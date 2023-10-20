@@ -1,9 +1,18 @@
 
 async function getPosts() {
-    const response = await fetch('http://localhost:888/sonhoautoveiculos.com.br/wp-json/wp/v2/posts?_fields=id,title,content,estrelas', { cache: 'no-store' });
-    const posts = await response.json();
-    console.log(posts[0]);
-    return posts || [];
+    try{
+        const response = await fetch('http://localhost:888/sonhoautoveiculos.com.br/wp-json/wp/v2/posts?_fields=id,title,content,estrelas', { cache: 'no-store' });
+        if(!response.ok) {
+            throw new Error('Failed to fetch data');
+        }
+        const posts = await response.json();
+        console.log(posts[0]);
+        return posts || [];
+    
+    } catch (err) {
+        console.log(err);
+    }
+    
 }
 
 export default async function PageVeiculos() {
@@ -13,9 +22,12 @@ export default async function PageVeiculos() {
         <div>
             <h1>Página de Veículos</h1>
             <ul>
-                {posts.map((item:any, index:any) => (
+                {posts && posts.map((item:any, index:any) => (
                     <li key={index}>{item.title.rendered}</li>
                 ))}
+                {!posts &&
+                    <p>Nenhum vaículo para mostrar!</p>
+                }
             </ul>
         </div>
     );

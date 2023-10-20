@@ -1,2 +1,8 @@
 http://localhost:888/sonhoautoveiculos.com.br/wp-json/wp/v2/posts?_fields=id,title,content
 http://localhost:888/sonhoautoveiculos.com.br/wp-json/wp/v2/posts/1?_fields=id,title,content
+http://138.97.9.237:888/sonhoautoveiculos.com.br/wp-json/acf/v3/posts
+
+
+
+endpoits acf
+https://github.com/airesvsg/acf-to-rest-api/#endpoints
