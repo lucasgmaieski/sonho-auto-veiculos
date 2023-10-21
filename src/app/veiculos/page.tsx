@@ -1,7 +1,7 @@
 
 async function getPosts() {
     try{
-        const response = await fetch('http://localhost:888/sonhoautoveiculos.com.br/wp-json/wp/v2/posts?_fields=id,title,content,estrelas', { cache: 'no-store' });
+        const response = await fetch('http://localhost:888/sonhoautoveiculos.com.br/wp-json/wp/v2/veiculos', { cache: 'no-store' });
         if(!response.ok) {
             throw new Error('Failed to fetch data');
         }
@@ -23,7 +23,7 @@ export default async function PageVeiculos() {
             <h1>Página de Veículos</h1>
             <ul>
                 {posts && posts.map((item:any, index:any) => (
-                    <li key={index}>{item.title.rendered}</li>
+                    <li key={index}>{item.title.rendered} - {item.acf.combustivel}</li>
                 ))}
                 {!posts &&
                     <p>Nenhum vaículo para mostrar!</p>
