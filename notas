@@ -7,7 +7,14 @@ http://138.97.9.237:888/sonhoautoveiculos.com.br/wp-json/acf/v3/posts/6
 
 endpoits acf
 https://github.com/airesvsg/acf-to-rest-api/#endpoints
+https://www.advancedcustomfields.com/resources/wp-rest-api-integration/
+
 
 
 options
 http://138.97.9.237:888/sonhoautoveiculos.com.br/wp-json/acf/v3/options/site_name
+
+
+
+A fazer 
+[]Criar um favicon bonito para colocar no app/layout
