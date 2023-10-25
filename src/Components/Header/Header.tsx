@@ -16,7 +16,7 @@ export default async function Header() {
     }
     return (
         <header className={`${styles.header} d-flex justify-content-between align-items-center`}>
-            <h1><img src="/logo.svg" alt="" /></h1>
+            <h1><Link href={process.env.NEXT_PUBLIC_SITE_URL || '/'}><img src="/logo.svg" alt="" /></Link></h1>
             <div>input search</div>
             <nav>
                 <ul>
