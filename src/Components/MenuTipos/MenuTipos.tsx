@@ -15,12 +15,12 @@ export default async function MenuTipos() {
         return '/';
     }
     return (
-        <header className={`${styles.header} d-flex justify-content-between align-items-center`}>
-            <ul>
+        <div className="container-fluid">
+            <ul className={`${styles.menuTipos} container-fluid w-100 d-flex justify-content-between align-items-center list-unstyled`}>
                 {menuTipos && menuTipos.itens.map((menu: any, index: number) => (
                     <li key={index}><Link href={getUrl(menu.url)}>{menu.title}</Link> </li>
                 ))}
             </ul>
-        </header>
+        </div>
     );
 }
