@@ -1,15 +1,32 @@
+import React from 'react';
 import Image from "next/image";
 import styles from "./page.module.css";
 import MenuTipos from "@/Components/MenuTipos/MenuTipos";
 import SliderHome from "@/Components/SliderHome/SliderHome";
 import MenuMarcas from "@/Components/MenuMarcas/MenuMarcas";
+import SwiperSlider from "@/Components/SwiperSlider/SwiperSlider";
+import { SwiperSlide } from "swiper/react";
 
 export default function Home() {
+    const settings = {
+        spaceBetween: 20,
+        slidesPerView: 3,
+    }
+
     return (
         <main className={styles.main}>
             <SliderHome />
             <MenuTipos />
             <MenuMarcas />
+
+
+            <h1>Marcas SwiperSlider</h1>
+            <SwiperSlider settings={settings}>
+                <h1>asdfasdf</h1>
+                <h1>asdfasdf</h1>
+            </SwiperSlider>
+
+
             <div className={styles.description}>
                 <p>
                     Get started by editing&nbsp;

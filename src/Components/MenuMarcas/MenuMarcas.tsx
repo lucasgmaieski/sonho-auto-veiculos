@@ -25,24 +25,53 @@ export default function MenuMarcas() {
     }, []);
 
     var settingsSliderMarcas = {
+        className: "menuMarcas",
         dots: false,
         infinite: false,
         speed: 500,
-        slidesToShow: 5,
-        slidesToScroll: 5
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        responsive: [
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 5,
+                slidesToScroll: 1,
+              }
+            },
+            {
+              breakpoint: 640,
+              settings: {
+                slidesToShow: 4,
+                slidesToScroll: 1,
+              }
+            },
+            {
+              breakpoint: 500,
+              settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1
+              }
+            },
+            {
+                breakpoint: 400,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 1
+                }
+            }
+          ],
       };
     return (
-        <div className="relative flex flex-col justify-center gap-2 w-fit z-10 p-4 mx-auto mt-12">
+        <div className="container relative flex flex-col justify-center gap-2 z-10 p-4 mx-auto mt-12">
             <h2 className="text-3xl font-bold">Marcas</h2>
             <div className="flex flex-row gap-2">
             <Slider {...settingsSliderMarcas}>
             {menus && menus.itens.map((menu: any, index: number) => (
                     
-                <Link key={index} href={getUrl(menu.url)} className="relative w-[13vw] h-[13vw] rounded-full flex flex-col justify-center overflow-hidden">
-                    <div className="group relative h-full w-full flex shadow-xl ring-gray-900/5 sm:mx-auto sm:max-w-lg">
-                        <div className="z-100 h-full w-full overflow-hidden rounded-full border border-gray-200 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:opacity-70">
-                            <img src={menu.description} className="animate-fade-in block h-full w-full scale-100 transform object-cover object-center opacity-100 transition duration-300 group-hover:scale-110" alt="" />
-                        </div>
+                <Link key={index} href={getUrl(menu.url)} className="relative sm:w-[19vw] lg:w-[13vw] aspect-[1/1] p-1 rounded-full flex flex-col justify-center overflow-hidden">
+                    <div className="z-100 overflow-hidden rounded-full border border-gray-200 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:opacity-70">
+                        <img src={menu.description} className="animate-fade-in block w-full aspect-[1/1] scale-100 transform object-cover object-center " alt="" />
                     </div>
                 </Link>
             ))}

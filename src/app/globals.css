@@ -9,6 +9,17 @@
   left: 15px;
   z-index: 1;
 }
-.slick-slide {
+.slick-slider {
   width: 100%;
+}
+
+.menuMarcas .slick-list{
+  /* width: fit-content; */
+}
+.menuMarcas.slick-slider button.slick-next {
+  right: 0px;
+}
+.menuMarcas.slick-slider button.slick-prev {
+left: 0px;
+z-index: 1;
 }
