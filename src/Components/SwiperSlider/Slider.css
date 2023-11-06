@@ -1,0 +1,12 @@
+.swiper {
+    padding: 0 10px;
+}
+.swiper-button-prev {
+    left: -7px;
+}
+.swiper-button-next {
+    right: -7px;
+}
+.swiper-button-prev:after, .swiper-button-next:after {
+    font-size: 20px;
+}
