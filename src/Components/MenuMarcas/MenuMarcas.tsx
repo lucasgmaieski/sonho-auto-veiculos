@@ -67,7 +67,7 @@ export default function MenuMarcas() {
     //   };
 
     const settings: SwiperProps = {
-        spaceBetween: 5,
+        spaceBetween: 7,
         slidesPerView: 3,
         navigation: true,
         breakpoints: {

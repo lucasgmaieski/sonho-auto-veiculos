@@ -1,5 +1,8 @@
 .swiper {
-    padding: 0 10px;
+    padding: 0 12px;
+}
+#marcas .swiper {
+    padding: 0 10.8px;
 }
 .swiper-button-prev {
     left: -7px;
