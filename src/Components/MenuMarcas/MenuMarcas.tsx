@@ -68,9 +68,12 @@ export default function MenuMarcas() {
 
     const settings: SwiperProps = {
         spaceBetween: 7,
-        slidesPerView: 3,
+        slidesPerView: 2,
         navigation: true,
         breakpoints: {
+            475: {
+                slidesPerView: 3,
+            },
             550: {
               slidesPerView: 4,
             },
@@ -87,7 +90,7 @@ export default function MenuMarcas() {
     }
     return (
         <div className="container relative flex flex-col justify-center gap-2 z-10 p-4 mx-auto mt-12">
-            <h2 className="text-3xl font-bold">Marcas</h2>
+            <h2 className="text-center text-3xl font-bold">Marcas</h2>
             <div className="flex flex-row gap-2">
                 <SwiperSlider settings={settings}>
                 {menus && menus.itens.map((menu: any, index: number) => (

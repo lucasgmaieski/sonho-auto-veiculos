@@ -19,14 +19,6 @@ export default function Home() {
             <MenuTipos />
             <MenuMarcas />
 
-
-            <h1>Marcas SwiperSlider</h1>
-            <SwiperSlider settings={settings}>
-                <h1>asdfasdf</h1>
-                <h1>asdfasdf</h1>
-            </SwiperSlider>
-
-
             <div className={styles.description}>
                 <p>
                     Get started by editing&nbsp;

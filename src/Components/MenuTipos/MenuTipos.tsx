@@ -19,7 +19,7 @@ export default async function MenuTipos() {
     }
 
     const settings: SwiperProps = {
-        spaceBetween: 10,
+        spaceBetween: 15,
         slidesPerView: 2,
         navigation: true,
         breakpoints: {
@@ -41,11 +41,12 @@ export default async function MenuTipos() {
         }
     }
     return (
-            <div id="marcas" className="relative -mt-14 flex justify-center gap-2 bg-white z-10 p-4 mx-auto rounded-xl shadow-xl">
+            <div id="marcas" className="relative max-w-fit mt-7 md:-mt-14 flex flex-col justify-center gap-2 bg-transparent md:bg-white z-10 p-4 mx-auto rounded-xl md:shadow-xl">
+                <h2 className="block md:hidden text-center text-3xl font-bold">Tipos</h2>
                 <SwiperSlider settings={settings}>
                     {menuTipos && menuTipos.itens.map((menu: any, index: number) => (
                         <SwiperSlide className="max-w-[190px]">
-                            <div key={index} className="flex flex-row  max-w-[190px] aspect-[12/9]">
+                            <div key={index} className="flex flex-row  max-w-[195px] aspect-[12/9]">
                                 
                                 <Link href={getUrl(menu.url)} className="relative h-full w-full flex flex-col justify-center overflow-hidden">
                                     <div className="absolute inset-0 bg-center dark:bg-black"></div>
