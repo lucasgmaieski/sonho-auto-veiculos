@@ -94,7 +94,7 @@ export default function MenuMarcas() {
             <div className="flex flex-row gap-2">
                 <SwiperSlider settings={settings}>
                 {menus && menus.itens.map((menu: any, index: number) => (
-                    <SwiperSlide className="max-w-[190px]">
+                    <SwiperSlide className="max-w-[190px]" key={index}>
                         <Link key={index} href={getUrl(menu.url)} className="relative max-w-[190px] aspect-[1/1] p-1 rounded-full flex flex-col justify-center overflow-hidden">
                             <div className="z-100 overflow-hidden rounded-full border border-gray-200 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:opacity-70">
                                 <img src={menu.description} className="animate-fade-in block w-full aspect-[1/1] scale-100 transform object-cover object-center " alt="" />

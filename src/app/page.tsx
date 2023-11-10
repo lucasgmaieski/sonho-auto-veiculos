@@ -6,6 +6,7 @@ import SliderHome from "@/Components/SliderHome/SliderHome";
 import MenuMarcas from "@/Components/MenuMarcas/MenuMarcas";
 import SwiperSlider from "@/Components/SwiperSlider/SwiperSlider";
 import { SwiperSlide } from "swiper/react";
+import MorePopular from '@/Components/MorePopular/MorePopular';
 
 export default function Home() {
     const settings = {
@@ -18,6 +19,8 @@ export default function Home() {
             <SliderHome />
             <MenuTipos />
             <MenuMarcas />
+
+            <MorePopular />
 
             <div className={styles.description}>
                 <p>

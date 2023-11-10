@@ -45,9 +45,8 @@ export default async function MenuTipos() {
                 <h2 className="block md:hidden text-center text-3xl font-bold">Tipos</h2>
                 <SwiperSlider settings={settings}>
                     {menuTipos && menuTipos.itens.map((menu: any, index: number) => (
-                        <SwiperSlide className="max-w-[190px]">
-                            <div key={index} className="flex flex-row  max-w-[195px] aspect-[12/9]">
-                                
+                        <SwiperSlide className="max-w-[190px]" key={index}>
+                            <div className="flex flex-row  max-w-[195px] aspect-[12/9]">
                                 <Link href={getUrl(menu.url)} className="relative h-full w-full flex flex-col justify-center overflow-hidden">
                                     <div className="absolute inset-0 bg-center dark:bg-black"></div>
                                     <div className="group relative h-full w-full flex rounded-xl shadow-xl ring-gray-900/5 sm:mx-auto sm:max-w-lg">
@@ -59,7 +58,6 @@ export default async function MenuTipos() {
                                         </div>
                                     </div>
                                 </Link>
-
                             </div>
                         </SwiperSlide>
                     ))}
