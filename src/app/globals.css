@@ -13,13 +13,18 @@
   width: 100%;
 }
 
-.menuMarcas .slick-list{
-  /* width: fit-content; */
+
+.slider-card .swiper-slide{
+  width: 100% !important;
 }
-.menuMarcas.slick-slider button.slick-next {
-  right: 0px;
+.slider-card .swiper {
+  padding: 0;
 }
-.menuMarcas.slick-slider button.slick-prev {
-left: 0px;
-z-index: 1;
+.slider-card .swiper-button-prev,
+.slider-card .swiper-button-next {
+  display: none;
+}
+.slider-card .swiper:hover .swiper-button-next,
+.slider-card .swiper:hover .swiper-button-prev {
+  display: flex;
 }
