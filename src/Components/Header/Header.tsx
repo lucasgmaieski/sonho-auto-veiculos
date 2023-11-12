@@ -1,6 +1,7 @@
 
 import api from "@/api";
 import Link from "next/link";
+import { ThemeSwitcher } from "../../app/ThemeSwitcher";
 
 export default async function Header() {
     const menuPrincipal: any = await api.getMenu(9);
@@ -14,7 +15,7 @@ export default async function Header() {
         return '/';
     }
     return (
-        <header className={`flex justify-between items-center p-4`}>
+        <header className={`flex justify-between items-center p-4 bg-transparent`}>
             <h1><Link href={process.env.NEXT_PUBLIC_SITE_URL || '/'}><img className="w-52" src="/logo.svg" alt="" /></Link></h1>
             <div className="m-auto">input search</div>
             <form>   
@@ -34,8 +35,7 @@ export default async function Header() {
                     ))}
                 </ul>
                 <div className="flex justify-content-end">
-                    <div>Favoritos</div>
-                    <div>Light/Dark</div>
+                    <ThemeSwitcher />
                 </div>
             </nav>
         </header>

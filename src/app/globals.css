@@ -1,30 +1,30 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
 
 .slick-slider button.slick-next {
-    right: 15px;
+  right: 15px;
 }
 .slick-slider button.slick-prev {
-  left: 15px;
-  z-index: 1;
+left: 15px;
+z-index: 1;
 }
 .slick-slider {
-  width: 100%;
+width: 100%;
 }
-
-
 .slider-card .swiper-slide{
-  width: 100% !important;
+width: 100% !important;
 }
 .slider-card .swiper {
-  padding: 0;
+padding: 0;
 }
 .slider-card .swiper-button-prev,
 .slider-card .swiper-button-next {
-  display: none;
+display: none;
 }
 .slider-card .swiper:hover .swiper-button-next,
 .slider-card .swiper:hover .swiper-button-prev {
-  display: flex;
+display: flex;
 }
+
+
+@tailwind utilities;
