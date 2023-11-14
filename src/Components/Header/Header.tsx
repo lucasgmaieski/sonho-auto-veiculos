@@ -2,6 +2,12 @@
 import api from "@/api";
 import Link from "next/link";
 import { ThemeSwitcher } from "../../app/ThemeSwitcher";
+import { FaHeart } from "react-icons/fa";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+  } from "@/Components/ui/popover";
 
 export default async function Header() {
     const menuPrincipal: any = await api.getMenu(9);
@@ -34,6 +40,17 @@ export default async function Header() {
                         <li key={index}><Link href={getUrl(menu.url)}>{menu.title}</Link> </li>
                     ))}
                 </ul>
+                <Popover>
+                    <PopoverTrigger><FaHeart className="w-[28px] h-[28px] text-red-500"/></PopoverTrigger>
+                    <PopoverContent>
+                        <ul>
+                            <li>ford focus R$ 35000</li>
+                            <li>ford focus R$ 35000</li>
+                            <li>ford focus R$ 35000</li>
+                            <li>ford focus R$ 35000</li>
+                        </ul>
+                    </PopoverContent>
+                </Popover>
                 <div className="flex justify-content-end">
                     <ThemeSwitcher />
                 </div>
