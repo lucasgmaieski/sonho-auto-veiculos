@@ -1,8 +1,10 @@
 'use client'
 import SwiperSlider from "../SwiperSlider/SwiperSlider";
 import { SwiperProps, SwiperSlide } from "swiper/react";
-
-export default function SliderCard({images}:string[]) {
+type Props = {
+    images: string[]
+}
+export default function SliderCard({images}: Props) {
     const settings: SwiperProps = {
         slidesPerView: 1,
         navigation: true,

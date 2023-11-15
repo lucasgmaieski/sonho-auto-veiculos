@@ -8,18 +8,12 @@ import {
     PopoverContent,
     PopoverTrigger,
   } from "@/Components/ui/popover";
+import { getUrl } from "@/lib/utils";
 
 export default async function Header() {
     const menuPrincipal: any = await api.getMenu(9);
     console.log(menuPrincipal);
 
-    function getUrl(url: string): string {
-        if(process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_WORDPRESS_URL) {
-            url = url.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL, process.env.NEXT_PUBLIC_SITE_URL)
-            return url;
-        }
-        return '/';
-    }
     return (
         <header className={`flex justify-between items-center p-4 bg-transparent`}>
             <h1><Link href={process.env.NEXT_PUBLIC_SITE_URL || '/'}><img className="w-52" src="/logo.svg" alt="" /></Link></h1>
