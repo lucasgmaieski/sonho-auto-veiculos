@@ -12,7 +12,7 @@ export default function SliderCard({images}: Props) {
     }
     return (
         <SwiperSlider settings={settings}>
-            {images && images.map((image: any, index: number) => (
+            {images && images.map((image: string, index: number) => (
                 <SwiperSlide key={index} className="z-20">
                     <img src={image} className="animate-fade-in block w-full scale-100 transform object-cover object-center" alt="" /> 
                 </SwiperSlide>

@@ -43,7 +43,7 @@ export default function SliderHome() {
                     <div key={index} className="relative">
                         <img src="/banner-home1.jpg" alt="" />
                         <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-center text-white">
-                            <h3 className="text-4xl">{menu.title}</h3>
+                            <h3 className="text-4xl">{menu.titulo}</h3>
                             <p className="text-xl">Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                         </div>
                     </div>
