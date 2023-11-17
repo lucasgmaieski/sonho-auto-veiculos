@@ -5,6 +5,7 @@ import Header from "@/Components/Header/Header";
 import { ThemeProvider } from "next-themes";
 import Provider from "./providers";
 import ContextProvider from "@/Contexts/Context";
+import Footer from "@/Components/Footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -77,6 +78,8 @@ export default function RootLayout({
                         <Header />
 
                         {children}
+                        
+                        <Footer />
                     </ContextProvider>
                 </Provider>
             </body>

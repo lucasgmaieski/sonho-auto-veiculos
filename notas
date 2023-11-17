@@ -4,6 +4,8 @@ http://138.97.9.237:888/sonhoautoveiculos.com.br/wp-json/acf/v3/posts
 
 http://138.97.9.237:888/sonhoautoveiculos.com.br/wp-json/acf/v3/posts/6
 
+pegar um post pelo especifico pelo slug
+ http://138.97.9.237:888//sonhoautoveiculos.com.br/wp-json/wp/v2/veiculos?slug=uno-2
 
 endpoits acf
 https://github.com/airesvsg/acf-to-rest-api/#endpoints
@@ -19,15 +21,17 @@ http://138.97.9.237:888/sonhoautoveiculos.com.br/wp-json/acf/v3/options/site_nam
 A fazer 
 []Criar um favicon bonito para colocar no app/layout
 []Página de contato - criar formulário e ver como vai processar esse formulário de contato
+[]criar breadcrumb
+[]criar função para ordenação dos veiculos
 []Adicionar um selo de Oferta em destaque nos veiculos
 []Criar os filtros
 [✅]Criar context para os carros adicionados aos favoritos
 []criar página para mostrar os favoritos do usuário
 [✅]janelinha de notificação dos favoritos 
-[✅]adicionar shacn ao projeto
+[✅]adicionar shadcn ao projeto
 []estilizar e fazer a funcionalidade da barra de pesquisa
 []fazer o footer do site
 []fazer uma seção de cta para colocar nas páginas
-
-[]criar os campos personalizados para colocar nos filtros
+[]botão de compartilhar veículo
+[✅]criar os campos personalizados para colocar nos filtros
 []

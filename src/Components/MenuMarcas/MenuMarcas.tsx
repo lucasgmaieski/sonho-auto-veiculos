@@ -26,7 +26,7 @@ export default function MenuMarcas() {
         loop: true,
         breakpoints: {
             475: {
-                slidesPerView: 3,
+              slidesPerView: 3,
             },
             550: {
               slidesPerView: 4,
@@ -38,8 +38,8 @@ export default function MenuMarcas() {
               slidesPerView: 6,
             },
             1536: {
-                slidesPerView: 7,
-              },
+              slidesPerView: 7,
+            },
         }
     }
     return (
@@ -48,8 +48,8 @@ export default function MenuMarcas() {
             <div className="flex flex-row gap-2">
                 <SwiperSlider settings={settings}>
                 {menus && menus.itens.map((menu: any, index: number) => (
-                    <SwiperSlide className="max-w-[190px]" key={index}>
-                        <Link key={index} href={`${process.env.NEXT_PUBLIC_SITE_URL}/veiculos?marca=${getLastPartUrl(menu.url)}`} className="relative max-w-[190px] aspect-[1/1] p-1 rounded-full flex flex-col justify-center overflow-hidden">
+                    <SwiperSlide className="w-[15%]" key={index}>
+                        <Link key={index} href={`${process.env.NEXT_PUBLIC_SITE_URL}/veiculos?marca=${getLastPartUrl(menu.url)}`} className="relative max-w-[190px] m-auto aspect-[1/1] p-1 rounded-full flex flex-col justify-center overflow-hidden">
                             <div className="z-100 overflow-hidden rounded-full border border-gray-200 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:opacity-70">
                                 <img src={menu.logo} className="animate-fade-in block w-full aspect-[1/1] scale-100 transform object-cover object-center " alt="" />
                             </div>

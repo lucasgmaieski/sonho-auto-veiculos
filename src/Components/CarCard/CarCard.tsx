@@ -14,7 +14,7 @@ export default function CarCard({vehicle}: Props) {
                         <p className="px-2 py-0.5 text-lg font-semibold text-white">🤍</p>
                     </div>
                     {/* <img className="w-full rounded-lg object-cover object-center" src="../../../car.png" alt="product" /> */}
-                    <SliderCard images={vehicle.acf.galeria_de_images as string[]}/>
+                    <SliderCard images={vehicle.acf.galeria_de_imagens as string[]}/>
                     <div>
                         <div className="my-4 flex flex-wrap items-center justify-start px-4 gap-y-2 gap-x-1">
                             {vehicle.acf.combustivel && 

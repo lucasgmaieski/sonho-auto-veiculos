@@ -31,7 +31,7 @@ export default async function Header() {
             <nav className="flex w-50 gap-3 justify-between ">
                 <ul className={`flex justify-between col mb-0`}>
                     {menuPrincipal && menuPrincipal.itens.map((menu: any, index: number) => (
-                        <li key={index}><Link href={getUrl(menu.url)}>{menu.title}</Link> </li>
+                        <li key={index}><Link href={getUrl(menu.url)}>{menu.titulo}</Link> </li>
                     ))}
                 </ul>
                 <Popover>
