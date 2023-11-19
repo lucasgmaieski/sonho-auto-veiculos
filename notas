@@ -11,6 +11,8 @@ endpoits acf
 https://github.com/airesvsg/acf-to-rest-api/#endpoints
 https://www.advancedcustomfields.com/resources/wp-rest-api-integration/
 
+endpoit para filtrar veiculos com paginação
+http://localhost:888/sonhoautoveiculos.com.br/wp-json/wp/v2/veiculos/?condicao=novo&page=2&per_page=3
 
 
 options
