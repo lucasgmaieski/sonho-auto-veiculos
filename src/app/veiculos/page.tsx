@@ -19,6 +19,9 @@ async function getPosts() {
 
 export default async function PageVeiculos() {
     const vehicles: VehicleType[] = await api.getVehicles();
+    const vehiclesQtd: any = await api.getQtdVehiclesPerField();
+    console.log(vehiclesQtd)
+    
     
     return (
         <div className="flex flex-row">

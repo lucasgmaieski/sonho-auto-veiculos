@@ -43,7 +43,8 @@ export default async function PageVeiculos({params}: Props) {
             <div className="w-4/5">
                 <h1>{vehicle.title.rendered}</h1>
                 <div>
-                    {galery.map((image: string, index: number)=> (
+                    {galery && 
+                    galery.map((image: string, index: number)=> (
                         <img src={image} alt="" className="w-80 inline-block"/>
                     ))}
                 </div>

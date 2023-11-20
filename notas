@@ -12,12 +12,16 @@ https://github.com/airesvsg/acf-to-rest-api/#endpoints
 https://www.advancedcustomfields.com/resources/wp-rest-api-integration/
 
 endpoit para filtrar veiculos com paginação
-http://localhost:888/sonhoautoveiculos.com.br/wp-json/wp/v2/veiculos/?condicao=novo&page=2&per_page=3
+http://localhost:888/sonhoautoveiculos.com.br/wp-json/wp/v2/veiculosf/?condicao=novo&page=2&per_page=3
+
+https://seusite.com/wp-json/seu_namespace/v1/quantidade-veiculos-por-valor/?campo_personalizado=seu_campo
 
 
 options
 http://138.97.9.237:888/sonhoautoveiculos.com.br/wp-json/acf/v3/options/site_name
 
+
+(minPrice ? '&preco=' + minPrice + '_' + maxPrice : '') 
 
 
 A fazer 
@@ -36,4 +40,5 @@ A fazer
 []fazer uma seção de cta para colocar nas páginas
 []botão de compartilhar veículo
 [✅]criar os campos personalizados para colocar nos filtros
-[]
+[✅]Ajustar o endpoit de filtro de veiculos para filtrar campos de maior/menor que um valor
+[]criar endpoit para pegar os campos personalidados e exibir nos filtros com quantidade de veiculos em cada um

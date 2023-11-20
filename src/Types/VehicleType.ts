@@ -1,6 +1,6 @@
-type Guid = {
-    rendered: string;
-}
+// type Guid = {
+//     rendered: string;
+// }
 
 type Title = {
     rendered: string;
@@ -29,7 +29,7 @@ export type VehicleType = {
     id: number;
     date: string;
     date_gmt: string;
-    guid: Guid;
+    permalink: string;
     modified: string;
     modified_gmt: string;
     slug: string;
@@ -37,6 +37,7 @@ export type VehicleType = {
     type: string;
     link: string;
     title: Title;
+    post_title: string;
     content: Content;
     featured_media: number;
     template: string;
