@@ -16,11 +16,16 @@ async function getPosts() {
     }
     
 }
+interface ContagemPorCampo {
+    [campo: string]: {
+    [valor: string]: number;
+    };
+}
 
 export default async function PageVeiculos() {
     const vehicles: VehicleType[] = await api.getVehicles();
-    const vehiclesQtd: any = await api.getQtdVehiclesPerField();
-    console.log(vehiclesQtd)
+    const vehiclesFilter: ContagemPorCampo | undefined = await api.getQtdVehiclesPerField();
+    console.log(vehiclesFilter)
     
     
     return (
@@ -28,6 +33,12 @@ export default async function PageVeiculos() {
             <aside className="w-1/5">
                 <div>
                     <h2>Marca</h2>
+                    {vehiclesFilter &&
+                    Object.entries(vehiclesFilter['marca']).map(([valor, contagem]) => (
+                        <div key={valor}>
+                        {`${valor}: ${contagem}`}
+                        </div>
+                    ))}
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 gap-y-6 sm:gap-y-4">
                         <div>
                             <img src="logo-bmw.svg" alt="" />
@@ -42,6 +53,17 @@ export default async function PageVeiculos() {
                             Nome
                         </div>
                     </div>
+                    { vehiclesFilter &&
+                    Object.keys(vehiclesFilter).map((campo) => (
+                        <div key={campo}>
+                            <h3>Contagem para o campo "{campo}":</h3>
+                            {Object.entries(vehiclesFilter[campo]).map(([valor, contagem]) => (
+                                <div key={valor}>
+                                {`${valor}: ${contagem}`}
+                                </div>
+                            ))}
+                        </div>
+                    ))}
                 </div>
             </aside>
             <div className="w-4/5">

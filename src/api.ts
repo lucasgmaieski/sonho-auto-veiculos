@@ -68,7 +68,8 @@ export default {
     },
     getQtdVehiclesPerField: async () => {
         try{
-            const response = await fetch(`${URL_BASE}/sonhoautoveiculos.com.br/wp-json/acf/v3/veiculos?_fields=acf.ano,acf.condicao,acf.cor,acf.combustivel`, { next: { revalidate: 3600 } });
+            // ano, preco, MARCA, condicao, combustivel, motor, quilometros, transmissao, direcao, cor, portas, *localizacao, *carroceria, 
+            const response = await fetch(`${URL_BASE}/sonhoautoveiculos.com.br/wp-json/acf/v3/veiculos?_fields=acf.ano,acf.preco,acf.condicao,acf.combustivel,acf.motor,acf.quilometros,acf.transmissao,acf.direcao,acf.cor,acf.portas,acf.marca,acf.tipo`, { next: { revalidate: 3600 } });
             if(!response.ok) {
                 throw new Error('Failed to fetch data');
             }
@@ -76,7 +77,7 @@ export default {
 
             interface DadosAPI {
                 acf: {
-                [campo: string]: string;
+                [campo: string]: string | { name: string };
                 };
             }
             interface ContagemPorCampo {
@@ -89,19 +90,24 @@ export default {
             // Itera sobre os dados da API
             vehicleFilters.forEach(item => {
                 for (const campo in item.acf) {
-                    const valorCampo = item.acf[campo];
-            
+                    let valorCampo = item.acf[campo];
+                    console.log("campo: " + campo)
+
+                    if ((campo === "marca" || "tipo") && (typeof valorCampo === "object") && ("name" in valorCampo)) {
+                        valorCampo = (valorCampo as { name: string }).name;
+                      }
+
                     // Cria um objeto de contagem para o campo, se não existir
                     if (!contagemPorCampo[campo]) {
                         contagemPorCampo[campo] = {};
                     }
             
                     // Atualiza o contador para esse valor no campo
-                    contagemPorCampo[campo][valorCampo] = (contagemPorCampo[campo][valorCampo] || 0) + 1;
+                    contagemPorCampo[campo][valorCampo as string] = (contagemPorCampo[campo][valorCampo as string] || 0) + 1;
                 }
             });
             
-        // Imprime os resultados
+            // Imprime os resultados
             for (const campo in contagemPorCampo) {
                 // console.log(`Contagem para o campo "${campo}":`);
                 for (const valor in contagemPorCampo[campo]) {
@@ -111,9 +117,6 @@ export default {
             }
 
             return contagemPorCampo;
-            console.log("vehicleFilters: ")
-            console.log(vehicleFilters);
-            return vehicleFilters;
         
         } catch (err) {
             console.log(err);
