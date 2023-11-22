@@ -1,4 +1,5 @@
 import CarCard from "@/Components/CarCard/CarCard";
+import { MenuTypes } from "@/Types/MenuType";
 import { VehicleType } from "@/Types/VehicleType"
 import api from "@/api";
 async function getPosts() {
@@ -24,34 +25,27 @@ interface ContagemPorCampo {
 
 export default async function PageVeiculos() {
     const vehicles: VehicleType[] = await api.getVehicles();
+    const marcaFilter: MenuTypes = await api.getMenu(15);
     const vehiclesFilter: ContagemPorCampo | undefined = await api.getQtdVehiclesPerField();
     console.log(vehiclesFilter)
-    
+    // useEffect(()=> {
+        console.log("marcaFilter: ");
+        console.log(marcaFilter);
+    // }, []);
     
     return (
         <div className="flex flex-row">
             <aside className="w-1/5">
                 <div>
                     <h2>Marca</h2>
-                    {vehiclesFilter &&
-                    Object.entries(vehiclesFilter['marca']).map(([valor, contagem]) => (
-                        <div key={valor}>
-                        {`${valor}: ${contagem}`}
+                    
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 gap-y-6 sm:gap-y-4">
+                    {marcaFilter && marcaFilter.itens.map((item,index) => (
+                        <div>
+                            <img src={item.logo} alt="" />
+                            {item.titulo}({item.contagem})
                         </div>
                     ))}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 gap-y-6 sm:gap-y-4">
-                        <div>
-                            <img src="logo-bmw.svg" alt="" />
-                            Nome
-                        </div>
-                        <div>
-                            <img src="logo-mitsubishi.svg" alt="" />
-                            Nome
-                        </div>
-                        <div>
-                            <img src="logo-toyota.svg" alt="" />
-                            Nome
-                        </div>
                     </div>
                     { vehiclesFilter &&
                     Object.keys(vehiclesFilter).map((campo) => (
