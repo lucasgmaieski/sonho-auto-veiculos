@@ -5,11 +5,20 @@ import Link from "next/link";
 import SwiperSlider from "../SwiperSlider/SwiperSlider";
 import { SwiperProps, SwiperSlide } from "swiper/react";
 import { getLastPartUrl } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 
-export default async function MenuTipos() {
-    const menuTipos: any = await api.getMenu(8);
-    console.log(menuTipos);
+export default function MenuTipos() {
+    const [menus, setMenus] = useState<any>();
+    useEffect(() => {
+        getItensMenu();
+        async function getItensMenu() {
+            const menuTipos: any = await api.getMenu(8);
+            console.log(menuTipos);
+            setMenus(menuTipos);
+        }
+    }, []);
+
 
     const settings: SwiperProps = {
         spaceBetween: 15,
@@ -37,7 +46,7 @@ export default async function MenuTipos() {
             <div id="marcas" className="relative max-w-fit mt-7 md:-mt-14 flex flex-col justify-center gap-2 md:dark:bg-slate-800 md:bg-slate-100 bg-transparent z-10 p-4 mx-auto rounded-xl md:shadow-xl">
                 <h2 className="block md:hidden text-center text-3xl font-bold">Tipos</h2>
                 <SwiperSlider settings={settings}>
-                    {menuTipos && menuTipos.itens.map((menu: any, index: number) => (
+                    {menus && menus.itens.map((menu: any, index: number) => (
                         <SwiperSlide className="max-w-[190px]" key={index}>
                             <div className="flex flex-row  max-w-[195px] aspect-[12/9]">
                                 <Link href={`${process.env.NEXT_PUBLIC_SITE_URL}/veiculos?tipo=${getLastPartUrl(menu.url)}`} className="relative h-full w-full flex flex-col justify-center overflow-hidden">

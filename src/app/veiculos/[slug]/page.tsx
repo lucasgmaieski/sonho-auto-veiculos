@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 
 export default async function PageVeiculos({params}: Props) {
     const vehicle: VehicleType = await api.getVehicleBySlug(params.slug);
-    const galery = vehicle.acf.galeria_de_imagens as string[]
+    const galery = vehicle?.acf.galeria_de_imagens as string[]
     return (
         <div className="flex flex-row">
             <aside className="w-1/5">
@@ -41,7 +41,7 @@ export default async function PageVeiculos({params}: Props) {
                 </div>
             </aside>
             <div className="w-4/5">
-                <h1>{vehicle.title.rendered}</h1>
+                <h1>{vehicle?.title.rendered}</h1>
                 <div>
                     {galery && 
                     galery.map((image: string, index: number)=> (

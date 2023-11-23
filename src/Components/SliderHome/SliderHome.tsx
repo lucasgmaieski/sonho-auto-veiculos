@@ -8,15 +8,6 @@ import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
 
 export default function SliderHome() {
-    
-
-    function getUrl(url: string): string {
-        if(process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_WORDPRESS_URL) {
-            url = url.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL, process.env.NEXT_PUBLIC_SITE_URL)
-            return url;
-        }
-        return '/';
-    }
 
     const [menus, setMenus] = useState<any>();
 
@@ -35,7 +26,7 @@ export default function SliderHome() {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1
-      };
+    };
     return (
         <div className="">
             <Slider {...settings}>
