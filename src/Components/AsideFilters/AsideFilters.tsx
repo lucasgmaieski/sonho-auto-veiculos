@@ -6,6 +6,8 @@ import { getUrl } from "@/lib/utils";
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
 import { MenuTypes } from "@/Types/MenuType";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+
 
 interface ContagemPorCampo {
     [campo: string]: {
@@ -13,32 +15,99 @@ interface ContagemPorCampo {
     };
 }
 interface FilterField {
-    field: string;
-    valor: string;
+    chave: string;
+    valor: boolean;
 }
+interface Item {
+    chave: string;
+    valor: boolean;
+  }
 type Props = {
     vehiclesFilter: ContagemPorCampo | undefined;
     marcaFilter: MenuTypes;
 }
+
+export function useQueryParams<T = {}>() {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const urlSearchParams = new URLSearchParams(
+      Array.from(searchParams.entries()),
+    );
+  
+    function setQueryParams(params: Partial<T>) {
+      Object.entries(params).forEach(([key, value]) => {
+        urlSearchParams.set(key, String(value));
+      });
+  
+      const search = urlSearchParams.toString();
+      const query = search ? `?${search}` : "";
+  
+      router.push(`${pathname}${query}`);
+    }
+  
+    return { urlSearchParams, setQueryParams };
+  }
 export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
     const [activeSheetAll, setActiveSheetAll] = useState(false);
     const [contentSheetAll, setContentSheetAll] = useState<[string, number][]>();
-    const [selected, setSelected] = useState<FilterField[]>();
+    const [selected, setSelected] = useState<FilterField[]>([]);
+    const { urlSearchParams, setQueryParams } = useQueryParams();
+
+
+    const [meuEstado, setMeuEstado] = useState<Item[]>([]);
+    // Função para adicionar um novo item ao estado
+    const adicionarItem = (chave: string, valor: boolean) => {
+        const novoItem: Item = { chave, valor };
+        setMeuEstado([...meuEstado, novoItem]);
+    };
+    // Função para alterar o valor de um item com base na chave
+    const alterarValor = (chave: string, novoValor: boolean) => {
+        const novoEstado = meuEstado.map(item => {
+        if (item.chave === chave) {
+            return { ...item, valor: novoValor };
+        }
+        return item;
+        });
+
+        setMeuEstado(novoEstado);
+    };
+    const obterItemPorChave = (chave: string): Item | undefined => {
+        return meuEstado.find(item => item.chave === chave);
+    };
+    // Exemplo de uso
+    
+
+
+    // const urlFilterParams = useSearchParams()
     const handleSheetAll = (filter: [string, number][]) => {
         setActiveSheetAll(true);
         setContentSheetAll(filter);
     }
+    useEffect(()=> {
 
-    const handleSelectFilter = (event: MouseEvent<HTMLButtonElement>) => {
-        console.log('Tipo do Evento:', event.type);
-        console.log('Alvo do Evento:', event.currentTarget);
+        const parametros = urlSearchParams;
+        // const parametros = useRouter().query;
+        parametros.forEach((value, key) => {
+            console.log("valor: "+value+"-key: "+ key);
+          });
+          
+    })
+
+    const handleSelectFilter = (val: string) => {
+        // console.log('Tipo do Evento:', event.type);
+        // console.log('Alvo do Evento:', event.currentTarget);
         
-        // Propriedades específicas do elemento
-        const idDoElemento = event.currentTarget.id;
-        const classeDoElemento = event.currentTarget.className;
+        // // Propriedades específicas do elemento
+        // const idDoElemento = event.currentTarget.id;
+        // const classeDoElemento = event.currentTarget.className;
     
-        console.log('ID do Elemento:', idDoElemento);
-        console.log('Classe do Elemento:', classeDoElemento);
+        // console.log('ID do Elemento:', idDoElemento);
+        // console.log('Classe do Elemento:', classeDoElemento);
+        // const checked = event.currentTarget.dataset
+        // console.log( checked)
+        console.log("taclicando aqui")
+        
     }
 
     return(
@@ -60,8 +129,8 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                         <h3>Contagem para o campo "{campo}":</h3>
                         {Object.entries(vehiclesFilter[campo]).map(([valor, contagem]) => (
                             <div key={valor}>
-                                <Checkbox  id={valor} onClick={handleSelectFilter}/>
-                                {/* <input type="checkbox" name={valor} id={valor} onChange={handleSelectFilter}/> */}
+                                {/* <Checkbox  id={valor} checked={(urlSearchParams.get(campo) ?? "") === valor ? true : false} onClick={handleSelectFilter}/> */}
+                                <Checkbox  id={valor} checked={(meuEstado.find(item => item.chave === "2020")?.valor)} onCheckedChange={()=>handleSelectFilter(valor)}/>
                                 <label htmlFor={valor}>
                                 {`${valor}: ${contagem}`}
                                 </label>
