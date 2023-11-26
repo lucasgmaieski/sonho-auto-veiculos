@@ -2,11 +2,10 @@
 import { Checkbox } from "@/Components/ui/checkbox"
 import { VehicleType } from "@/Types/VehicleType";
 import SliderCard from "../SliderCard/SliderCard"
-import { getUrl } from "@/lib/utils";
+import { getUrl, useQueryParams } from "@/lib/utils";
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
 import { MenuTypes } from "@/Types/MenuType";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 
 interface ContagemPorCampo {
@@ -14,87 +13,78 @@ interface ContagemPorCampo {
     [valor: string]: number;
     };
 }
-interface FilterField {
-    chave: string;
-    valor: boolean;
+interface StatusFilterItem {
+    key: string;
+    value: boolean;
 }
-interface Item {
-    chave: string;
-    valor: boolean;
-  }
+interface ContentSheetAllItem {
+    field: string;
+    data: [string, number][];
+}
 type Props = {
     vehiclesFilter: ContagemPorCampo | undefined;
     marcaFilter: MenuTypes;
 }
 
-export function useQueryParams<T = {}>() {
-    const router = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
-    const urlSearchParams = new URLSearchParams(
-      Array.from(searchParams.entries()),
-    );
-  
-    function setQueryParams(params: Partial<T>) {
-      Object.entries(params).forEach(([key, value]) => {
-        urlSearchParams.set(key, String(value));
-      });
-  
-      const search = urlSearchParams.toString();
-      const query = search ? `?${search}` : "";
-  
-      router.push(`${pathname}${query}`);
-    }
-  
-    return { urlSearchParams, setQueryParams };
-  }
+
 export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
     const [activeSheetAll, setActiveSheetAll] = useState(false);
-    const [contentSheetAll, setContentSheetAll] = useState<[string, number][]>();
-    const [selected, setSelected] = useState<FilterField[]>([]);
+    const [contentSheetAll, setContentSheetAll] = useState<ContentSheetAllItem>();
     const { urlSearchParams, setQueryParams } = useQueryParams();
 
 
-    const [meuEstado, setMeuEstado] = useState<Item[]>([]);
-    // Função para adicionar um novo item ao estado
-    const adicionarItem = (chave: string, valor: boolean) => {
-        const novoItem: Item = { chave, valor };
-        setMeuEstado([...meuEstado, novoItem]);
+    const [statusFilterItens, setStatusFilterItens] = useState<StatusFilterItem[]>([
+        // { key: 'Fiat', value: true },
+        // { key: '2020', value: true },
+    ]);
+
+    const addStatusFilterItem = (key: string, value: boolean) => {
+        setStatusFilterItens(prevStatusFilterItens => {
+            const newItem: StatusFilterItem = { key, value };
+            const newState = [...prevStatusFilterItens, newItem];
+            return newState;
+          });
     };
-    // Função para alterar o valor de um item com base na chave
-    const alterarValor = (chave: string, novoValor: boolean) => {
-        const novoEstado = meuEstado.map(item => {
-        if (item.chave === chave) {
-            return { ...item, valor: novoValor };
+
+    const changeStatusFilterItem = (key: string, newValue: boolean) => {
+        const itemExist = statusFilterItens.find(item => item.key === key);
+
+        if(itemExist){
+            const novoEstado = statusFilterItens.map(item => {
+                if (item.key === key) {
+                    return { ...item, value: newValue };
+                }
+                return item;
+            });
+            setStatusFilterItens(novoEstado);
+        } else {
+            setStatusFilterItens([...statusFilterItens, { key, value: newValue }]);
+            console.log("statusFilterItens");
+            console.log(statusFilterItens);
         }
-        return item;
-        });
-
-        setMeuEstado(novoEstado);
     };
-    const obterItemPorChave = (chave: string): Item | undefined => {
-        return meuEstado.find(item => item.chave === chave);
+
+    const getStatusFilterItem = (key: string): StatusFilterItem | undefined => {
+        return statusFilterItens.find(item => item.key === key);
     };
-    // Exemplo de uso
-    
 
-
-    // const urlFilterParams = useSearchParams()
-    const handleSheetAll = (filter: [string, number][]) => {
+    const handleSheetAll = (filter: [string, number][], field: string) => {
         setActiveSheetAll(true);
-        setContentSheetAll(filter);
+        setContentSheetAll({data:filter, field});
     }
     useEffect(()=> {
-
         const parametros = urlSearchParams;
-        // const parametros = useRouter().query;
         parametros.forEach((value, key) => {
             console.log("valor: "+value+"-key: "+ key);
-          });
-          
-    })
+            addStatusFilterItem(value, true);
+            
+        });
+    }, []);
+    console.log(statusFilterItens);
 
-    const handleSelectFilter = (val: string) => {
+    // (urlSearchParams.get(campo) ?? "") === valor ? true : false
+
+    const handleSelectFilter = (field: string, val: string) => {
         // console.log('Tipo do Evento:', event.type);
         // console.log('Alvo do Evento:', event.currentTarget);
         
@@ -107,7 +97,9 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
         // const checked = event.currentTarget.dataset
         // console.log( checked)
         console.log("taclicando aqui")
-        
+        const newValue = !getStatusFilterItem(val)?.value ?? true
+        changeStatusFilterItem(val, newValue);
+        setQueryParams({ [field]: val })
     }
 
     return(
@@ -129,25 +121,23 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                         <h3>Contagem para o campo "{campo}":</h3>
                         {Object.entries(vehiclesFilter[campo]).map(([valor, contagem]) => (
                             <div key={valor}>
-                                {/* <Checkbox  id={valor} checked={(urlSearchParams.get(campo) ?? "") === valor ? true : false} onClick={handleSelectFilter}/> */}
-                                <Checkbox  id={valor} checked={(meuEstado.find(item => item.chave === "2020")?.valor)} onCheckedChange={()=>handleSelectFilter(valor)}/>
+                                <Checkbox  id={valor} checked={(statusFilterItens.find(item => item.key === valor )?.value)} onCheckedChange={()=>handleSelectFilter(campo,valor)}/>
                                 <label htmlFor={valor}>
-                                {`${valor}: ${contagem}`}
+                                    {`${valor}: ${contagem}`}
                                 </label>
                             </div>
                         ))}
-                        <div className="cursor-pointer w-fit self-end" onClick={()=>handleSheetAll(Object.entries(vehiclesFilter[campo]))}>Ver todos</div>
+                        <div className="cursor-pointer w-fit self-end" onClick={()=>handleSheetAll(Object.entries(vehiclesFilter[campo]), campo)}>Ver todos</div>
                     </div>
                 ))}
                 <div className={`${activeSheetAll ? 'translate-x-0' : '-translate-x-96'} absolute top-0 dark:bg-slate-800 bg-slate-100 w-full h-full transition-transform tr duration-500`}>
                     <button onClick={()=>setActiveSheetAll(false)}><MdOutlineKeyboardBackspace className="w-[32px] h-[32px]"/></button>
                     <div>
-                    {contentSheetAll?.map(([valor, contagem]) => (
+                    {contentSheetAll?.data.map(([valor, contagem]) => (
                         <div key={valor}>
-                            <Checkbox id={valor}/>
-                            <input type="checkbox" name={valor} id={valor} />
+                            <Checkbox  id={valor} checked={(statusFilterItens.find(item => item.key === valor )?.value)} onCheckedChange={()=>handleSelectFilter(contentSheetAll.field, valor)}/>
                             <label htmlFor={valor}>
-                            {`${valor}: ${contagem}`}
+                                {`${valor}: ${contagem}`}
                             </label>
                         </div>
                     ))}
