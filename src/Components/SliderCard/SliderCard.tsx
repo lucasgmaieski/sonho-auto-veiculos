@@ -7,8 +7,8 @@ type Props = {
 export default function SliderCard({images}: Props) {
     const settings: SwiperProps = {
         slidesPerView: 1,
+        slidesPerGroup: 1,
         navigation: true,
-        loop: true,
     }
     return (
         <SwiperSlider settings={settings}>

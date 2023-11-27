@@ -31,7 +31,11 @@ export function useQueryParams<T = {}>() {
 
   function setQueryParams(params: Partial<T>) {
     Object.entries(params).forEach(([key, value]) => {
-      urlSearchParams.set(key, String(value));
+      if (value === undefined || value === null || value === '') {
+        urlSearchParams.delete(key);
+      } else {
+        urlSearchParams.set(key, String(value));
+      }
     });
 
     const search = urlSearchParams.toString();

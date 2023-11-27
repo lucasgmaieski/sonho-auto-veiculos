@@ -1,10 +1,10 @@
 "use client"
 import { VehicleType } from "@/Types/VehicleType";
-import { getUrl, useQueryParams } from "@/lib/utils";
-import { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
-import { MenuTypes } from "@/Types/MenuType";
-import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import { useQueryParams } from "@/lib/utils";
+import {useContext, useEffect, useState } from 'react'
 import CarCard from "../CarCard/CarCard";
+import { Context } from "@/Contexts/Context";
+import api from "@/api";
 
 
 type Props = {
@@ -14,17 +14,30 @@ type Props = {
 
 export default function ListVehicles({vehicles}: Props) {
     const { urlSearchParams, setQueryParams } = useQueryParams();
-    const [vehiclesList, setVehiclesList] = useState<VehicleType[]>(vehicles);
+    const [vehiclesList, setVehiclesList] = useState<VehicleType[]>([]);
+    const [isMounted, setIsMounted] = useState(true);  // Novo estado para verificar se o componente está montado
+
+    const { urlParams } = useContext(Context)
 
     
     useEffect(()=> {
-       
-    }, []);
+
+            getVehiclesSearch();
+        async function getVehiclesSearch() {
+            const vehiclesSearch: VehicleType[] = await api.getVehiclesBypParams(urlParams);
+            console.log('ta trasendo certo até aqui')
+            console.log(vehiclesSearch);
+            
+                setVehiclesList(vehiclesSearch || []);
+              
+        }
+    }, [urlParams]);
+    // console.log(vehiclesList)
 
     return(
         <>
-            Lista
-            {vehiclesList && vehiclesList.map((vehicle: VehicleType, index:number) => (
+            Lista - {urlParams}
+            {vehiclesList.length > 0 && vehiclesList.map((vehicle: VehicleType, index:number) => (
                 <CarCard vehicle={vehicle} key={index}/>
             ))}
             {!vehiclesList &&

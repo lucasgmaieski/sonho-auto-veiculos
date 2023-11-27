@@ -3,9 +3,10 @@ import { Checkbox } from "@/Components/ui/checkbox"
 import { VehicleType } from "@/Types/VehicleType";
 import SliderCard from "../SliderCard/SliderCard"
 import { getUrl, useQueryParams } from "@/lib/utils";
-import { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
+import { ChangeEvent, MouseEvent, useContext, useEffect, useState } from 'react'
 import { MenuTypes } from "@/Types/MenuType";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import { Context } from "@/Contexts/Context";
 
 
 interface ContagemPorCampo {
@@ -31,7 +32,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
     const [activeSheetAll, setActiveSheetAll] = useState(false);
     const [contentSheetAll, setContentSheetAll] = useState<ContentSheetAllItem>();
     const { urlSearchParams, setQueryParams } = useQueryParams();
-
+    const { urlParams, changeUrlParams } = useContext(Context)
 
     const [statusFilterItens, setStatusFilterItens] = useState<StatusFilterItem[]>([
         // { key: 'Fiat', value: true },
@@ -76,8 +77,13 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
         const parametros = urlSearchParams;
         parametros.forEach((value, key) => {
             console.log("valor: "+value+"-key: "+ key);
-            addStatusFilterItem(value, true);
-            
+            if(value) {
+                const valueArray = value.split('_');
+                valueArray.forEach((item) => {
+                    addStatusFilterItem(item, true);
+                })
+            }
+            changeUrlParams(urlSearchParams.toString());
         });
     }, []);
     console.log(statusFilterItens);
@@ -85,27 +91,42 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
     // (urlSearchParams.get(campo) ?? "") === valor ? true : false
 
     const handleSelectFilter = (field: string, val: string) => {
-        // console.log('Tipo do Evento:', event.type);
-        // console.log('Alvo do Evento:', event.currentTarget);
-        
-        // // Propriedades específicas do elemento
-        // const idDoElemento = event.currentTarget.id;
-        // const classeDoElemento = event.currentTarget.className;
-    
-        // console.log('ID do Elemento:', idDoElemento);
-        // console.log('Classe do Elemento:', classeDoElemento);
-        // const checked = event.currentTarget.dataset
-        // console.log( checked)
         console.log("taclicando aqui")
-        const newValue = !getStatusFilterItem(val)?.value ?? true
+        const currentField = urlSearchParams.get(field);
+        console.log(currentField);
+        const currentFieldArray = currentField?.split('_');
+        const newValue = !getStatusFilterItem(val)?.value ?? true;
+        if (newValue) {
+            if(!currentField) {
+                setQueryParams({ [field]: val })
+            }
+            else if(currentFieldArray?.indexOf(val) == -1) {
+                let newParam = currentField + '_' + val;
+                newParam = newParam.replace(/^_/, '');
+
+                console.log("newParam 1: " + newParam)
+                setQueryParams({ [field]: newParam })
+            } 
+        } else {
+            if (currentFieldArray?.indexOf(val) !== -1) {
+                const newParamArray = currentFieldArray?.filter(valor => valor !== val)
+                let newParam = newParamArray.join('_');
+                newParam = newParam.replace(/^_/, '');
+
+                console.log("newParam 2: " + newParam)
+                setQueryParams({ [field]: newParam })
+            }
+        }
         changeStatusFilterItem(val, newValue);
-        setQueryParams({ [field]: val })
+        
+
+        changeUrlParams(urlSearchParams.toString());
     }
 
     return(
         <div className="relative overflow-hidden h-full">
             <div className="overflow-y-scroll h-full p-3">
-                <h2>Marca</h2>
+                <h2>Marca - {urlParams}</h2>
                 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 gap-y-6 sm:gap-y-4">
                 {marcaFilter && marcaFilter.itens.map((item,index) => (
