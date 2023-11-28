@@ -49,6 +49,24 @@ export default {
 
         return null;
     },
+    getVehiclesBypParams: async (params: string) => {
+        try{
+            //http://localhost:888/sonhoautoveiculos.com.br/wp-json/wp/v2/veiculosf/?condicao=novo&page=2&per_page=3
+            const response = await fetch(`${URL_BASE}/sonhoautoveiculos.com.br/wp-json/wp/v2/veiculosf/?${params}`, { next: { revalidate: 3600 } });
+            if(!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const vehicle = await response.json();
+            console.log("vehicle: ")
+            console.log(vehicle);
+            return vehicle;
+        
+        } catch (err) {
+            console.log(err);
+        }
+
+        return null;
+    },
     getVehicleBySlug: async (slug: string) => {
         try{
             const response = await fetch(`${URL_BASE}/sonhoautoveiculos.com.br/wp-json/wp/v2/veiculos?slug=${slug}`, { next: { revalidate: 3600 } });
@@ -69,7 +87,7 @@ export default {
     getQtdVehiclesPerField: async () => {
         try{
             // ano, preco, MARCA, condicao, combustivel, motor, quilometros, transmissao, direcao, cor, portas, *localizacao, *carroceria, 
-            const response = await fetch(`${URL_BASE}/sonhoautoveiculos.com.br/wp-json/acf/v3/veiculos?_fields=acf.ano,acf.preco,acf.condicao,acf.combustivel,acf.motor,acf.quilometros,acf.transmissao,acf.direcao,acf.cor,acf.portas,acf.marca,acf.tipo`, { next: { revalidate: 3600 } });
+            const response = await fetch(`${URL_BASE}/sonhoautoveiculos.com.br/wp-json/acf/v3/veiculos?_fields=acf.ano,acf.preco,acf.condicao,acf.combustivel,acf.motor,acf.quilometros,acf.transmissao,acf.direcao,acf.cor,acf.portas,acf.marca,acf.tipo`, { next: { revalidate: 360 } });
             if(!response.ok) {
                 throw new Error('Failed to fetch data');
             }

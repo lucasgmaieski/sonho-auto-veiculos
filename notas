@@ -41,4 +41,8 @@ A fazer
 []botão de compartilhar veículo
 [✅]criar os campos personalizados para colocar nos filtros
 [✅]Ajustar o endpoit de filtro de veiculos para filtrar campos de maior/menor que um valor
-[]criar endpoit para pegar os campos personalidados e exibir nos filtros com quantidade de veiculos em cada um
+[✅]criar endpoit para pegar os campos personalidados e exibir nos filtros com quantidade de veiculos em cada um
+[✅]fazer a remoção dos parametros da url quando deselesionar
+[]fazer os filtros de preco, quilometros e anos
+[]criar páginação
+[]fazer os loaders ou skeleton

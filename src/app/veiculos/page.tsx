@@ -1,5 +1,6 @@
 import AsideFilters from "@/Components/AsideFilters/AsideFilters";
 import CarCard from "@/Components/CarCard/CarCard";
+import ListVehicles from "@/Components/ListVehicles/ListVehicles";
 import { MenuTypes } from "@/Types/MenuType";
 import { VehicleType } from "@/Types/VehicleType"
 import api from "@/api";
@@ -44,12 +45,13 @@ export default async function PageVeiculos() {
                 <h1>Página de Veículos</h1>
                 <section className="px-2 xl:container xl:mx-auto">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-0 gap-y-6 sm:gap-y-4">
-                    {vehicles && vehicles.map((vehicle: VehicleType, index:number) => (
+                    {/* {vehicles && vehicles.map((vehicle: VehicleType, index:number) => (
                         <CarCard vehicle={vehicle} key={index}/>
                     ))}
                     {!vehicles &&
                         <p>Nenhum vaículo para mostrar!</p>
-                    }
+                    } */}
+                    <ListVehicles vehicles={vehicles}/>
                         
                     </div>
                 </section>
