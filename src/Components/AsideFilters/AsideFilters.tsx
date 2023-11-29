@@ -7,7 +7,7 @@ import { ChangeEvent, MouseEvent, useContext, useEffect, useState } from 'react'
 import { MenuTypes } from "@/Types/MenuType";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { Context } from "@/Contexts/Context";
-
+import FilterText from "../FilterText/FilterText";
 
 interface ContagemPorCampo {
     [campo: string]: {
@@ -32,12 +32,9 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
     const [activeSheetAll, setActiveSheetAll] = useState(false);
     const [contentSheetAll, setContentSheetAll] = useState<ContentSheetAllItem>();
     const { urlSearchParams, setQueryParams } = useQueryParams();
-    const { urlParams, changeUrlParams } = useContext(Context)
+    const { urlParams, changeUrlParams } = useContext(Context);
 
-    const [statusFilterItens, setStatusFilterItens] = useState<StatusFilterItem[]>([
-        // { key: 'Fiat', value: true },
-        // { key: '2020', value: true },
-    ]);
+    const [statusFilterItens, setStatusFilterItens] = useState<StatusFilterItem[]>([]);
 
     const addStatusFilterItem = (key: string, value: boolean) => {
         setStatusFilterItens(prevStatusFilterItens => {
@@ -88,8 +85,6 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
     }, []);
     console.log(statusFilterItens);
 
-    // (urlSearchParams.get(campo) ?? "") === valor ? true : false
-
     const handleSelectFilter = (field: string, val: string) => {
         console.log("taclicando aqui")
         const currentField = urlSearchParams.get(field);
@@ -118,10 +113,10 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
             }
         }
         changeStatusFilterItem(val, newValue);
-        
-
         changeUrlParams(urlSearchParams.toString());
     }
+
+
 
     return(
         <div className="relative overflow-hidden h-full">
@@ -148,6 +143,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                                 <label htmlFor={valor}>
                                     {`${valor}: ${contagem}`}
                                 </label>
+                                
                             </div>
                         ))}
                         <div className="cursor-pointer w-fit self-end" onClick={()=>handleSheetAll(Object.entries(vehiclesFilter[campo]), campo)}>Ver todos</div>
@@ -165,6 +161,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                                 <label htmlFor={valor}>
                                     {`${valor}: ${contagem}`}
                                 </label>
+                                <FilterText />
                             </div>
                         ))}
                         <div className="cursor-pointer w-fit self-end" onClick={()=>handleSheetAll(Object.entries(vehiclesFilter[campo]), campo)}>Ver todos</div>
