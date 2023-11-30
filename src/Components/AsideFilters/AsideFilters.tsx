@@ -161,9 +161,9 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                                 <label htmlFor={valor}>
                                     {`${valor}: ${contagem}`}
                                 </label>
-                                <FilterText />
                             </div>
                         ))}
+                        <FilterText />
                         <div className="cursor-pointer w-fit self-end" onClick={()=>handleSheetAll(Object.entries(vehiclesFilter[campo]), campo)}>Ver todos</div>
                     </div>
                 ))}
