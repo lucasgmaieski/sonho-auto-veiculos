@@ -39,14 +39,13 @@ export default function FilterText() {
         
         <form onSubmit={handleSubmit(handleForm)} className="space-y-8 flex">
             <Label>
-                Endereço:
-                <Input type="number" id="min"  {...register('min')} onChange={handleInputChange}/>
+                <Input type="number" id="min"  {...register('min')} placeholder="de" onChange={handleInputChange}/>
                 {errors.min && (
                     <div>{errors.min?.message}</div>
                 )}
             </Label>
             <Label>
-                <Input type="number" id="max"  {...register('max')} onChange={handleInputChange}/>
+                <Input type="number" id="max"  {...register('max')} placeholder="até" onChange={handleInputChange}/>
                 {errors.max && (
                     <div>{errors.max?.message}</div>
                 )}

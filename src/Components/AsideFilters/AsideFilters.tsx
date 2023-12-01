@@ -154,17 +154,8 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                 .filter((campo) => campo === 'preco' || campo === 'quilometros' || campo === 'ano')
                 .map((campo) => (
                     <div key={campo} className="flex flex-col">
-                        <h3>Contagem para o campo "{campo}":</h3>
-                        {Object.entries(vehiclesFilter[campo]).map(([valor, contagem]) => (
-                            <div key={valor}>
-                                <Checkbox  id={valor} checked={(statusFilterItens.find(item => item.key === valor )?.value)} onCheckedChange={()=>handleSelectFilter(campo,valor)}/>
-                                <label htmlFor={valor}>
-                                    {`${valor}: ${contagem}`}
-                                </label>
-                            </div>
-                        ))}
+                        <h3>{campo}</h3>
                         <FilterText />
-                        <div className="cursor-pointer w-fit self-end" onClick={()=>handleSheetAll(Object.entries(vehiclesFilter[campo]), campo)}>Ver todos</div>
                     </div>
                 ))}
                 <div className={`${activeSheetAll ? 'translate-x-0' : '-translate-x-96'} absolute top-0 dark:bg-slate-800 bg-slate-100 w-full h-full transition-transform tr duration-500`}>
