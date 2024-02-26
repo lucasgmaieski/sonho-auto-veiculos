@@ -185,29 +185,6 @@ export default {
                     'Content-Type': 'application/json',
                     //'Authorization': 'Bearer seu_token_de_autenticacao' // Se necessário
                 },
-                // body: JSON.stringify({
-                //     query: `
-                //     query posts {
-                //         allVeiculosGQL {
-                //           nodes {
-                //             veiculos {
-                //               ano
-                //               combustivel
-                //               condicao
-                //               cor
-                //               direcao
-                //               motor
-                //               localizacao
-                //               portas
-                //               preco
-                //               quilometros
-                //               transmissao
-                //             }
-                //           }
-                //         }
-                //       }
-                //     `
-                // }),
                 cache: 'no-store'
             });
             if(!response.ok) {
@@ -259,11 +236,9 @@ export default {
                 for (const valor in contagemPorCampo[campo]) {
                     console.log(`   ${valor}: ${contagemPorCampo[campo][valor]}`);
                 }
-                // console.log(contagemPorCampo);
             }
 
             return contagemPorCampo;
-        
         } catch (err) {
             console.log(err);
         }
@@ -321,7 +296,6 @@ export default {
                 },
                 cache: 'no-store'
             });
-            //http://localhost:888/sonhoautoveiculos.com.br/wp-json/wp/v2/veiculosf/?condicao=novo&page=2&per_page=3
             if(!response.ok) {
                 throw new Error('Failed to fetch data');
             }
@@ -329,6 +303,115 @@ export default {
             console.log("vehicle: ")
             console.log(vehicle);
             return vehicle;
+        } catch (err) {
+            console.log(err);
+        }
+
+        return null;
+    },
+    getMenuMarcasGQL: async () => {
+        try{
+            const query = `
+            query MenMarcas {
+                opcoespageMenuMarca {
+                  acf {
+                    itens {
+                      logo
+                      nome
+                    }
+                  }
+                }
+              }
+              `
+            const response = await fetch(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}?query=${encodeURIComponent(query)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                cache: 'no-store'
+            });
+            if(!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const menMarcas = await response.json();
+            console.log("menMarcas: ")
+            console.log(menMarcas);
+            return menMarcas;
+        
+        } catch (err) {
+            console.log(err);
+        }
+
+        return null;
+    },
+    getMenuTiposGQL: async () => {
+        try{
+            const query = `
+            query MenuTipos {
+                opcoespageMenuTipo {
+                  acf {
+                    itens {
+                      logo
+                      nome
+                    }
+                  }
+                }
+              }
+              `
+            const response = await fetch(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}?query=${encodeURIComponent(query)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                cache: 'no-store'
+            });
+            if(!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const menuTipos = await response.json();
+            console.log("menuTipos: ")
+            console.log(menuTipos);
+            return menuTipos;
+        
+        } catch (err) {
+            console.log(err);
+        }
+
+        return null;
+    },
+    getMarcaFilter: async () => {
+        try{
+            const query = `
+            query MarcaFilter {
+                allMarcasGQL {
+                  nodes {
+                    name
+                    count
+                    marcas {
+                      logo {
+                        node {
+                          mediaItemUrl
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              `
+            const response = await fetch(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}?query=${encodeURIComponent(query)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                cache: 'no-store'
+            });
+            if(!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const menuTipos = await response.json();
+            console.log("menuTipos: ")
+            console.log(menuTipos);
+            return menuTipos;
         
         } catch (err) {
             console.log(err);
