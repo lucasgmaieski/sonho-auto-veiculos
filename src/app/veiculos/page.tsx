@@ -1,6 +1,7 @@
 import AsideFilters from "@/Components/AsideFilters/AsideFilters";
 import CarCard from "@/Components/CarCard/CarCard";
 import ListVehicles from "@/Components/ListVehicles/ListVehicles";
+import { MarcaFilter } from "@/Types/MarcaFilter";
 import { MenuTypes } from "@/Types/MenuType";
 import { VehicleType } from "@/Types/VehicleType"
 import api from "@/api";
@@ -27,8 +28,9 @@ interface ContagemPorCampo {
 
 export default async function PageVeiculos() {
     const vehicles: VehicleType[] = await api.getVehicles();
-    const marcaFilter: MenuTypes = await api.getMenu(15);
-    const vehiclesFilter: ContagemPorCampo | undefined = await api.getQtdVehiclesPerField();
+    // const marcaFilter: MenuTypes = await api.getMenu(15);
+    const marcaFilter: MarcaFilter[] = await api.getMarcaFilterGQL();
+    const vehiclesFilter: ContagemPorCampo | undefined = await api.getQtdVehiclesPerFieldGQL();
     console.log(vehiclesFilter);
     console.log("marcaFilter: ");
     console.log(marcaFilter);

@@ -379,7 +379,7 @@ export default {
 
         return null;
     },
-    getMarcaFilter: async () => {
+    getMarcaFilterGQL: async () => {
         try{
             const query = `
             query MarcaFilter {
@@ -408,10 +408,10 @@ export default {
             if(!response.ok) {
                 throw new Error('Failed to fetch data');
             }
-            const menuTipos = await response.json();
-            console.log("menuTipos: ")
-            console.log(menuTipos);
-            return menuTipos;
+            const marcaFilter = await response.json();
+            console.log("marcaFilter2: ")
+            console.log(marcaFilter.data.allMarcasGQL.nodes);
+            return marcaFilter.data.allMarcasGQL.nodes;
         
         } catch (err) {
             console.log(err);
