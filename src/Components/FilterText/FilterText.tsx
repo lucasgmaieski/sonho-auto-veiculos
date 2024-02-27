@@ -19,8 +19,8 @@ import { useState } from "react";
 
 //
 const schema = z.object({
-    min: z.coerce.number().min(1900),
-    max: z.coerce.number().max(new Date().getFullYear()+1),
+    min: z.coerce.number(),
+    max: z.coerce.number(),
   })
   type FormProps = z.infer<typeof schema>;
 
@@ -37,20 +37,20 @@ export default function FilterText() {
     
     return (
         
-        <form onSubmit={handleSubmit(handleForm)} className="space-y-8 flex">
-            <Label>
+        <form onSubmit={handleSubmit(handleForm)} className="flex justify-between">
+            <Label className="w-[10ch]">
                 <Input type="number" id="min"  {...register('min')} placeholder="de" onChange={handleInputChange}/>
                 {errors.min && (
                     <div>{errors.min?.message}</div>
                 )}
             </Label>
-            <Label>
+            <Label className="w-[10ch]">
                 <Input type="number" id="max"  {...register('max')} placeholder="até" onChange={handleInputChange}/>
                 {errors.max && (
                     <div>{errors.max?.message}</div>
                 )}
             </Label>
-            <Button type="submit"><FaChevronRight /></Button>
+            <Button className="" type="submit"><FaChevronRight /></Button>
         </form>
         
     );
