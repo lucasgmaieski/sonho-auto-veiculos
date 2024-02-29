@@ -166,7 +166,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                 .map((campo) => (
                     <div key={campo} className="flex flex-col">
                         <h2>{campo}</h2>
-                        <FilterText />
+                        <FilterText field={campo}/>
                     </div>
                 ))}
                 <div className={`${activeSheetAll ? 'translate-x-0' : '-translate-x-96'} absolute top-0 dark:bg-slate-800 bg-slate-100 w-full h-full p-3 pr-6 transition-transform duration-500`}>
