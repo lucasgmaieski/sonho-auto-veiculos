@@ -125,7 +125,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
 
     return(
         <div className="relative overflow-hidden h-full">
-            <div className={`overflow-y-scroll h-full p-3 space-y-4`}>
+            <div className={`overflow-y-auto h-full p-3 space-y-4`}>
                 <div>
                     <h2>Marca - {urlParams}</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 gap-y-6 sm:gap-y-4">
@@ -142,6 +142,17 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                     </div>
                     <div className="cursor-pointer w-fit ml-auto" onClick={()=>handleSheetAll(marcaFilter, 'marca')}>Ver todos</div>
                 </div>
+
+                { vehiclesFilter &&
+                Object.keys(vehiclesFilter)
+                .filter((campo) => campo === 'preco' || campo === 'quilometros' || campo === 'ano')
+                .map((campo) => (
+                    <div key={campo} className="flex flex-col">
+                        <h2>{campo}</h2>
+                        <FilterText field={campo} handleSelectFilter={handleSelectFilter}/>
+                    </div>
+                ))}
+
                 { vehiclesFilter &&
                 Object.keys(vehiclesFilter)
                 .filter((campo) => campo !== 'preco' && campo !== 'quilometros' && campo !== 'ano' && campo !== 'marca')
@@ -160,15 +171,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                         <div className="cursor-pointer w-fit self-end" onClick={()=>handleSheetAll(Object.entries(vehiclesFilter[campo]), campo)}>Ver todos</div>
                     </div>
                 ))}
-                { vehiclesFilter &&
-                Object.keys(vehiclesFilter)
-                .filter((campo) => campo === 'preco' || campo === 'quilometros' || campo === 'ano')
-                .map((campo) => (
-                    <div key={campo} className="flex flex-col">
-                        <h2>{campo}</h2>
-                        <FilterText field={campo}/>
-                    </div>
-                ))}
+                
                 <div className={`${activeSheetAll ? 'translate-x-0' : '-translate-x-96'} absolute top-0 dark:bg-slate-800 bg-slate-100 w-full h-full p-3 pr-6 transition-transform duration-500`}>
                     <button onClick={()=>setActiveSheetAll(false)}><MdOutlineKeyboardBackspace className="w-[32px] h-[32px]"/></button>
                     <div>
