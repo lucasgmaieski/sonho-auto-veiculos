@@ -7,19 +7,20 @@ import { ChangeEvent, MouseEvent, useContext, useEffect, useState } from 'react'
 import { MenuTypes } from "@/Types/MenuType";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { Context } from "@/Contexts/Context";
-import FilterText from "../FilterText/FilterText";
+import FilterText from "@/Components/Filters/FilterText";
 import { MarcaFilter } from "@/Types/MarcaFilter";
+import SeeAll from "./SeeAll";
 
 interface ContagemPorCampo {
     [campo: string]: {
     [valor: string]: number;
     };
 }
-interface StatusFilterItem {
+export interface StatusFilterItem {
     key: string;
     value: boolean;
 }
-interface ContentSheetAllItem {
+export interface ContentSeeAllItem {
     field: string;
     data?: [string, number][];
     dataMarca?: MarcaFilter[];
@@ -31,8 +32,8 @@ type Props = {
 
 
 export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
-    const [activeSheetAll, setActiveSheetAll] = useState(false);
-    const [contentSheetAll, setContentSheetAll] = useState<ContentSheetAllItem>();
+    const [activeSeeAll, setActiveSeeAll] = useState(false);
+    const [contentSeeAll, setContentSeeAll] = useState<ContentSeeAllItem>();
     const { urlSearchParams, setQueryParams } = useQueryParams();
     const { urlParams, changeUrlParams } = useContext(Context);
 
@@ -64,16 +65,16 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
         }
     };
 
-    const getStatusFilterItem = (key: string): StatusFilterItem | undefined => {
+    const statusFilterItemIsSet = (key: string): StatusFilterItem | undefined => {
         return statusFilterItens.find(item => item.key === key);
     };
 
     const handleSheetAll = (filter: [string, number][] | MarcaFilter[], field: string) => {
-        setActiveSheetAll(true);
+        setActiveSeeAll(true);
         field === 'marca' ? 
-        setContentSheetAll({dataMarca:filter as MarcaFilter[], field})
+        setContentSeeAll({dataMarca:filter as MarcaFilter[], field})
         :
-        setContentSheetAll({data:filter as [string, number][], field});
+        setContentSeeAll({data:filter as [string, number][], field});
     }
     useEffect(()=> {
         const parametros = urlSearchParams;
@@ -90,12 +91,12 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
     }, []);
     console.log(statusFilterItens);
 
-    const handleSelectFilter = (field: string, val: string) => {
+    const handleSetFilterCheck = (field: string, val: string) => {
         console.log("taclicando aqui")
         const currentField = urlSearchParams.get(field);
         console.log(currentField);
         const currentFieldArray = currentField?.split('_');
-        const newValue = !getStatusFilterItem(val)?.value ?? true;
+        const newValue = !statusFilterItemIsSet(val)?.value ?? true;
         if (newValue) {
             if(!currentField) {
                 setQueryParams({ [field]: val })
@@ -120,6 +121,24 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
         changeStatusFilterItem(val, newValue);
         changeUrlParams(urlSearchParams.toString());
     }
+    const handleSetFilterText = (field: string, valMin?: string, valMax?: string) => {
+
+        console.log("taclicando aqui")
+        const currentField = urlSearchParams.get(field);
+        console.log(currentField);
+        const currentFieldArray = currentField?.split('_');
+
+        if(!currentField) {
+            let newParam = `${valMin ?? 0}_${valMax ?? 0}`;
+            setQueryParams({ [field]: newParam });
+        } else {
+            console.log(currentFieldArray)
+            let newParam = `${valMin === '' ? '0' : valMin ?? currentFieldArray[0]}_${valMax === '' ? '0' : valMax ?? currentFieldArray[1]}`;
+            if(newParam === '0_0') newParam = '';
+            setQueryParams({ [field]: newParam });
+        }
+        changeUrlParams(urlSearchParams.toString());
+    }
 
 
 
@@ -132,7 +151,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                         {marcaFilter && marcaFilter.map((item,index) => (
                             <div key={index} className={`text-center border-blue-500 ${(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value) ? 'border' : ''}`}>
                     
-                                <Checkbox className="hidden"  id={item.name} checked={(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value)} onCheckedChange={()=>handleSelectFilter('marca',item.name)}/>
+                                <Checkbox className="hidden"  id={item.name} checked={(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value)} onCheckedChange={()=>handleSetFilterCheck('marca',item.name)}/>
                                 <label htmlFor={item.name}>
                                     <img src={item?.marcas?.logo?.node?.mediaItemUrl} alt={item?.name} />
                                     {item?.name} <br />({item?.count ?? '0'})
@@ -149,7 +168,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                 .map((campo) => (
                     <div key={campo} className="flex flex-col">
                         <h2>{campo}</h2>
-                        <FilterText field={campo} handleSelectFilter={handleSelectFilter}/>
+                        <FilterText field={campo} handleSetFilterText={handleSetFilterText}/>
                     </div>
                 ))}
 
@@ -161,7 +180,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                         <h2>{campo}</h2>
                         {Object.entries(vehiclesFilter[campo]).map(([valor, contagem]) => (
                             <div key={valor}>
-                                <Checkbox  id={valor} checked={(statusFilterItens.find(item => item.key === valor )?.value)} onCheckedChange={()=>handleSelectFilter(campo,valor)}/>
+                                <Checkbox  id={valor} checked={(statusFilterItens.find(item => item.key === valor )?.value)} onCheckedChange={()=>handleSetFilterCheck(campo,valor)}/>
                                 <label htmlFor={valor}>
                                     {`${valor}: ${contagem}`}
                                 </label>
@@ -171,32 +190,9 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                         <div className="cursor-pointer w-fit self-end" onClick={()=>handleSheetAll(Object.entries(vehiclesFilter[campo]), campo)}>Ver todos</div>
                     </div>
                 ))}
+
+                <SeeAll activeSeeAll={activeSeeAll} setActiveSeeAll={setActiveSeeAll} contentSeeAll={contentSeeAll} statusFilterItens={statusFilterItens} handleSetFilterCheck={handleSetFilterCheck}/>
                 
-                <div className={`${activeSheetAll ? 'translate-x-0' : '-translate-x-96'} absolute top-0 dark:bg-slate-800 bg-slate-100 w-full h-full p-3 pr-6 transition-transform duration-500`}>
-                    <button onClick={()=>setActiveSheetAll(false)}><MdOutlineKeyboardBackspace className="w-[32px] h-[32px]"/></button>
-                    <div>
-                    {contentSheetAll?.field !== 'marca' && contentSheetAll?.data.map(([valor, contagem]) => (
-                        <div key={valor}>
-                            <Checkbox  id={valor} checked={(statusFilterItens.find(item => item.key === valor )?.value)} onCheckedChange={()=>handleSelectFilter(contentSheetAll.field, valor)}/>
-                            <label htmlFor={valor}>
-                                {`${valor}: ${contagem}`}
-                            </label>
-                        </div>
-                    ))}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 gap-y-6 sm:gap-y-4">
-                    {contentSheetAll?.field === 'marca' && contentSheetAll?.dataMarca.map((item, index) => (
-                            <div key={index} className={`text-center border-blue-500 ${(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value) ? 'border' : ''}`}>
-                                
-                                <Checkbox className="hidden"  id={item.name} checked={(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value)} onCheckedChange={()=>handleSelectFilter('marca',item.name)}/>
-                                <label htmlFor={item.name}>
-                                    <img src={item?.marcas?.logo?.node?.mediaItemUrl} alt={item?.name} />
-                                    {item?.name} <br />({item?.count ?? '0'})
-                                </label>
-                            </div>
-                    ))}
-                    </div>
-                    </div>
-                </div>
             </div>
         </div>
     );
