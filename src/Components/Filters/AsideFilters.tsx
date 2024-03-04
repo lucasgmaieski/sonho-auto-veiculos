@@ -13,7 +13,7 @@ import SeeAll from "./SeeAll";
 
 interface ContagemPorCampo {
     [campo: string]: {
-    [valor: string]: number;
+        [valor: string]: number;
     };
 }
 export interface StatusFilterItem {
@@ -104,8 +104,6 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
             else if(currentFieldArray?.indexOf(val) == -1) {
                 let newParam = currentField + '_' + val;
                 newParam = newParam.replace(/^_/, '');
-
-                console.log("newParam 1: " + newParam)
                 setQueryParams({ [field]: newParam })
             } 
         } else {
@@ -113,8 +111,6 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                 const newParamArray = currentFieldArray?.filter(valor => valor !== val)
                 let newParam = newParamArray.join('_');
                 newParam = newParam.replace(/^_/, '');
-
-                console.log("newParam 2: " + newParam)
                 setQueryParams({ [field]: newParam })
             }
         }
@@ -139,8 +135,6 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
         }
         changeUrlParams(urlSearchParams.toString());
     }
-
-
 
     return(
         <div className="relative overflow-hidden h-full">

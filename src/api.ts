@@ -149,7 +149,16 @@ export default {
                 allVeiculosGQL {
                     nodes {
                         veiculos {
+                            tipo {
+                                edges {
+                                    node {
+                                        name
+                                    }
+                                }
+                            }
                             ano
+                            preco
+                            quilometros
                             combustivel
                             condicao
                             cor
@@ -157,17 +166,8 @@ export default {
                             motor
                             localizacao
                             portas
-                            preco
-                            quilometros
                             transmissao
                             marca {
-                                edges {
-                                    node {
-                                        name
-                                    }
-                                }
-                            }
-                            tipo {
                                 edges {
                                     node {
                                         name
@@ -335,8 +335,8 @@ export default {
             }
             const menMarcas = await response.json();
             console.log("menMarcas: ")
-            console.log(menMarcas);
-            return menMarcas;
+            console.log(menMarcas.data.opcoespageMenuMarca.acf.itens);
+            return menMarcas.data.opcoespageMenuMarca.acf.itens;
         
         } catch (err) {
             console.log(err);
@@ -370,8 +370,8 @@ export default {
             }
             const menuTipos = await response.json();
             console.log("menuTipos: ")
-            console.log(menuTipos);
-            return menuTipos;
+            console.log(menuTipos.data.opcoespageMenuTipo.acf.itens);
+            return menuTipos.data.opcoespageMenuTipo.acf.itens;
         
         } catch (err) {
             console.log(err);

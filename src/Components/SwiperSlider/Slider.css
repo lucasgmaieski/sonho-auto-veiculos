@@ -5,6 +5,9 @@
     padding: 0 14.7px;
     width: 100%;
 }
+#tipos .swiper-slide:last-child {
+    margin-right: 0 !important;
+}
 .swiper-button-prev {
     left: -7px;
 }

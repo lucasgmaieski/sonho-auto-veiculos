@@ -1,7 +1,4 @@
 export type MenuTypes = {
-    id: string,
+    logo: string,
     nome: string,
-    itens: Itens[]
 }
-
-type Itens = { [tag: string]: string }
