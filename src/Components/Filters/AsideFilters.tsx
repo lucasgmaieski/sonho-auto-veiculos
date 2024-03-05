@@ -10,6 +10,7 @@ import { Context } from "@/Contexts/Context";
 import FilterText from "@/Components/Filters/FilterText";
 import { MarcaFilter } from "@/Types/MarcaFilter";
 import SeeAll from "./SeeAll";
+import { FaAngleRight } from "react-icons/fa6";
 
 interface ContagemPorCampo {
     [campo: string]: {
@@ -138,15 +139,15 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
 
     return(
         <div className="relative overflow-hidden h-full">
-            <div className={`overflow-y-auto h-full p-3 space-y-4`}>
-                <div>
-                    <h2>Marca</h2>
+            <div className={`overflow-y-auto h-full`}>
+                <div className="px-4 py-6">
+                    <h2 className="font-semibold mb-2">Marca</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 gap-y-6 sm:gap-y-4">
                         {marcaFilter && marcaFilter
                         .sort((a, b) => (b.count) - (a.count))
                         .slice(0, 6)
                         .map((item,index) => (
-                            <div key={index} className={`text-center border-blue-500 ${(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value) ? 'border' : ''}`}>
+                            <div key={index} className={`rounded-lg p-1 text-center border-blue-500 ${(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value) ? 'border' : ''}`}>
                     
                                 <Checkbox className="hidden"  id={item.name} checked={(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value)} onCheckedChange={()=>handleSetFilterCheck('marca',item.name)}/>
                                 <label htmlFor={item.name}>
@@ -156,15 +157,15 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                             </div>
                         ))}
                     </div>
-                    <div className="cursor-pointer w-fit ml-auto" onClick={()=>handleSheetAll(marcaFilter, 'marca')}>Ver todos</div>
+                    <div className="cursor-pointer w-fit ml-auto font-semibold mt-2" onClick={()=>handleSheetAll(marcaFilter, 'marca')}>Ver todos <FaAngleRight className="text-xl inline" /></div>
                 </div>
 
                 { vehiclesFilter &&
                 Object.keys(vehiclesFilter)
                 .filter((campo) => campo === 'preco' || campo === 'quilometros' || campo === 'ano')
                 .map((campo) => (
-                    <div key={campo} className="flex flex-col">
-                        <h2>{getNameField(campo)}</h2>
+                    <div key={campo} className="flex flex-col px-4 py-6 border-t-[1px] dark:border-blue-900 border-blue-200">
+                        <h2 className="font-semibold mb-2">{getNameField(campo)}</h2>
                         <FilterText field={campo} handleSetFilterText={handleSetFilterText}/>
                     </div>
                 ))}
@@ -173,21 +174,21 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                 Object.keys(vehiclesFilter)
                 .filter((campo) => campo !== 'preco' && campo !== 'quilometros' && campo !== 'ano' && campo !== 'marca')
                 .map((campo) => (
-                    <div key={campo} className="flex flex-col">
-                        <h2>{getNameField(campo)}</h2>
+                    <div key={campo} className="flex flex-col px-4 py-6 border-t-[1px] dark:border-blue-900 border-blue-200">
+                        <h2 className="font-semibold mb-2">{getNameField(campo)}</h2>
                         {Object.entries(vehiclesFilter[campo])
                             .sort(([, countA], [, countB]) => countB - countA)
                             .slice(0, 4)
                             .map(([valor, contagem]) => (
-                            <div key={valor}>
+                            <div key={valor} className="space-x-2">
                                 <Checkbox  id={valor} checked={(statusFilterItens.find(item => item.key === valor )?.value)} onCheckedChange={()=>handleSetFilterCheck(campo,valor)}/>
-                                <label htmlFor={valor}>
+                                <label htmlFor={valor} className="">
                                     {`${valor}: ${contagem}`}
                                 </label>
                             </div>
                         ))}
                         {Object.entries(vehiclesFilter[campo]).length > 4 &&
-                            <div className="cursor-pointer w-fit self-end" onClick={()=>handleSheetAll(Object.entries(vehiclesFilter[campo]), campo)}>Ver todos</div>
+                            <div className="cursor-pointer w-fit self-end font-semibold" onClick={()=>handleSheetAll(Object.entries(vehiclesFilter[campo]), campo)}>Ver todos <FaAngleRight className="text-xl inline" /></div>
                         }
                     </div>
                 ))}

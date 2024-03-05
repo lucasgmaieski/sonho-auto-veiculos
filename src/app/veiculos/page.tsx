@@ -38,7 +38,7 @@ export default async function PageVeiculos() {
     
     return (
         <div className="flex flex-row">
-            <aside className="w-1/5 sticky h-[calc(100vh-3.5rem)]">
+            <aside className="w-1/5  md:min-w-[320px] sticky h-[calc(100vh-3.5rem)]">
                 {/* <div className="max-h-full "> */}
                     <AsideFilters vehiclesFilter={vehiclesFilter} marcaFilter={marcaFilter} />
                 {/* </div> */}
@@ -46,7 +46,7 @@ export default async function PageVeiculos() {
             <div className="w-4/5">
                 <h1>Página de Veículos</h1>
                 <section className="px-2 xl:container xl:mx-auto">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-0 gap-y-6 sm:gap-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 gap-y-6 sm:gap-y-4">
                     {/* {vehicles && vehicles.map((vehicle: VehicleType, index:number) => (
                         <CarCard vehicle={vehicle} key={index}/>
                     ))}
