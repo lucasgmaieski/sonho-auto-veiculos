@@ -2,7 +2,7 @@
 import { Checkbox } from "@/Components/ui/checkbox"
 import { VehicleType } from "@/Types/VehicleType";
 import SliderCard from "../SliderCard/SliderCard"
-import { getUrl, useQueryParams } from "@/lib/utils";
+import { getNameField, getUrl, useQueryParams } from "@/lib/utils";
 import { ChangeEvent, MouseEvent, useContext, useEffect, useState } from 'react'
 import { MenuTypes } from "@/Types/MenuType";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
@@ -140,9 +140,12 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
         <div className="relative overflow-hidden h-full">
             <div className={`overflow-y-auto h-full p-3 space-y-4`}>
                 <div>
-                    <h2>Marca - {urlParams}</h2>
+                    <h2>Marca</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 gap-y-6 sm:gap-y-4">
-                        {marcaFilter && marcaFilter.map((item,index) => (
+                        {marcaFilter && marcaFilter
+                        .sort((a, b) => (b.count) - (a.count))
+                        .slice(0, 6)
+                        .map((item,index) => (
                             <div key={index} className={`text-center border-blue-500 ${(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value) ? 'border' : ''}`}>
                     
                                 <Checkbox className="hidden"  id={item.name} checked={(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value)} onCheckedChange={()=>handleSetFilterCheck('marca',item.name)}/>
@@ -161,7 +164,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                 .filter((campo) => campo === 'preco' || campo === 'quilometros' || campo === 'ano')
                 .map((campo) => (
                     <div key={campo} className="flex flex-col">
-                        <h2>{campo}</h2>
+                        <h2>{getNameField(campo)}</h2>
                         <FilterText field={campo} handleSetFilterText={handleSetFilterText}/>
                     </div>
                 ))}
@@ -171,17 +174,21 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                 .filter((campo) => campo !== 'preco' && campo !== 'quilometros' && campo !== 'ano' && campo !== 'marca')
                 .map((campo) => (
                     <div key={campo} className="flex flex-col">
-                        <h2>{campo}</h2>
-                        {Object.entries(vehiclesFilter[campo]).map(([valor, contagem]) => (
+                        <h2>{getNameField(campo)}</h2>
+                        {Object.entries(vehiclesFilter[campo])
+                            .sort(([, countA], [, countB]) => countB - countA)
+                            .slice(0, 4)
+                            .map(([valor, contagem]) => (
                             <div key={valor}>
                                 <Checkbox  id={valor} checked={(statusFilterItens.find(item => item.key === valor )?.value)} onCheckedChange={()=>handleSetFilterCheck(campo,valor)}/>
                                 <label htmlFor={valor}>
                                     {`${valor}: ${contagem}`}
                                 </label>
-                                
                             </div>
                         ))}
-                        <div className="cursor-pointer w-fit self-end" onClick={()=>handleSheetAll(Object.entries(vehiclesFilter[campo]), campo)}>Ver todos</div>
+                        {Object.entries(vehiclesFilter[campo]).length > 4 &&
+                            <div className="cursor-pointer w-fit self-end" onClick={()=>handleSheetAll(Object.entries(vehiclesFilter[campo]), campo)}>Ver todos</div>
+                        }
                     </div>
                 ))}
 

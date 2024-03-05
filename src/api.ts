@@ -164,7 +164,6 @@ export default {
                             cor
                             direcao
                             motor
-                            localizacao
                             portas
                             transmissao
                             marca {
@@ -275,7 +274,6 @@ export default {
                         cor
                         direcao
                         motor
-                        localizacao
                         portas
                         preco
                         quilometros

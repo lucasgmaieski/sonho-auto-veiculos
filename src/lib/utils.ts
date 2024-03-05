@@ -46,3 +46,32 @@ export function useQueryParams<T = {}>() {
 
   return { urlSearchParams, setQueryParams };
 }
+
+export function getNameField( slug: string ) {
+  switch (slug) {
+    case 'ano':
+      return 'Ano';
+    case 'preco':
+      return 'Preço';
+    case 'quilometros':
+      return 'Quilomêtros';
+    case 'tipo':
+      return 'Tipo';
+    case 'combustivel':
+      return 'Combustível';
+    case 'condicao':
+      return 'Condição';
+    case 'cor':
+      return 'Cor';
+    case 'direcao':
+      return 'Direção';
+    case 'motor':
+      return 'Motor';
+    case 'portas':
+      return 'Portas';
+    case 'transmissao':
+      return 'Transmissão';
+    default:
+      break;
+  }
+}

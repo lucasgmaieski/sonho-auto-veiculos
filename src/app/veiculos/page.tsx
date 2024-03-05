@@ -1,4 +1,4 @@
-import AsideFilters from "@/Components/AsideFilters/AsideFilters";
+import AsideFilters from "@/Components/Filters/AsideFilters";
 import CarCard from "@/Components/CarCard/CarCard";
 import ListVehicles from "@/Components/ListVehicles/ListVehicles";
 import { MarcaFilter } from "@/Types/MarcaFilter";
