@@ -38,7 +38,7 @@ export default async function PageVeiculos() {
     
     return (
         <div className="flex flex-row">
-            <aside className="w-1/5  md:min-w-[320px] sticky h-[calc(100vh-3.5rem)]">
+            <aside className="w-1/5  md:min-w-[310px] sticky h-[calc(100vh-3.5rem)]">
                 {/* <div className="max-h-full "> */}
                     <AsideFilters vehiclesFilter={vehiclesFilter} marcaFilter={marcaFilter} />
                 {/* </div> */}

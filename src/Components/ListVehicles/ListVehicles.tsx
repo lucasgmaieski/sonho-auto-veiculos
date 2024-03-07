@@ -24,7 +24,7 @@ export default function ListVehicles({vehicles}: Props) {
 
             getVehiclesSearch();
         async function getVehiclesSearch() {
-            const vehiclesSearch: VehicleType[] = await api.getVehiclesBypParams(urlParams);
+            const vehiclesSearch: VehicleType[] = await api.getVehiclesByParamsGQL(urlParams);
             console.log('ta trasendo certo até aqui')
             console.log(vehiclesSearch);
             

@@ -243,47 +243,45 @@ export default {
         }
     },
     getVehiclesByParamsGQL: async (params: string) => {
+        console.log("params ---------", params)
+        var newParams = new URLSearchParams(params);
+        var stringFormatada = "";
+
+        // Itere sobre todos os pares chave-valor nos parâmetros
+        newParams.forEach(function(valor, chave) {
+            // Adicione o par chave-valor formatado à string
+            stringFormatada += chave + ': "' + valor + '", "';
+        });
+
+        // Remova a vírgula extra no final da string
+        stringFormatada = stringFormatada.slice(0, -2);
+
+        // Exiba a string formatada
+        console.log(stringFormatada);
         try{
             const query = `
-            query BuscarVeiculos(${params}) {
-                veiculos(where: { 
-                  metaQuery: {
-                    relation: AND
-                    args: [
-                      { key: "preco", value: $preco, compare: BETWEEN },
-                      { key: "ano", value: $ano, compare: BETWEEN },
-                      { key: "quilometros", value: $quilometros, compare: BETWEEN }
-                    ]
-                  },
-                  marcaTaxQuery: {
-                    relation: AND
-                    args: [{ taxonomy: MARCAS, terms: $marca, operator: IN }]
-                  },
-                  tipoTaxQuery: {
-                    relation: AND
-                    args: [{ taxonomy: TIPOS, terms: $tipo, operator: IN }]
+            query BuscarVeiculos {
+                buscarVeiculos(${stringFormatada}) {
+                  id
+                  title
+                  acf {
+                    ano
+                    marca
+                    combustivel
+                    condicao
+                    cor
+                    direcao
+                    galeria_de_images
+                    localizacao
+                    motor
+                    portas
+                    preco
+                    quilometros
+                    tipo
+                    transmissao
                   }
-                }) {
-                  nodes {
-                    id
-                    title
-                    veiculos {
-                        ano
-                        combustivel
-                        condicao
-                        cor
-                        direcao
-                        motor
-                        portas
-                        preco
-                        quilometros
-                        transmissao
-                      }
-                    permalink
-                    featuredImage {
-                      sourceUrl
-                    }
-                  }
+                  permalink
+                  imagemDestacada
                 }
               }
               `
@@ -299,8 +297,8 @@ export default {
             }
             const vehicle = await response.json();
             console.log("vehicle: ")
-            console.log(vehicle);
-            return vehicle;
+            console.log(vehicle.data.buscarVeiculos);
+            return vehicle.data.buscarVeiculos;
         } catch (err) {
             console.log(err);
         }
