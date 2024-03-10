@@ -5,6 +5,7 @@ import {useContext, useEffect, useState } from 'react'
 import CarCard from "../CarCard/CarCard";
 import { Context } from "@/Contexts/Context";
 import api from "@/api";
+import Pagination from "../Pagination/Pagination";
 
 
 type Props = {
@@ -37,11 +38,17 @@ export default function ListVehicles({vehicles}: Props) {
     return(
         <>
             Lista - {urlParams}
-            {vehiclesList.length > 0 && vehiclesList.map((vehicle: VehicleType, index:number) => (
-                <CarCard vehicle={vehicle} key={index}/>
-            ))}
-            {!vehiclesList &&
-                <p>Nenhum vaículo para mostrar!</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 gap-y-6 sm:gap-y-4">
+
+                {vehiclesList.length > 0 && vehiclesList.map((vehicle: VehicleType, index:number) => (
+                    <CarCard vehicle={vehicle} key={index}/>
+                ))}
+                {!vehiclesList &&
+                    <p>Nenhum vaículo para mostrar!</p>
+                }
+            </div>
+            {vehiclesList[0]?.count > 0 &&
+                <Pagination totalCount={vehiclesList[0]?.count} slug={"/veiculos"} perPage={6}/>
             }
         </>
     );

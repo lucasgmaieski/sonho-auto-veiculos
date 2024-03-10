@@ -191,10 +191,10 @@ export default {
             }
             const { data } = await response.json();
             // ano, preco, MARCA, condicao, combustivel, motor, quilometros, transmissao, direcao, cor, portas, *localizacao, *carroceria, 
-            console.log("dataaaaaaaaaa:");
+            // console.log("dataaaaaaaaaa:");
             console.log(data);
             console.log(data.allVeiculosGQL.nodes);
-            console.log("opaaaaaaaaaaaaaaa ",data.allVeiculosGQL.nodes[0].veiculos.marca.edges[0].node.name);
+            // console.log("opaaaaaaaaaaaaaaa ",data.allVeiculosGQL.nodes[0].veiculos.marca.edges[0].node.name);
             const vehicleFilters : DadosAPI[] = data.allVeiculosGQL.nodes;
 
             interface DadosAPI {
@@ -213,7 +213,7 @@ export default {
             vehicleFilters.forEach(item => {
                 for (const campo in item.veiculos) {
                     let valorCampo = item.veiculos[campo] ?? '';
-                    console.log("campo: " + campo)
+                    // console.log("campo: " + campo)
 
                     if ((campo === "marca" || "tipo") && (typeof valorCampo === "object") && ("edges" in valorCampo)) {
                         valorCampo = (valorCampo as { edges:[{node: {name: string}}] }).edges[0].node.name;
@@ -233,7 +233,7 @@ export default {
             for (const campo in contagemPorCampo) {
                 // console.log(`Contagem para o campo "${campo}":`);
                 for (const valor in contagemPorCampo[campo]) {
-                    console.log(`   ${valor}: ${contagemPorCampo[campo][valor]}`);
+                    // console.log(`   ${valor}: ${contagemPorCampo[campo][valor]}`);
                 }
             }
 
@@ -243,27 +243,26 @@ export default {
         }
     },
     getVehiclesByParamsGQL: async (params: string) => {
-        console.log("params ---------", params)
         var newParams = new URLSearchParams(params);
-        var stringFormatada = "";
-
-        // Itere sobre todos os pares chave-valor nos parâmetros
+        var paramsFormated = "";
         newParams.forEach(function(valor, chave) {
-            // Adicione o par chave-valor formatado à string
-            stringFormatada += chave + ': "' + valor + '", "';
+            // if(chave === "page" || chave === "perpage") {
+
+            // } else {
+
+            // }
+            paramsFormated += chave + ': "' + valor + '", ';
         });
+        paramsFormated = paramsFormated.slice(0, -2);
+        console.log(paramsFormated);
 
-        // Remova a vírgula extra no final da string
-        stringFormatada = stringFormatada.slice(0, -2);
-
-        // Exiba a string formatada
-        console.log(stringFormatada);
         try{
             const query = `
             query BuscarVeiculos {
-                buscarVeiculos(${stringFormatada}) {
+                buscarVeiculos ${paramsFormated !== '' ? `(${paramsFormated})` : ''} {
                   id
                   title
+                  count
                   acf {
                     ano
                     marca
