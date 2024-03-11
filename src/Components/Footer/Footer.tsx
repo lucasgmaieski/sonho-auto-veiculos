@@ -4,16 +4,38 @@ import { BsInstagram } from "react-icons/bs";
 
 export default function Footer() {
     return (
-        <footer className="flex flex-col gap-4 p-4">
-            <div className="flex justify-between items-center">
-            <Link href={process.env.NEXT_PUBLIC_SITE_URL || '/'} className="w-fit block"><img className="w-32" src="/logo.svg" alt="" /></Link>
-                <address className="flex items-center gap-2">
-                    <FaMapLocationDot className="w-[28px] h-[28px]"/>
-                    <span>Avenida das Missões, 1396 - Centro  <br /> CEP: 85640-000 - Ampére - PR</span>
-                </address>
-                <div className="flex gap-2">
-                    <BsInstagram />
-                    <FaSquareFacebook />
+        <footer className="flex flex-col gap-4 p-4 lg:gap-8 lg:p-16 mt-auto">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[2.4fr_2fr_1.2fr_1.2fr_.6fr] justify-between gap-4 flex-wrap">
+                <Link href={process.env.NEXT_PUBLIC_SITE_URL || '/'} className="w-fit block"><img className="w-32" src="/logo.svg" alt="" /></Link>
+                <div className=" font-normal text-sm">
+                    <h3 className="font-bold text-base mb-2">Localização</h3>
+                    <address className="flex items-center gap-2">
+                        <FaMapLocationDot className="w-[28px] h-[28px]"/>
+                        <span>Avenida das Missões, 1396 - Centro  <br /> CEP: 85640-000 - Ampére - PR</span>
+                    </address>
+                </div>
+                <div className="flex flex-col font-normal text-sm">
+                    <h3 className="font-bold text-base mb-2">Institucional</h3>
+                    <Link href="/sobre">Sobre</Link>
+                    <Link href="/contato">Contato</Link>
+                    <Link href="/politica-de-privacidade">Política de Privacidade</Link>
+                </div>
+                <div className="flex flex-col font-normal text-sm">
+                    <h3 className="font-bold text-base mb-2">Acesso Rápido</h3>
+                    <Link href="/veiculos?ano=0_0">Carros 0Km</Link>
+                    <Link href="/veiculos?condicao=usado">Carros usados</Link>
+                    <Link href="/noticias">Notícias</Link>
+                </div>
+                <div className="flex flex-col font-normal text-sm">
+                    <h3 className="font-bold text-base mb-2">Social</h3>
+                    <div className="flex gap-2 text-xl">
+                        <Link href="https://instagram.com.br/sonhoautoveiculos">
+                            <BsInstagram />
+                        </Link>
+                        <Link href="https://facebook.com.br/sonhoautoveiculos">
+                            <FaSquareFacebook />
+                        </Link>
+                    </div>
                 </div>
             </div>
             <div className="flex justify-between">
