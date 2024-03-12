@@ -1,46 +1,76 @@
 "use client"
-import { VehicleType } from "@/Types/VehicleType";
+import { VehicleCustomType } from "@/Types/VehicleCustomType";
 import { useQueryParams } from "@/lib/utils";
 import {useContext, useEffect, useState } from 'react'
 import CarCard from "../CarCard/CarCard";
 import { Context } from "@/Contexts/Context";
 import api from "@/api";
 import Pagination from "../Pagination/Pagination";
-
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+  } from "@/Components/ui/select"
 
 type Props = {
-    vehicles: VehicleType[];
+    vehicles: VehicleCustomType[];
 }
 
 
 export default function ListVehicles({vehicles}: Props) {
+    const { urlParams, changeUrlParams } = useContext(Context);
     const { urlSearchParams, setQueryParams } = useQueryParams();
-    const [vehiclesList, setVehiclesList] = useState<VehicleType[]>([]);
-    const [isMounted, setIsMounted] = useState(true);  // Novo estado para verificar se o componente está montado
-
-    const { urlParams } = useContext(Context)
-
+    const [vehiclesList, setVehiclesList] = useState<VehicleCustomType[]>([]);
+    const [isMounted, setIsMounted] = useState(true);
     
-    useEffect(()=> {
+    const [ordering, setOrdering] = useState<string>(urlSearchParams.get('ord') ?? 'padrao' );
 
-            getVehiclesSearch();
+    useEffect(() => {
+        if(!isMounted){
+            setQueryParams({ ['ord']: ordering, ['page']: 1 });
+            changeUrlParams(urlSearchParams.toString());
+        }
+        setIsMounted(false)
+    }, [ordering]);
+
+    useEffect(()=> {
+        getVehiclesSearch();
         async function getVehiclesSearch() {
-            const vehiclesSearch: VehicleType[] = await api.getVehiclesByParamsGQL(urlParams);
+            const vehiclesSearch: VehicleCustomType[] = await api.getVehiclesByParamsGQL(urlParams);
             console.log('ta trasendo certo até aqui')
             console.log(vehiclesSearch);
             
-                setVehiclesList(vehiclesSearch || []);
-              
+            setVehiclesList(vehiclesSearch || []);
         }
     }, [urlParams]);
-    // console.log(vehiclesList)
 
     return(
         <>
             Lista - {urlParams}
+            <div className="w-fit flex items-center">
+                <label htmlFor="">Ordenar: </label>
+                <Select defaultValue={ordering} onValueChange={setOrdering}>
+                    <SelectTrigger>
+                        <SelectValue placeholder="Selecione a orndem" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            <SelectLabel></SelectLabel>
+                            <SelectItem value="padrao">Ordem Padrão</SelectItem>
+                            <SelectItem value="maiorpreco">Maior Preço</SelectItem>
+                            <SelectItem value="menorpreco">Menor Preço</SelectItem>
+                            <SelectItem value="anomaisnovo">Ano mais novo</SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 gap-y-6 sm:gap-y-4">
 
-                {vehiclesList.length > 0 && vehiclesList.map((vehicle: VehicleType, index:number) => (
+                {vehiclesList.length > 0 && vehiclesList.map((vehicle: VehicleCustomType, index:number) => (
                     <CarCard vehicle={vehicle} key={index}/>
                 ))}
                 {!vehiclesList &&
@@ -48,7 +78,7 @@ export default function ListVehicles({vehicles}: Props) {
                 }
             </div>
             {vehiclesList[0]?.count > 0 &&
-                <Pagination totalCount={vehiclesList[0]?.count} slug={"/veiculos"} perPage={6}/>
+                <Pagination totalCount={vehiclesList[0]?.count} slug={"/veiculos"} perPage={2}/>
             }
         </>
     );

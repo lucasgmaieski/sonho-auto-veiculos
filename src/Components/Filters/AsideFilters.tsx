@@ -1,11 +1,7 @@
 "use client"
 import { Checkbox } from "@/Components/ui/checkbox"
-import { VehicleType } from "@/Types/VehicleType";
-import SliderCard from "../SliderCard/SliderCard"
 import { getNameField, getUrl, useQueryParams } from "@/lib/utils";
-import { ChangeEvent, MouseEvent, useContext, useEffect, useState } from 'react'
-import { MenuTypes } from "@/Types/MenuType";
-import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import { useContext, useEffect, useState } from 'react'
 import { Context } from "@/Contexts/Context";
 import FilterText from "@/Components/Filters/FilterText";
 import { MarcaFilter } from "@/Types/MarcaFilter";
@@ -36,7 +32,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
     const [activeSeeAll, setActiveSeeAll] = useState(false);
     const [contentSeeAll, setContentSeeAll] = useState<ContentSeeAllItem>();
     const { urlSearchParams, setQueryParams } = useQueryParams();
-    const { urlParams, changeUrlParams } = useContext(Context);
+    const { changeUrlParams } = useContext(Context);
 
     const [statusFilterItens, setStatusFilterItens] = useState<StatusFilterItem[]>([]);
 
@@ -77,10 +73,10 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
         :
         setContentSeeAll({data:filter as [string, number][], field});
     }
+
     useEffect(()=> {
         const parametros = urlSearchParams;
         parametros.forEach((value, key) => {
-            console.log("valor: "+value+"-key: "+ key);
             if(value) {
                 const valueArray = value.split('_');
                 valueArray.forEach((item) => {
@@ -90,49 +86,43 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
             changeUrlParams(urlSearchParams.toString());
         });
     }, []);
-    console.log(statusFilterItens);
 
     const handleSetFilterCheck = (field: string, val: string) => {
-        console.log("taclicando aqui")
         const currentField = urlSearchParams.get(field);
-        console.log(currentField);
         const currentFieldArray = currentField?.split('_');
         const newValue = !statusFilterItemIsSet(val)?.value ?? true;
         if (newValue) {
             if(!currentField) {
-                setQueryParams({ [field]: val })
+                setQueryParams({ [field]: val, ['page']: 1 })
             }
             else if(currentFieldArray?.indexOf(val) == -1) {
                 let newParam = currentField + '_' + val;
                 newParam = newParam.replace(/^_/, '');
-                setQueryParams({ [field]: newParam })
+                setQueryParams({ [field]: newParam, ['page']: 1 })
             } 
         } else {
             if (currentFieldArray?.indexOf(val) !== -1) {
                 const newParamArray = currentFieldArray?.filter(valor => valor !== val)
                 let newParam = newParamArray.join('_');
                 newParam = newParam.replace(/^_/, '');
-                setQueryParams({ [field]: newParam })
+                setQueryParams({ [field]: newParam, ['page']: 1 })
             }
         }
         changeStatusFilterItem(val, newValue);
         changeUrlParams(urlSearchParams.toString());
     }
     const handleSetFilterText = (field: string, valMin?: string, valMax?: string) => {
-
-        console.log("taclicando aqui")
         const currentField = urlSearchParams.get(field);
-        console.log(currentField);
         const currentFieldArray = currentField?.split('_');
 
         if(!currentField) {
             let newParam = `${valMin ?? 0}_${valMax ?? 0}`;
-            setQueryParams({ [field]: newParam });
+            setQueryParams({ [field]: newParam, ['page']: 1  });
         } else {
             console.log(currentFieldArray)
             let newParam = `${valMin === '' ? '0' : valMin ?? currentFieldArray[0]}_${valMax === '' ? '0' : valMax ?? currentFieldArray[1]}`;
             if(newParam === '0_0') newParam = '';
-            setQueryParams({ [field]: newParam });
+            setQueryParams({ [field]: newParam, ['page']: 1  });
         }
         changeUrlParams(urlSearchParams.toString());
     }
@@ -152,7 +142,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                                 <Checkbox className="hidden"  id={item.name} checked={(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value)} onCheckedChange={()=>handleSetFilterCheck('marca',item.name)}/>
                                 <label htmlFor={item.name}>
                                     <img src={item?.marcas?.logo?.node?.mediaItemUrl} alt={item?.name} />
-                                    {item?.name} <br />({item?.count ?? '0'})
+                                    {item?.name} <br /><span className="opacity-80"> ({item?.count ?? '0'})</span>
                                 </label>
                             </div>
                         ))}
@@ -183,7 +173,8 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                             <div key={valor} className="space-x-2">
                                 <Checkbox  id={valor} checked={(statusFilterItens.find(item => item.key === valor )?.value)} onCheckedChange={()=>handleSetFilterCheck(campo,valor)}/>
                                 <label htmlFor={valor} className="">
-                                    {`${valor}: ${contagem}`}
+                                    {valor}
+                                    <span className="opacity-80"> ({contagem})</span>
                                 </label>
                             </div>
                         ))}

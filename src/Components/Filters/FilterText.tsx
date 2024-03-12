@@ -26,7 +26,6 @@ export default function FilterText( {field, handleSetFilterText}: Props ) {
     const { urlSearchParams, setQueryParams } = useQueryParams();
     const [isMountedYear1, setIsMountedYear1] = useState(true); 
     const [isMountedYear2, setIsMountedYear2] = useState(true);
-    urlSearchParams.get(field)?.split('_') 
     const [year1, setYear1] = useState<string>(urlSearchParams.get(field)?.split('_')[0] );
     const [year2, setYear2] = useState<string>(urlSearchParams.get(field)?.split('_')[1] );
     const [minPrice, setMinPrice] = useState<string>(urlSearchParams.get(field)?.split('_')[0] );

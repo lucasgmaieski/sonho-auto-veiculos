@@ -1,23 +1,43 @@
 "use client"
-import { VehicleType } from "@/Types/VehicleType";
+import { VehicleCustomType } from "@/Types/VehicleCustomType";
 import SliderCard from "../SliderCard/SliderCard"
 import { getUrl } from "@/lib/utils";
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 type Props = {
-    vehicle: VehicleType
+    vehicle: VehicleCustomType;
+    home?: boolean
 }
-export default function CarCard({vehicle}: Props) {
-    
+export default function CarCard({vehicle, home}: Props) {
+    let galeriaArray = []
+    let imagemDestacada = ''
+    if(home) {
+        vehicle.acf.galeriaDeImagens?.nodes.forEach(element => {
+            galeriaArray.push(element.mediaItemUrl)
+        });
+        galeriaArray.push(vehicle.featuredImage?.node.mediaItemUrl);
+    } else {
+        (vehicle.acf.galeria_de_imagens as string[]).forEach(element => {
+            galeriaArray.push(element)
+        });
+        galeriaArray.push(vehicle.imagemDestacada)
+    }
+    const [galeria, setGaleria] = useState<string[]>()
+    useEffect(() => {
+        setGaleria(galeriaArray)
+        console.log(galeriaArray)
+    }, [vehicle]);
+    console.log(vehicle);
+
     return(
         <div className="flex items-center justify-center bg-transparent p-2 slider-card">
             <div className="mx-auto w-100">
                 <div className="border-[1px] dark:border-blue-900 border-blue-200 rounded-lg dark:bg-slate-800 bg-slate-100 p-2 shadow duration-150 hover:scale-[102%] hover:shadow-md">
                     <div className="flex items-center justify-between px-4">
-                        <a href={getUrl(vehicle.permalink)} className="font-bold dark:text-neutral-200 text-slate-900">{vehicle.post_title}</a>
+                        <a href={getUrl(vehicle.link)} className="font-bold dark:text-neutral-200 text-slate-900">{vehicle.title}</a>
                         <p className="px-2 py-0.5 text-lg font-semibold text-white">🤍</p>
                     </div>
                     {/* <img className="w-full rounded-lg object-cover object-center" src="../../../car.png" alt="product" /> */}
-                    <SliderCard images={vehicle.acf.galeria_de_imagens as string[]}/>
+                    <SliderCard images={galeria as string[]}/>
                     <div>
                         <div className="my-4 flex flex-wrap items-center justify-start px-4 gap-y-2 gap-x-1">
                             {vehicle.acf.combustivel && 
@@ -96,7 +116,7 @@ export default function CarCard({vehicle}: Props) {
                             {vehicle.acf.preco &&
                                 <p className="text-2xl font-semibold dark:text-neutral-200 text-slate-900">R$ {vehicle.acf.preco}</p>
                             }
-                            <a href={getUrl(vehicle.permalink)} className="rounded-md bg-blue-600 px-4 py-2 text-1xl font-semibold text-white">Ver mais</a>
+                            <a href={getUrl(vehicle.link)} className="rounded-md bg-blue-600 px-4 py-2 text-1xl font-semibold text-white">Ver mais</a>
                         </div>
                     </div>
                 </div>
