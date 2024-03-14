@@ -16,6 +16,8 @@ export default async function MorePopular() {
                     <p>Nenhum vaículo para mostrar!</p>
                 }
             </div>
+            <a href="/veiculos" className="rounded-md bg-blue-600 block w-fit mx-auto mt-8 px-4 py-2 text-1xl font-semibold text-white">VER TODOS</a>
+
         </section>
     );
 }

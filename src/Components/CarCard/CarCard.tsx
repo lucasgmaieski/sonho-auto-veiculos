@@ -3,6 +3,7 @@ import { VehicleCustomType } from "@/Types/VehicleCustomType";
 import SliderCard from "../SliderCard/SliderCard"
 import { getUrl } from "@/lib/utils";
 import { useEffect, useState } from 'react'
+import { thousandsMask } from "@/lib/masks/thousandsMask";
 type Props = {
     vehicle: VehicleCustomType;
     home?: boolean
@@ -114,7 +115,7 @@ export default function CarCard({vehicle, home}: Props) {
                         </div>
                         <div className="my-4 flex items-center justify-between px-4">
                             {vehicle.acf.preco &&
-                                <p className="text-2xl font-semibold dark:text-neutral-200 text-slate-900">R$ {vehicle.acf.preco}</p>
+                                <p className="text-2xl font-semibold dark:text-neutral-200 text-slate-900">R$ {thousandsMask(vehicle.acf.preco.toString())}</p>
                             }
                             <a href={getUrl(vehicle.link)} className="rounded-md bg-blue-600 px-4 py-2 text-1xl font-semibold text-white">Ver mais</a>
                         </div>

@@ -142,13 +142,60 @@ export default {
 
 
     },
+    getMenuBySlugGQL: async (slug: string) => {
+        try{
+            const query = `
+            query MyQuery5 {
+                menus(where: {slug: "menu-principal"}) {
+                  edges {
+                    node {
+                      menuItems {
+                        nodes {
+                          label
+                          url
+                          childItems {
+                            nodes {
+                              label
+                              url
+                            }
+                          }
+                          id
+                          parentId
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              `
+            const response = await fetch(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}?query=${encodeURIComponent(query)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                cache: 'no-store'
+            });
+            if(!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const menu = await response.json();
+            // console.log("menu principal: ")
+            // console.log(menu.data.menus.edges[0].node.menuItems.nodes);
+            return menu.data.menus.edges[0].node.menuItems.nodes;
+        
+        } catch (err) {
+            console.log(err);
+        }
+
+        return null;
+    },
     getQtdVehiclesPerFieldGQL: async () => {
         try{
             const query = `
             query posts {
                 allVeiculosGQL {
                     nodes {
-                        veiculos {
+                        acf {
                             tipo {
                                 edges {
                                     node {
@@ -192,13 +239,13 @@ export default {
             const { data } = await response.json();
             // ano, preco, MARCA, condicao, combustivel, motor, quilometros, transmissao, direcao, cor, portas, *localizacao, *carroceria, 
             // console.log("dataaaaaaaaaa:");
-            console.log(data);
-            console.log(data.allVeiculosGQL.nodes);
+            // console.log(data);
+            // console.log(data.allVeiculosGQL.nodes);
             // console.log("opaaaaaaaaaaaaaaa ",data.allVeiculosGQL.nodes[0].veiculos.marca.edges[0].node.name);
             const vehicleFilters : DadosAPI[] = data.allVeiculosGQL.nodes;
 
             interface DadosAPI {
-                veiculos: {
+                acf: {
                 [campo: string]: string | { edges:[{node: {name: string}}] };
                 };
             }
@@ -211,8 +258,8 @@ export default {
             const contagemPorCampo : ContagemPorCampo = {};
             // Itera sobre os dados da API
             vehicleFilters.forEach(item => {
-                for (const campo in item.veiculos) {
-                    let valorCampo = item.veiculos[campo] ?? '';
+                for (const campo in item.acf) {
+                    let valorCampo = item.acf[campo] ?? '';
                     // console.log("campo: " + campo)
 
                     if ((campo === "marca" || "tipo") && (typeof valorCampo === "object") && ("edges" in valorCampo)) {
@@ -246,11 +293,6 @@ export default {
         var newParams = new URLSearchParams(params);
         var paramsFormated = "";
         newParams.forEach(function(valor, chave) {
-            // if(chave === "page" || chave === "perpage") {
-
-            // } else {
-
-            // }
             paramsFormated += chave + ': "' + valor + '", ';
         });
         paramsFormated = paramsFormated.slice(0, -2);
@@ -262,6 +304,7 @@ export default {
                 buscarVeiculos ${paramsFormated !== '' ? `(${paramsFormated})` : ''} {
                   id
                   title
+                  slug
                   count
                   acf {
                     ano
@@ -270,7 +313,7 @@ export default {
                     condicao
                     cor
                     direcao
-                    galeria_de_images
+                    galeria_de_imagens
                     localizacao
                     motor
                     portas
@@ -279,7 +322,7 @@ export default {
                     tipo
                     transmissao
                   }
-                  permalink
+                  link
                   imagemDestacada
                 }
               }
@@ -298,6 +341,71 @@ export default {
             console.log("vehicle: ")
             console.log(vehicle.data.buscarVeiculos);
             return vehicle.data.buscarVeiculos;
+        } catch (err) {
+            console.log(err);
+        }
+
+        return null;
+    },
+    getVehiclesMorePopularGQL: async () => {
+        try{
+            const query = `
+            query MaisPopulares {
+                allVeiculosGQL(first: 8, where: {orderby: {field: DATE, order: DESC}}) {
+                  nodes {
+                    title(format: RENDERED)
+                    link
+                    slug
+                    featuredImage {
+                        node {
+                            mediaItemUrl
+                        }
+                    }
+                    acf {
+                      ano
+                      combustivel
+                      condicao
+                      cor
+                      direcao
+                      transmissao
+                      quilometros
+                      preco
+                      portas
+                      motor
+                      galeriaDeImagens {
+                        nodes {
+                          mediaItemUrl
+                        }
+                      }
+                      tipo {
+                        nodes {
+                          name
+                        }
+                      }
+                      marca {
+                        nodes {
+                          name
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              `
+            const response = await fetch(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}?query=${encodeURIComponent(query)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                cache: 'no-store'
+            });
+            if(!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const vehicle = await response.json();
+            console.log("vehicle more Popular: ")
+            console.log(vehicle.data.allVeiculosGQL.nodes);
+            return vehicle.data.allVeiculosGQL.nodes;
         } catch (err) {
             console.log(err);
         }
@@ -404,8 +512,8 @@ export default {
                 throw new Error('Failed to fetch data');
             }
             const marcaFilter = await response.json();
-            console.log("marcaFilter2: ")
-            console.log(marcaFilter.data.allMarcasGQL.nodes);
+            // console.log("marcaFilter2: ")
+            // console.log(marcaFilter.data.allMarcasGQL.nodes);
             return marcaFilter.data.allMarcasGQL.nodes;
         
         } catch (err) {

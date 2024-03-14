@@ -15,6 +15,7 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/Components/ui/select"
+import { thousandsMask } from "@/lib/masks/thousandsMask";
 
 type Props = {
     vehicles: VehicleCustomType[];
@@ -50,23 +51,28 @@ export default function ListVehicles({vehicles}: Props) {
 
     return(
         <>
-            Lista - {urlParams}
-            <div className="w-fit flex items-center">
-                <label htmlFor="">Ordenar: </label>
-                <Select defaultValue={ordering} onValueChange={setOrdering}>
-                    <SelectTrigger>
-                        <SelectValue placeholder="Selecione a orndem" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectLabel></SelectLabel>
-                            <SelectItem value="padrao">Ordem Padrão</SelectItem>
-                            <SelectItem value="maiorpreco">Maior Preço</SelectItem>
-                            <SelectItem value="menorpreco">Menor Preço</SelectItem>
-                            <SelectItem value="anomaisnovo">Ano mais novo</SelectItem>
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
+            <div className="flex items-center mb-6">
+                Lista - {urlParams}
+                {vehiclesList[0]?.count > 0 && 
+                    <p>{thousandsMask(vehiclesList[0].count.toString())} {vehiclesList[0].count === 1 ? 'carro encontrado' : 'carros encontrados'}</p>
+                }
+                <div className="w-fit flex items-center ml-auto">
+                    <label htmlFor="">Ordenar: </label>
+                    <Select defaultValue={ordering} onValueChange={setOrdering}>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Selecione a orndem" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel></SelectLabel>
+                                <SelectItem value="padrao">Ordem Padrão</SelectItem>
+                                <SelectItem value="maiorpreco">Maior Preço</SelectItem>
+                                <SelectItem value="menorpreco">Menor Preço</SelectItem>
+                                <SelectItem value="anomaisnovo">Ano mais novo</SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 gap-y-6 sm:gap-y-4">
 

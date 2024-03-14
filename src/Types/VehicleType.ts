@@ -36,13 +36,11 @@ export type VehicleType = {
     status: string;
     type: string;
     link: string;
-    title: Title;
-    post_title: string;
+    title: string;
     content: Content;
     featured_media: number;
     template: string;
     meta: any[]; // Substitua "any" pelo tipo apropriado, dependendo da estrutura real dos seus metadados.
     tipos: number[];
     acf: ACF;
-    _links: Links;
 }
