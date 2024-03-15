@@ -13,90 +13,57 @@ import './Slider.css';
 
 // import required modules
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import Image from 'next/image';
 
-export default function SliderVehicle() {
+export default function SliderVehicle({images}: {images: string[]}) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   return (
     <>
-      <Swiper
-        spaceBetween={10}
-        navigation={true}
-        thumbs={{ swiper: thumbsSwiper }}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiperVehicle"
-      >
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
-        </SwiperSlide>
-      </Swiper>
-      <Swiper
-        onSwiper={setThumbsSwiper}
-        spaceBetween={10}
-        slidesPerView={4}
-        freeMode={true}
-        watchSlidesProgress={true}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper"
-      >
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
-        </SwiperSlide>
-      </Swiper>
+        <Swiper
+            spaceBetween={10}
+            navigation={true}
+            thumbs={{ swiper: thumbsSwiper }}
+            modules={[FreeMode, Navigation, Thumbs]}
+            className="mySwiperVehicle mb-2 rounded-lg overflow-hidden"
+        >
+            {images && images.map((image, index) => (
+            <SwiperSlide key={index}>
+                <Image 
+                    src={image}
+                    width={500}
+                    height={500}
+                    alt="Imagem do Veículo"
+                    priority={index === 0}
+                    placeholder='blur'
+                    blurDataURL='blue'
+                />
+            </SwiperSlide>
+            ))}
+        </Swiper>
+        <Swiper
+            onSwiper={setThumbsSwiper}
+            spaceBetween={14}
+            slidesPerView={4}
+            freeMode={true}
+            watchSlidesProgress={true}
+            modules={[FreeMode, Navigation, Thumbs]}
+            className="mySwiper"
+        >
+            {images && images.map((image, index) => (
+            <SwiperSlide key={index}>
+                <Image 
+                    src={image}
+                    width={80}
+                    height={60}
+                    alt="Imagem do Veículo"
+                    priority={index <= 4}
+                    placeholder='blur'
+                    blurDataURL='blue'
+                />
+            </SwiperSlide>
+            ))}
+        </Swiper>
     </>
   );
 }
