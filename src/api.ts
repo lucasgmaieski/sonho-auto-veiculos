@@ -412,6 +412,94 @@ export default {
 
         return null;
     },
+    getSlugAllVehiclesGQL: async () => {
+
+        try{
+            const query = `
+            query SlugVeiculos {
+                allVeiculosGQL {
+                  nodes {
+                    slug
+                  }
+                }
+              }
+              `
+            const response = await fetch(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}?query=${encodeURIComponent(query)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                cache: 'no-store'
+            });
+            if(!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const vehicle = await response.json();
+            console.log("vehicle: ")
+            console.log(vehicle.data.allVeiculosGQL.nodes);
+            return vehicle.data.allVeiculosGQL.nodes;
+        } catch (err) {
+            console.log(err);
+        }
+
+        return null;
+    },
+    getVehicleBySlugGQL: async (slug: string) => {
+
+        try{
+            const query = `
+            query veiculo {
+                veiculosGQLBy(slug: "${slug}") {
+                    link
+                    title
+                    id
+                    acf {
+                        ano
+                        combustivel
+                        condicao
+                        cor
+                        direcao
+                        motor
+                        portas
+                        preco
+                        quilometros
+                        transmissao
+                        galeriaDeImagens {
+                            nodes {
+                                mediaItemUrl
+                            }
+                        }
+                    }
+                    content(format: RENDERED)
+                    featuredImage {
+                        node {
+                            mediaItemUrl
+                            link
+                        }
+                    }
+                }
+            }
+              `
+            const response = await fetch(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}?query=${encodeURIComponent(query)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                cache: 'no-store'
+            });
+            if(!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const vehicle = await response.json();
+            console.log("vehicle: ")
+            console.log(vehicle.data.veiculosGQLBy);
+            return vehicle.data.veiculosGQLBy;
+        } catch (err) {
+            console.log(err);
+        }
+
+        return null;
+    },
     getMenuMarcasGQL: async () => {
         try{
             const query = `

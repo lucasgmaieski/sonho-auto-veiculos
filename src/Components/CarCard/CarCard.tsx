@@ -10,7 +10,6 @@ type Props = {
 }
 export default function CarCard({vehicle, home}: Props) {
     let galeriaArray = []
-    let imagemDestacada = ''
     if(home) {
         vehicle.acf.galeriaDeImagens?.nodes.forEach(element => {
             galeriaArray.push(element.mediaItemUrl)
