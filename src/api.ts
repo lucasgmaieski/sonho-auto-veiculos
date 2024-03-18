@@ -469,6 +469,16 @@ export default {
                                 mediaItemUrl
                             }
                         }
+                        tipo {
+                            nodes {
+                              name
+                            }
+                        }
+                        marca {
+                            nodes {
+                              name
+                            }
+                        }
                     }
                     content(format: RENDERED)
                     featuredImage {

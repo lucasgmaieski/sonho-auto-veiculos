@@ -8,6 +8,7 @@ export type VehicleCustomType = {
     id: number;
     link: string;
     title: string;
+    content: string;
     slug: string;
     acf: ACF;
     imagemDestacada: string;
