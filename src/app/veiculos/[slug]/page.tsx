@@ -7,6 +7,7 @@ import { VehicleCustomType } from "@/Types/VehicleCustomType"
 import api from "@/api";
 import { thousandsMask } from "@/lib/masks/thousandsMask";
 import Link from "next/link";
+import Share from "@/Components/Share/Share";
 
 type Props = {
     params: {
@@ -41,8 +42,8 @@ export default async function PageVeiculos({params}: Props) {
                     <div className="w-full md:w-1/2 space-y-6">
                         <h1 className="font-bold text-2xl">{vehicle?.title}</h1>
                         <div className="flex justify-between">
-                            <span>R$ {thousandsMask(vehicle.acf.preco.toString())}</span>
-                            <div>Compartilhar</div>
+                            <span className="font-semibold text-2xl text-blue-600">R$ {thousandsMask(vehicle.acf.preco.toString())}</span>
+                            <div className="flex items-center gap-1">Compartilhar: <Share title={vehicle.title}/></div>
                         </div>
                         <div className="grid grid-cols-3 gap-3">
                         {vehicle.acf.combustivel &&
@@ -211,31 +212,33 @@ export default async function PageVeiculos({params}: Props) {
                                 </div>
                             }
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 pt-4">
                             <div className="flex items-center gap-1 text-xl border-2 border-blue-600  p-3 rounded-lg"> <FaHeart className="w-[28px] h-[28px] "/>Favorito</div>
-                            <Link href={``} className="flex items-center gap-2 text-xl bg-blue-600 text-white p-3 rounded-lg"> <BsWhatsapp className="text-4xl text-white"/> Fale com o vendedor</Link>
+                            <Link href={``} className="flex items-center w-fit gap-2 text-xl bg-blue-600 text-white p-3 rounded-lg"> <BsWhatsapp className="text-4xl text-white"/> Fale com o vendedor</Link>
                         </div>
                     </div>
                 </div>
                 {vehicle.content &&
-                    <div className="w-full">
-                        <h3>Descrição</h3>
+                    <div className="w-full space-y-4">
+                        <h3 className="font-bold text-3xl">Descrição</h3>
                         <div>
                             {vehicle.content}
                         </div>
                     </div>
                 }
 
-                <div className="w-full">
-                    <h3>Adicionais</h3>
-                    <div>
-                        
+                <div className="w-full space-y-4">
+                    <h3 className="font-bold text-3xl">Adicionais</h3>
+                    <div className="flex flex-wrap gap-2 ">
+                        {vehicle.acf.adicionais && vehicle.acf.adicionais.map((item, index) => (
+                            <div className="inline-block dark:bg-slate-800 bg-slate-200 rounded-lg px-2 py-1">{item}</div>
+                        ))}
                     </div>
                 </div>
 
 
             </div>
-            <section className="w-full mx-auto text-center dark:bg-slate-800 bg-blue-200 p-10 space-y-5">
+            <section className="w-full mx-auto text-center dark:bg-slate-800 bg-blue-200 p-10 space-y-5 mt-16">
                 <h3 className="font-bold text-4xl">Veja mais carros desta <span className="text-blue-600">marca</span> ou <span className="text-blue-600">carroceria</span></h3>
                 <div className="flex justify-center gap-4">
                     <Link href={`/veiculos?marca=${vehicle.acf.marca.nodes[0].name}`} className="flex items-center gap-2 text-xl bg-blue-600 text-white p-3 rounded-lg"> {vehicle.acf.marca.nodes[0].name}</Link>
