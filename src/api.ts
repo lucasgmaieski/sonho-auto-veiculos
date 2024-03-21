@@ -189,6 +189,48 @@ export default {
 
         return null;
     },
+    getPageByIdGQL: async (id: number) => {
+        try{
+            const query = `
+            query pagina {
+                pageBy(pageId: ${id}) {
+                    id
+                    title(format: RENDERED)
+                    content(format: RENDERED)
+                    sobre {
+                        visao
+                        valores
+                        missao
+                        imagemEmpresa {
+                            node {
+                                mediaItemUrl
+                            }
+                        }
+                    }
+                }
+            }
+            `
+            const response = await fetch(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}?query=${encodeURIComponent(query)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                cache: 'no-store'
+            });
+            if(!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const page = await response.json();
+            // console.log("menu principal: ")
+            // console.log(menu.data.menus.edges[0].node.menuItems.nodes);
+            return page.data.pageBy;
+        
+        } catch (err) {
+            console.log(err);
+        }
+
+        return null;
+    },
     getQtdVehiclesPerFieldGQL: async () => {
         try{
             const query = `
@@ -479,6 +521,7 @@ export default {
                               name
                             }
                         }
+                        adicionais
                     }
                     content(format: RENDERED)
                     featuredImage {
