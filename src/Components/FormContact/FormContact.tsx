@@ -1,29 +1,31 @@
 "use client"
 import { useFormContact } from "@/app/hooks/useFormContact";
 import { ErrorMessage } from "./ErrorMessage";
+import { Checkbox } from "@/Components/ui/checkbox"
+import Link from "next/link";
 
 type Params = {
 
 }
 export default function FormContact() {
-    const { errors, handleForm, handleSubmit, register, loading, handleInputChange } = useFormContact()
+    const { errors, handleForm, handleSubmit, register, loading, handleInputChange, privacyCheck, setPrivacyCheck } = useFormContact()
     return (
         <form onSubmit={handleSubmit(handleForm)} className=' rounded-[18px] mb-7 max-[360px]:px-4'>
             <label className='flex gap-2 flex-col pb-8 w-full'>
-                <input type="text" id="name"  {...register('name')} placeholder='Nome completo' onChange={handleInputChange} className='w-full bg-transparent border-2 dark:border-slate-600 border-slate-300 rounded-lg py-2 px-4 max-[360px]:text-xl text-2xl sm:text-2xl text-white placeholder:text-white/60 placeholder:font-normal outline-none' readOnly={loading}/>
+                <input type="text" id="name"  {...register('name')} placeholder='Nome completo' onChange={handleInputChange} className='w-full bg-transparent border-2 dark:border-slate-600 border-slate-300 rounded-lg py-2 px-4 max-[360px]:text-xl text-2xl sm:text-2xl  dark:placeholder:text-white/60 placeholder:text-slate-400 dark:focus-visible:border-blue-600 focus-visible:border-blue-600 focus-visible:outline-none' readOnly={loading}/>
                 {errors.name && (
                     <ErrorMessage color='#fff' message={errors.name?.message} />
                 )}
             </label>
             <div className="flex flex-col lg:flex-row gap-4">
                 <label className='flex gap-2 flex-col pb-8 w-full'>
-                    <input type="text" id="state"  {...register('state')} placeholder='Estado' onChange={handleInputChange} className='w-full bg-transparent border-2 dark:border-slate-600 border-slate-300 rounded-lg py-2 px-4 max-[360px]:text-xl text-2xl sm:text-2xl text-white placeholder:text-white/60 placeholder:font-normal outline-none' readOnly={loading}/>
+                    <input type="text" id="state"  {...register('state')} placeholder='Estado' onChange={handleInputChange} className='w-full bg-transparent border-2 dark:border-slate-600 border-slate-300 rounded-lg py-2 px-4 max-[360px]:text-xl text-2xl sm:text-2xl  dark:placeholder:text-white/60 placeholder:text-slate-400 dark:focus-visible:border-blue-600 focus-visible:border-blue-600 focus-visible:outline-none' readOnly={loading}/>
                     {errors.state && (
                         <ErrorMessage color='#fff' message={errors.state?.message} />
                     )}
                 </label>
                 <label className='flex gap-2 flex-col pb-8 w-full'>
-                    <input type="text" id="city"  {...register('city')} placeholder='Cidade' onChange={handleInputChange} className='w-full bg-transparent border-2 dark:border-slate-600 border-slate-300 rounded-lg py-2 px-4 max-[360px]:text-xl text-2xl sm:text-2xl text-white placeholder:text-white/60 placeholder:font-normal outline-none' readOnly={loading}/>
+                    <input type="text" id="city"  {...register('city')} placeholder='Cidade' onChange={handleInputChange} className='w-full bg-transparent border-2 dark:border-slate-600 border-slate-300 rounded-lg py-2 px-4 max-[360px]:text-xl text-2xl sm:text-2xl  dark:placeholder:text-white/60 placeholder:text-slate-400 dark:focus-visible:border-blue-600 focus-visible:border-blue-600 focus-visible:outline-none' readOnly={loading}/>
                     {errors.city && (
                         <ErrorMessage color='#fff' message={errors.city?.message} />
                     )}
@@ -31,20 +33,30 @@ export default function FormContact() {
             </div>
             <div className="flex flex-col lg:flex-row gap-4">
                 <label className='flex gap-2 flex-col pb-8 w-full'>
-                    <input type="text" id="email"  {...register('email')} placeholder='E-mail' onChange={handleInputChange} className='w-full bg-transparent border-2 dark:border-slate-600 border-slate-300 rounded-lg py-2 px-4 max-[360px]:text-xl text-2xl sm:text-2xl text-white placeholder:text-white/60 placeholder:font-normal outline-none' readOnly={loading}/>
+                    <input type="text" id="email"  {...register('email')} placeholder='E-mail' onChange={handleInputChange} className='w-full bg-transparent border-2 dark:border-slate-600 border-slate-300 rounded-lg py-2 px-4 max-[360px]:text-xl text-2xl sm:text-2xl  dark:placeholder:text-white/60 placeholder:text-slate-400 dark:focus-visible:border-blue-600 focus-visible:border-blue-600 focus-visible:outline-none' readOnly={loading}/>
                     {errors.email && (
                         <ErrorMessage color='#fff' message={errors.email?.message} />
                     )}
                 </label>
                 <label className='flex gap-2 flex-col pb-8 w-full'>
-                    <input type="text" id="phone"  {...register('phone')} placeholder='Telefone' onChange={handleInputChange} className='w-full bg-transparent border-2 dark:border-slate-600 border-slate-300 rounded-lg py-2 px-4 max-[360px]:text-xl text-2xl sm:text-2xl text-white placeholder:text-white/60 placeholder:font-normal outline-none' readOnly={loading}/>
+                    <input type="text" id="phone"  {...register('phone')} placeholder='Telefone' onChange={handleInputChange} className='w-full bg-transparent border-2 dark:border-slate-600 border-slate-300 rounded-lg py-2 px-4 max-[360px]:text-xl text-2xl sm:text-2xl  dark:placeholder:text-white/60 placeholder:text-slate-400 dark:focus-visible:border-blue-600 focus-visible:border-blue-600 focus-visible:outline-none' readOnly={loading}/>
                     {errors.phone && (
                         <ErrorMessage color='#fff' message={errors.phone?.message} />
                     )}
                 </label>
             </div>
+            {/* <label htmlFor="privacy">
+                <input type="checkbox" name="privacy" id="privacy" />
+                Ao enviar o formulário, eu concordo com as <Link href="/politica-de-privacidade">políticas de privacidade</Link> do Sonho Auto Veículos.
+            </label> */}
+            <div className="space-x-2 mb-5">
+                <Checkbox  id="privacy" checked={privacyCheck} onCheckedChange={() => setPrivacyCheck(!privacyCheck)} className="data-[state=checked]:bg-blue-500 data-[state=checked]:text-white data-[state=checked]:border-none"/>
+                <label htmlFor="privacy" className="">
+                    Ao enviar o formulário, eu concordo com as <Link href="/politica-de-privacidade" className="underline hover:text-blue-500">políticas de privacidade</Link> do Sonho Auto Veículos.
+                </label>
+            </div>
     
-            <button type="submit" className='relative bg-gradient-to-tr from-blue-500 to-blue-700 p-3 mt-3 rounded-2xl w-full text-2xl sm:text-3xl sm:p-4 disabled:opacity-90 sm:rounded-[18px]' disabled={loading}>
+            <button type="submit" className='relative bg-blue-500 text-white py-2 px-3 mt-3 rounded-lg w-fit block ml-auto uppercase text-xl sm:text-2xl font-semibold sm:py-3 sm:px-6 disabled:opacity-60 hover:bg-blue-600 transition-colors' disabled={loading || !privacyCheck}>
                 {loading ? 
                     <> 
                         Entrando...

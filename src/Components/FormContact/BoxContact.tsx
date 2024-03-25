@@ -1,42 +1,58 @@
+import { InfoExtras } from "@/Types/InfoExtras";
 import { BsWhatsapp } from "react-icons/bs";
 import { FaMapLocationDot } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 
-export default function BoxContact() {
+export default function BoxContact({infoExtras}: {infoExtras: InfoExtras}) {
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 mt-6">
             <div>
-                <h3 className="font-semibold text-2xl">Telefone/Whatsapp</h3>
-                <div className="text-sm font-semibold flex items-center gap-1">
-                    <div className="dark:bg-slate-700 bg-slate-200 rounded-lg">
-                        <BsWhatsapp className="text-5xl dark:text-neutral-200 text-slate-600 p-2"/>
-                    </div>
-                    <span className="font-medium text-lg">(46) 99544-8854</span>
-                </div>
-                <div className="text-sm font-semibold flex items-center gap-1">
-                    <div className="dark:bg-slate-700 bg-slate-200 rounded-lg">
-                        <BsWhatsapp className="text-5xl dark:text-neutral-200 text-slate-600 p-2"/>
-                    </div>
-                    <span className="font-medium text-lg">(46) 99544-8854</span>
-                </div>
+                {infoExtras.endereco &&
+                    <>
+                        <h3 className="font-semibold text-xl">Endereço</h3>
+                        <a href={infoExtras.endereco.link} target="_blank" className="text-sm font-semibold flex items-center gap-2 group">
+                            <div className="bg-blue-500 rounded-lg group-hover:bg-blue-600 transition-colors">
+                                <FaMapLocationDot className="text-5xl text-white p-2"/>
+                            </div>
+                            <span className="font-medium text-lg dark:group-hover:text-blue-500 group-hover:text-blue-600 transition-colors">{infoExtras.endereco.nome}</span>
+                        </a>
+                    </>
+                }
             </div>
             <div>
-                <h3 className="font-semibold text-2xl">E-mail</h3>
-                <div className="text-sm font-semibold flex items-center gap-1">
-                    <div className="dark:bg-slate-700 bg-slate-200 rounded-lg">
-                        <BsWhatsapp className="text-5xl dark:text-neutral-200 text-slate-600 p-2"/>
-                    </div>
-                    <span className="font-medium text-lg">sonhoauto@veiculos.com.br</span>
-                </div>
+                {(infoExtras.telefone1 || infoExtras.telefone2) &&
+                    <h3 className="font-semibold text-xl">Telefone/Whatsapp</h3>
+                }
+                {infoExtras.telefone1 &&
+                    <a href={`http://wa.me/${infoExtras.telefone1}`} target="_blank" className="text-sm font-semibold flex items-center gap-2 mb-3 group">
+                        <div className="bg-blue-500 rounded-lg group-hover:bg-blue-600 transition-colors">
+                            <BsWhatsapp className="text-5xl text-white p-2"/>
+                        </div>
+                        <span className="font-medium text-lg dark:group-hover:text-blue-500 group-hover:text-blue-600 transition-colors">{infoExtras.telefone1}</span>
+                    </a>
+                }
+                {infoExtras.telefone2 &&
+                    <a href={`http://wa.me/${infoExtras.telefone2}`} target="_blank" className="text-sm font-semibold flex items-center gap-2 group">
+                        <div className="bg-blue-500 rounded-lg group-hover:bg-blue-600 transition-colors">
+                            <BsWhatsapp className="text-5xl text-white p-2"/>
+                        </div>
+                        <span className="font-medium text-lg dark:group-hover:text-blue-500 group-hover:text-blue-600 transition-colors">{infoExtras.telefone2}</span>
+                    </a>
+                }
             </div>
             <div>
-                <h3 className="font-semibold text-2xl">Endereço</h3>
-                <div className="text-sm font-semibold flex items-center gap-1">
-                    <div className="dark:bg-slate-700 bg-slate-200 rounded-lg">
-                        <FaMapLocationDot className="text-5xl dark:text-neutral-200 text-slate-600 p-2"/>
-                    </div>
-                    <span className="font-medium text-lg">Avenida das Missões, 1396 - Centro CEP: 85640-000 - Ampére - PR</span>
-                </div>
+                {infoExtras.email &&
+                    <>
+                        <h3 className="font-semibold text-xl">E-mail</h3>
+                        <a href={`mailto:${infoExtras.telefone1}`} target="_blank" className="text-sm font-semibold flex items-center gap-2 group">
+                            <div className="bg-blue-500 rounded-lg group-hover:bg-blue-600 transition-colors">
+                                <MdEmail className="text-5xl text-white p-2"/>
+                            </div>
+                            <span className="font-medium text-lg dark:group-hover:text-blue-500 group-hover:text-blue-600 transition-colors">{infoExtras.email}</span>
+                        </a>
+                    </>
+                }
             </div>
         </div>
     );
