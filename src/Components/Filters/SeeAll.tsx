@@ -12,7 +12,7 @@ type Props = {
 
 export default function SeeAll({activeSeeAll, setActiveSeeAll, contentSeeAll, statusFilterItens, handleSetFilterCheck}: Props) {
     return (
-        <div className={`${activeSeeAll ? 'translate-x-0' : '-translate-x-96'} absolute top-0 dark:bg-slate-800 bg-slate-100 w-full h-full p-3 pr-6 transition-transform duration-500`}>
+        <div className={`${activeSeeAll ? 'translate-x-0' : '-translate-x-full'} absolute top-0 dark:bg-slate-800 bg-slate-100 w-full h-full p-3 pr-6 transition-transform duration-500 overflow-auto`}>
             <button onClick={()=>setActiveSeeAll(false)}><MdOutlineKeyboardBackspace className="w-[32px] h-[32px]"/></button>
             <div>
             {contentSeeAll?.field !== 'marca' && contentSeeAll?.data.map(([valor, contagem]) => (
@@ -29,7 +29,7 @@ export default function SeeAll({activeSeeAll, setActiveSeeAll, contentSeeAll, st
                         
                         <Checkbox className="hidden"  id={item.name} checked={(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value)} onCheckedChange={()=>handleSetFilterCheck('marca',item.name)}/>
                         <label htmlFor={item.name}>
-                            <img src={item?.marcas?.logo?.node?.mediaItemUrl} alt={item?.name} />
+                            <img src={item?.logoposts?.logo?.node?.mediaItemUrl} alt={item?.name} />
                             {item?.name} <br />({item?.count ?? '0'})
                         </label>
                     </div>

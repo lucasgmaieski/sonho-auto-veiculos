@@ -44,7 +44,11 @@ export function useQueryParams<T = {}>() {
     router.push(`${pathname}${query}`);
   }
 
-  return { urlSearchParams, setQueryParams };
+  function removeQueryParams() {
+    router.push(pathname);
+  }
+
+  return { urlSearchParams, setQueryParams, removeQueryParams };
 }
 
 export function getNameField( slug: string ) {
