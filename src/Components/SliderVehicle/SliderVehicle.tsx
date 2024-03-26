@@ -29,7 +29,7 @@ export default function SliderVehicle({images}: {images: string[]}) {
                     alt="Imagem do Veículo"
                     priority={index === 0}
                     className='object-cover'
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                 />
             </SwiperSlide>
             ))}
@@ -40,15 +40,15 @@ export default function SliderVehicle({images}: {images: string[]}) {
             modules={[Navigation, Thumbs]}
             className="mySwiper"
         >
-            {images && images.map((image, index) => (
-                <SwiperSlide key={index} className='relative aspect-[3/2] max-w-[23.5%] mr-[2%] rounded-lg overflow-hidden'>
+            {images.length > 1 && images.map((image, index) => (
+                <SwiperSlide key={index} className='relative aspect-[3/2] max-w-[23.5%] mr-[2%] rounded-lg overflow-hidden cursor-pointer'>
                     <Image
                         src={image}
                         fill
                         alt="Imagem do Veículo"
                         priority={index <= 4}
                         className='object-cover'
-                        sizes="(max-width: 560px) 25vw, 12vw"
+                        sizes="(max-width: 1024px) 23vw, 12vw"
                     />
                 </SwiperSlide>
             ))}

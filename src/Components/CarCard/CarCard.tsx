@@ -30,16 +30,16 @@ export default function CarCard({vehicle, home}: Props) {
 
     return(
         <div className="flex items-center justify-center bg-transparent p-2 slider-card">
-            <div className="mx-auto w-100">
-                <div className="border-[1px] dark:border-blue-900 border-blue-200 rounded-lg dark:bg-slate-800 bg-slate-100 p-2 shadow duration-150 hover:scale-[102%] hover:shadow-md">
-                    <div className="flex items-center justify-between px-4">
-                        <a href={getUrl(vehicle.link)} className="font-bold dark:text-neutral-200 text-slate-900">{vehicle.title}</a>
-                        <p className="px-2 py-0.5 text-lg font-semibold text-white">🤍</p>
+            <div className="mx-auto w-full h-full">
+                <div className="border-[1px] dark:border-blue-900 border-blue-200 rounded-lg dark:bg-slate-800 bg-slate-100 p-2 shadow duration-150 hover:scale-[102%] hover:shadow-md h-full flex flex-col">
+                    <div className="flex items-start justify-between px-1 gap-1">
+                        <a href={getUrl(vehicle.link)} className="font-bold dark:text-neutral-200 text-slate-900 line-clamp-1" title={vehicle.title}>{vehicle.title}</a>
+                        <p className="py-0.5 text-lg font-semibold text-white">🤍</p>
                     </div>
                     {/* <img className="w-full rounded-lg object-cover object-center" src="../../../car.png" alt="product" /> */}
                     <SliderCard images={galeria as string[]}/>
-                    <div>
-                        <div className="my-4 flex flex-wrap items-center justify-start px-4 gap-y-2 gap-x-1">
+                    <div className="flex flex-col flex-1">
+                        <div className="my-4 flex flex-wrap content-start justify-start px-2 gap-y-2 gap-x-2 flex-1">
                             {vehicle.acf.combustivel && 
                                 <div className="text-sm dark:text-neutral-200 text-slate-900 font-semibold flex items-center gap-1">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -112,11 +112,11 @@ export default function CarCard({vehicle, home}: Props) {
                                 </div>
                             }
                         </div>
-                        <div className="my-4 flex items-center justify-between px-4">
+                        <div className="my-4 flex flex-wrap items-center justify-between px-2 space-y-2">
                             {vehicle.acf.preco &&
                                 <p className="text-2xl font-semibold dark:text-neutral-200 text-slate-900">R$ {thousandsMask(vehicle.acf.preco.toString())}</p>
                             }
-                            <a href={getUrl(vehicle.link)} className="rounded-md bg-blue-600 px-4 py-2 text-1xl font-semibold text-white">Ver mais</a>
+                            <a href={getUrl(vehicle.link)} className="rounded-md bg-blue-600 px-4 py-2 text-xl font-semibold text-white hover:bg-blue-700 transition-colors">Ver mais</a>
                         </div>
                     </div>
                 </div>

@@ -44,12 +44,11 @@ export default function Share({title}: {title: string}) {
 
     return (
         <Dialog>
-            <DialogTrigger><LuShare2 className="bg-blue-600 text-white text-3xl p-1 rounded-lg"/></DialogTrigger>
+            <DialogTrigger><LuShare2 className="bg-blue-600 hover:bg-blue-700 text-white text-3xl p-1 rounded-lg transition-colors"/></DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle className="mb-3 text-xl">Compartilhe na suas redes sociais</DialogTitle>
                     <DialogDescription className="flex gap-1">
-                        
                         <WhatsappShareButton url={location.href} title={title}><WhatsappIcon size={45} borderRadius={8} /></WhatsappShareButton>
                         <TelegramShareButton url={location.href} title={title}><TelegramIcon size={45} borderRadius={8} /></TelegramShareButton>
                         <FacebookShareButton url={location.href} title={title}><FacebookIcon size={45} borderRadius={8} /></FacebookShareButton>
@@ -77,6 +76,5 @@ export default function Share({title}: {title: string}) {
                 </div>
             </DialogContent>
         </Dialog>
-      
     );
 }
