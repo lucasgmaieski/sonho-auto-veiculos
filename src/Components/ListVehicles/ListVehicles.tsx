@@ -105,7 +105,7 @@ export default function ListVehicles({vehicles}: Props) {
                 </div>
             </div>
             {vehiclesList[0]?.count > 0 && 
-                <p className="px-2 mb-5">{thousandsMask(vehiclesList[0].count.toString())} {vehiclesList[0].count === 1 ? 'carro encontrado' : 'carros encontrados'}</p>
+                <p className="px-2 mb-5">{thousandsMask(vehiclesList[0].count.toString())} {vehiclesList[0].count === 1 ? 'veículo encontrado' : 'veículos encontrados'}</p>
             }
             <div className={`grid grid-cols-1 ${openFilter ? 'sm:grid-cols-1' : 'sm:grid-cols-2'} md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 gap-y-6 sm:gap-y-4`}>
 

@@ -1,4 +1,3 @@
-import CarCard from "@/Components/CarCard/CarCard";
 import { FaHeart } from "react-icons/fa6";
 import { BsWhatsapp } from "react-icons/bs";
 import BreadcrumbCustom from "@/Components/Breadcrumb/Breadcrumb";
@@ -35,19 +34,19 @@ export default async function PageVeiculos({params}: Props) {
         <div className="mt-[140px] py-12">
             <div className="max-w-7xl w-full mx-auto space-y-10 px-3 sm:px-6">
                 <BreadcrumbCustom itens={[ {url:'veiculos', title:'Veículos'}, {url: 'nissan-sentra-advance-cvt-2', title: 'Nissan Sentra Advance'}] }/>
-                <div className="flex flex-wrap md:flex-nowrap gap-10">
-                    <div className="w-full md:w-1/2">
+                <div className="flex flex-wrap lg:flex-nowrap gap-10">
+                    <div className="w-full lg:w-1/2">
                         <SliderVehicle images={galeriaArray}/>
                     </div>
-                    <div className="w-full md:w-1/2 space-y-6">
+                    <div className="w-full lg:w-1/2 space-y-6">
                         <h1 className="font-bold text-2xl">{vehicle?.title}</h1>
                         <div className="flex justify-between">
                             <span className="font-semibold text-2xl text-blue-600">R$ {thousandsMask(vehicle.acf.preco.toString())}</span>
                             <div className="flex items-center gap-1">Compartilhar: <Share title={vehicle.title}/></div>
                         </div>
-                        <div className="grid grid-cols-3 gap-3">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 xsm:gap-3">
                         {vehicle.acf.combustivel &&
-                                <div className="text-sm font-semibold border-2 rounded-lg p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1">
+                                <div className="text-sm font-semibold border-2 rounded-lg p-2 xsm:p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1">
                                     <div className="dark:bg-slate-800 bg-slate-200 rounded-full">
                                         <svg className="w-10 h-10 p-2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M22.34 9.33L20.34 8.33C19.97 8.15 19.51 8.29 19.33 8.66C19.14 9.04 19.29 9.49 19.66 9.67L21.25 10.46V15.25L17.5 15.26V5C17.5 3 16.16 2 14.5 2H6.5C4.84 2 3.5 3 3.5 5V21.25H2C1.59 21.25 1.25 21.59 1.25 22C1.25 22.41 1.59 22.75 2 22.75H19C19.41 22.75 19.75 22.41 19.75 22C19.75 21.59 19.41 21.25 19 21.25H17.5V16.76L22 16.75C22.42 16.75 22.75 16.41 22.75 16V10C22.75 9.72 22.59 9.46 22.34 9.33ZM6 6.89C6 5.5 6.85 5 7.89 5H13.12C14.15 5 15 5.5 15 6.89V8.12C15 9.5 14.15 10 13.11 10H7.89C6.85 10 6 9.5 6 8.11V6.89ZM6.5 12.25H9.5C9.91 12.25 10.25 12.59 10.25 13C10.25 13.41 9.91 13.75 9.5 13.75H6.5C6.09 13.75 5.75 13.41 5.75 13C5.75 12.59 6.09 12.25 6.5 12.25Z" fill="#90A3BF"/>
@@ -60,7 +59,7 @@ export default async function PageVeiculos({params}: Props) {
                                 </div>
                             }
                             {vehicle.acf.transmissao &&
-                                <div className="text-sm font-semibold border-2 rounded-lg p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1">
+                                <div className="text-sm font-semibold border-2 rounded-lg p-2 xsm:p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1">
                                     <div className="dark:bg-slate-800 bg-slate-200 rounded-full">
                                         <svg className="w-10 h-10 p-2" width="11" height="13" viewBox="0 0 110 136" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M109.935 15.8383C109.935 7.17396 102.879 0.125153 94.2154 0.125153C85.5513 0.125153 78.5027 7.17396 78.5027 15.8383C78.5027 23.271 83.6896 29.494 90.6223 31.124V64.1512H58.9724V31.124C65.9051 29.494 71.0919 23.271 71.0919 15.8383C71.0919 7.17396 64.0432 0.125153 55.3719 0.125153C46.7078 0.125153 39.6664 7.17396 39.6664 15.8383C39.6664 23.271 44.8461 29.494 51.7788 31.124V64.1512H20.129V31.124C27.0617 29.494 32.2485 23.271 32.2485 15.8383C32.2485 7.17396 25.1999 0.125153 16.5359 0.125153C7.87905 0.125153 0.823242 7.17396 0.823242 15.8383C0.823242 23.271 6.01007 29.494 12.9428 31.124V104.285C6.01007 105.908 0.823242 112.138 0.823242 119.571C0.823242 128.228 7.87905 135.277 16.5359 135.277C25.1999 135.277 32.2485 128.228 32.2485 119.571C32.2485 112.138 27.0617 105.908 20.129 104.285V71.3377H51.7788V104.285C44.8461 105.908 39.6664 112.138 39.6664 119.571C39.6664 128.228 46.7078 135.277 55.3719 135.277C64.0432 135.277 71.0919 128.228 71.0919 119.571C71.0919 112.138 65.9051 105.908 58.9724 104.285V71.3377H97.9171V64.1512H97.8085V31.124C104.741 29.494 109.935 23.271 109.935 15.8383ZM46.8455 15.8383C46.8455 11.1366 50.6704 7.30438 55.3719 7.30438C60.0806 7.30438 63.9054 11.1366 63.9054 15.8383C63.9054 20.5471 60.0806 24.3722 55.3719 24.3722C50.6704 24.3722 46.8455 20.5471 46.8455 15.8383ZM8.002 15.8383C8.002 11.1366 11.8344 7.30438 16.5359 7.30438C21.2373 7.30438 25.0694 11.1366 25.0694 15.8383C25.0694 20.5471 21.2373 24.3722 16.5359 24.3722C11.8344 24.3722 8.002 20.5471 8.002 15.8383ZM25.0694 119.571C25.0694 124.265 21.2373 128.098 16.5359 128.098C11.8344 128.098 8.002 124.265 8.002 119.571C8.002 114.862 11.8344 111.037 16.5359 111.037C21.2373 111.037 25.0694 114.862 25.0694 119.571ZM63.9054 119.571C63.9054 124.265 60.0806 128.098 55.3719 128.098C50.6704 128.098 46.8455 124.265 46.8455 119.571C46.8455 114.862 50.6704 111.037 55.3719 111.037C60.0806 111.037 63.9054 114.862 63.9054 119.571ZM85.6815 15.8383C85.6815 11.1366 89.5139 7.30438 94.2154 7.30438C98.9168 7.30438 102.749 11.1366 102.749 15.8383C102.749 20.5471 98.9168 24.3722 94.2154 24.3722C89.5139 24.3722 85.6815 20.5471 85.6815 15.8383Z" fill="#90A3BF"/>
@@ -73,7 +72,7 @@ export default async function PageVeiculos({params}: Props) {
                                 </div>
                             }
                             {vehicle.acf.direcao &&
-                                <div className="text-sm font-semibold border-2 rounded-lg p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1">
+                                <div className="text-sm font-semibold border-2 rounded-lg p-2 xsm:p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1">
                                     <div className="dark:bg-slate-800 bg-slate-200 rounded-full">
                                         <svg className="w-10 h-10 p-2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M15 22.75H9C3.57 22.75 1.25 20.43 1.25 15V9C1.25 3.57 3.57 1.25 9 1.25H15C20.43 1.25 22.75 3.57 22.75 9V15C22.75 20.43 20.43 22.75 15 22.75ZM9 2.75C4.39 2.75 2.75 4.39 2.75 9V15C2.75 19.61 4.39 21.25 9 21.25H15C19.61 21.25 21.25 19.61 21.25 15V9C21.25 4.39 19.61 2.75 15 2.75H9Z" fill="#90A3BF"/>
@@ -92,7 +91,7 @@ export default async function PageVeiculos({params}: Props) {
                                 </div>
                             }
                             {vehicle.acf.ano &&
-                                <div className="text-sm font-semibold border-2 rounded-lg p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1">
+                                <div className="text-sm font-semibold border-2 rounded-lg p-2 xsm:p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1">
                                     <div className="dark:bg-slate-800 bg-slate-200 rounded-full">
                                         <svg className="w-10 h-10 p-2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M8 2V5" stroke="#90A3BF" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
@@ -114,7 +113,7 @@ export default async function PageVeiculos({params}: Props) {
                                 </div>
                             }
                             {vehicle.acf.quilometros &&
-                                <div className="text-sm font-semibold border-2 rounded-lg p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1">
+                                <div className="text-sm font-semibold border-2 rounded-lg p-2 xsm:p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1">
                                     <div className="dark:bg-slate-800 bg-slate-200 rounded-full">
                                         <svg className="w-10 h-10 p-2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="12" cy="12" r="10" stroke="#90A3BF" strokeWidth="0.5"/>
@@ -129,7 +128,7 @@ export default async function PageVeiculos({params}: Props) {
                                 </div>
                             }
                             {vehicle.acf.localizacao &&
-                                <div className="text-sm font-semibold border-2 rounded-lg p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1 w-100">
+                                <div className="text-sm font-semibold border-2 rounded-lg p-2 xsm:p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1 w-100">
                                     <div className="dark:bg-slate-800 bg-slate-200 rounded-full">
                                         <svg className="w-10 h-10 p-2" width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M8 4.28576C7.2808 4.28576 6.57774 4.49522 5.97974 4.88766C5.38175 5.2801 4.91567 5.83788 4.64044 6.49048C4.36521 7.14308 4.2932 7.86118 4.43351 8.55398C4.57382 9.24678 4.92015 9.88315 5.4287 10.3826C5.93726 10.8821 6.5852 11.2223 7.29058 11.3601C7.99597 11.4979 8.72712 11.4271 9.39158 11.1568C10.056 10.8865 10.624 10.4287 11.0235 9.84142C11.4231 9.2541 11.6364 8.56359 11.6364 7.85722C11.6364 6.91001 11.2532 6.00159 10.5713 5.33182C9.88935 4.66204 8.96442 4.28576 8 4.28576ZM8 10.0001C7.56848 10.0001 7.14665 9.87442 6.78785 9.63896C6.42905 9.4035 6.1494 9.06883 5.98426 8.67727C5.81913 8.28571 5.77592 7.85484 5.86011 7.43917C5.94429 7.02349 6.15209 6.64166 6.45722 6.34198C6.76235 6.04229 7.15112 5.8382 7.57435 5.75552C7.99758 5.67283 8.43627 5.71527 8.83495 5.87746C9.23362 6.03965 9.57438 6.31431 9.81412 6.6667C10.0539 7.0191 10.1818 7.4334 10.1818 7.85722C10.1818 8.42555 9.95195 8.9706 9.54278 9.37247C9.13361 9.77433 8.57865 10.0001 8 10.0001ZM8 0C5.87901 0.00236318 3.84557 0.830934 2.3458 2.30394C0.846033 3.77694 0.00240612 5.77408 0 7.85722C0 10.6608 1.31909 13.6323 3.81818 16.4511C4.94111 17.7248 6.20496 18.8717 7.58636 19.8707C7.70865 19.9549 7.85433 20 8.00364 20C8.15294 20 8.29863 19.9549 8.42091 19.8707C9.79977 18.8713 11.0612 17.7244 12.1818 16.4511C14.6773 13.6323 16 10.6608 16 7.85722C15.9976 5.77408 15.154 3.77694 13.6542 2.30394C12.1544 0.830934 10.121 0.00236318 8 0ZM8 18.393C6.49727 17.2323 1.45455 12.9689 1.45455 7.85722C1.45455 6.15224 2.14415 4.51709 3.37166 3.31149C4.59918 2.10589 6.26404 1.42859 8 1.42859C9.73596 1.42859 11.4008 2.10589 12.6283 3.31149C13.8558 4.51709 14.5455 6.15224 14.5455 7.85722C14.5455 12.9671 9.50273 17.2323 8 18.393Z" fill="#90A3BF"/>
@@ -142,7 +141,7 @@ export default async function PageVeiculos({params}: Props) {
                                 </div>
                             }
                             {vehicle.acf.cor &&
-                                <div className="text-sm font-semibold border-2 rounded-lg p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1 w-100">
+                                <div className="text-sm font-semibold border-2 rounded-lg p-2 xsm:p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1 w-100">
                                     <div className="dark:bg-slate-800 bg-slate-200 rounded-full">
                                         <svg className="w-10 h-10 p-2" stroke="currentColor" fill="#90A3BF" stroke-width="0" viewBox="0 0 512 512" height="160px" width="160px" xmlns="http://www.w3.org/2000/svg"><path d="M416 352c-12.6-.84-21-4-28-12-14-16-14-36 5.49-52.48l32.82-29.14c50.27-44.41 50.27-117.21 0-161.63C389.26 64.14 339.54 48 287.86 48c-60.34 0-123.39 22-172 65.11-90.46 80-90.46 210.92 0 290.87 45 39.76 105.63 59.59 165.64 60h1.84c60 0 119.07-19.5 161.2-56.77C464 390 464 385 444.62 355.56 440 348 431 353 416 352zM112 208a32 32 0 1 1 32 32 32 32 0 0 1-32-32zm40 135a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm40-199a32 32 0 1 1 32 32 32 32 0 0 1-32-32zm64 271a48 48 0 1 1 48-48 48 48 0 0 1-48 48zm72-239a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"></path>
                                         </svg>
@@ -154,7 +153,7 @@ export default async function PageVeiculos({params}: Props) {
                                 </div>
                             }
                             {vehicle.acf.portas &&
-                                <div className="text-sm font-semibold border-2 rounded-lg p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1 w-100">
+                                <div className="text-sm font-semibold border-2 rounded-lg p-2 xsm:p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1 w-100">
                                     <div className="dark:bg-slate-800 bg-slate-200 rounded-full">
                                         <svg className="w-10 h-10 p-2" stroke="currentColor" fill="#90A3BF" stroke-width="0" viewBox="0 0 512 512" height="200px" width="200px" xmlns="http://www.w3.org/2000/svg"><path d="M149.6 41L42.88 254.4c23.8 24.3 53.54 58.8 78.42 97.4 24.5 38.1 44.1 79.7 47.1 119.2h270.3L423.3 41H149.6zM164 64h230l8 192H74l90-192zm86.8 17.99l-141 154.81L339.3 81.99h-88.5zM336 279h64v18h-64v-18z"></path></svg>
                                     </div>
@@ -165,7 +164,7 @@ export default async function PageVeiculos({params}: Props) {
                                 </div>
                             }
                             {vehicle.acf.motor &&
-                                <div className="text-sm font-semibold border-2 rounded-lg p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1 w-100">
+                                <div className="text-sm font-semibold border-2 rounded-lg p-2 xsm:p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1 w-100">
                                     <div className="dark:bg-slate-800 bg-slate-200 rounded-full">
                                     <svg className="w-10 h-10 p-2" fill="#90A3BF" height="80px" width="80px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" 
                                         viewBox="0 0 491.524 491.524">
@@ -201,7 +200,7 @@ export default async function PageVeiculos({params}: Props) {
                                 </div>
                             }
                             {vehicle.acf.tipo.nodes[0].name &&
-                                <div className="text-sm font-semibold border-2 rounded-lg p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1 w-100">
+                                <div className="text-sm font-semibold border-2 rounded-lg p-2 xsm:p-3 dark:text-neutral-200 text-slate-900 flex items-center gap-1 w-100">
                                     <div className="dark:bg-slate-800 bg-slate-200 rounded-full">
                                     <svg className="w-10 h-10 p-2" stroke="currentColor" fill="#90A3BF" stroke-width="0" viewBox="0 0 256 256" height="200px" width="200px" xmlns="http://www.w3.org/2000/svg"><path d="M240,112H211.31L168,68.69A15.86,15.86,0,0,0,156.69,64H44.28A16,16,0,0,0,31,71.12L1.34,115.56A8.07,8.07,0,0,0,0,120v48a16,16,0,0,0,16,16H33a32,32,0,0,0,62,0h66a32,32,0,0,0,62,0h17a16,16,0,0,0,16-16V128A16,16,0,0,0,240,112ZM44.28,80H156.69l32,32H23ZM64,192a16,16,0,1,1,16-16A16,16,0,0,1,64,192Zm128,0a16,16,0,1,1,16-16A16,16,0,0,1,192,192Z"></path></svg>
                                     </div>
@@ -214,16 +213,14 @@ export default async function PageVeiculos({params}: Props) {
                         </div>
                         <div className="flex gap-2 pt-4">
                             <div className="flex items-center gap-1 text-xl border-2 border-blue-600  p-3 rounded-lg"> <FaHeart className="w-[28px] h-[28px] "/>Favorito</div>
-                            <Link href={``} className="flex items-center w-fit gap-2 text-xl bg-blue-600 text-white p-3 rounded-lg"> <BsWhatsapp className="text-4xl text-white"/> Fale com o vendedor</Link>
+                            <Link href={``} className="flex items-center w-fit gap-2 text-xl bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition-colors"> <BsWhatsapp className="text-4xl text-white"/> Fale com o vendedor</Link>
                         </div>
                     </div>
                 </div>
                 {vehicle.content &&
                     <div className="w-full space-y-4">
                         <h3 className="font-bold text-3xl">Descrição</h3>
-                        <div>
-                            {vehicle.content}
-                        </div>
+                        <div dangerouslySetInnerHTML={{ __html: vehicle.content }}></div>
                     </div>
                 }
 
@@ -235,14 +232,12 @@ export default async function PageVeiculos({params}: Props) {
                         ))}
                     </div>
                 </div>
-
-
             </div>
             <section className="w-full mx-auto text-center dark:bg-slate-800 bg-blue-200 p-10 space-y-5 mt-16">
                 <h3 className="font-bold text-4xl">Veja mais carros desta <span className="text-blue-600">marca</span> ou <span className="text-blue-600">carroceria</span></h3>
                 <div className="flex justify-center gap-4">
-                    <Link href={`/veiculos?marca=${vehicle.acf.marca.nodes[0].name}`} className="flex items-center gap-2 text-xl bg-blue-600 text-white p-3 rounded-lg"> {vehicle.acf.marca.nodes[0].name}</Link>
-                    <Link href={`/veiculos?tipo=${vehicle.acf.tipo.nodes[0].name}`} className="flex items-center gap-2 text-xl bg-blue-600 text-white p-3 rounded-lg">{vehicle.acf.tipo.nodes[0].name}</Link>
+                    <Link href={`/veiculos?marca=${vehicle.acf.marca.nodes[0].name}`} className="text-xl bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition-colors"> {vehicle.acf.marca.nodes[0].name}</Link>
+                    <Link href={`/veiculos?tipo=${vehicle.acf.tipo.nodes[0].name}`} className="text-xl bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition-colors">{vehicle.acf.tipo.nodes[0].name}</Link>
                 </div>
             </section>
         </div>

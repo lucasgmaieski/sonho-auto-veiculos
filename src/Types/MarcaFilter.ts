@@ -2,7 +2,7 @@ export type MarcaFilter = {
     name: string;
     slug: string;
     count: number | null;
-    marcas: {
+    logoposts: {
         logo: {
             node: {
                 mediaItemUrl: string;
