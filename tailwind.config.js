@@ -15,6 +15,14 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    screens: {
+      "xsm": "440px",
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -69,11 +77,21 @@ module.exports = {
           from: { opacity: 0 },
           to: { opacity: 1 },
         },
+        "fadeeoutmenumobile": {
+          from: { opacity: 0, maxWidth: 0},
+          to: { opacity: 1, maxWidth: '100vw'},
+        },
+        "fadeinmenumobile": {
+          from: { opacity: 1, maxWidth: '100vw'},
+          to: { opacity: 0, maxWidth: 0},
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fadeeout": "fadeeout 0.6s ease-out",
+        "fadeeoutmenumobile": "fadeeoutmenumobile 0.3s ease-out",
+        "fadeinmenumobile": "fadeinmenumobile 0.3s ease-out",
       },
     },
   },
