@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaMapLocationDot, FaSquareFacebook } from "react-icons/fa6";
+import { FaMapLocationDot, FaSquareFacebook, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { BsInstagram } from "react-icons/bs";
 import LinkFooter from "./LinkFooter";
 import { InfoExtras } from "@/Types/InfoExtras";
@@ -36,12 +36,26 @@ export default async function Footer() {
                 <div className="flex flex-col font-normal text-sm">
                     <h3 className="font-bold text-base mb-2">Social</h3>
                     <div className="flex gap-2 text-xl">
-                        <Link href="https://instagram.com.br/sonhoautoveiculos" className="group">
-                            <BsInstagram className="group-hover:text-blue-600 text-2xl transition-colors"/>
-                        </Link>
-                        <Link href="https://facebook.com.br/sonhoautoveiculos" className="group">
-                            <FaSquareFacebook className="group-hover:text-blue-600 text-2xl transition-colors"/>
-                        </Link>
+                        {infoExtras?.instagram &&
+                            <Link href={infoExtras?.instagram} className="group">
+                                <BsInstagram className="group-hover:text-blue-600 text-2xl transition-colors"/>
+                            </Link>
+                        }
+                        {infoExtras?.facebook &&
+                            <Link href={infoExtras?.facebook} className="group">
+                                <FaSquareFacebook className="group-hover:text-blue-600 text-2xl transition-colors"/>
+                            </Link>
+                        }
+                        {infoExtras?.youtube &&
+                            <Link href={infoExtras?.youtube} className="group">
+                                <FaYoutube className="group-hover:text-blue-600 text-2xl transition-colors"/>
+                            </Link>
+                        }
+                        {infoExtras?.twitter &&
+                            <Link href={infoExtras?.twitter} className="group">
+                                <FaXTwitter className="group-hover:text-blue-600 text-2xl transition-colors"/>
+                            </Link>
+                        }
                     </div>
                 </div>
             </div>
