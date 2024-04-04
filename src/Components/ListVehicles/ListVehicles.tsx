@@ -40,31 +40,20 @@ export default function ListVehicles({vehicles}: Props) {
         setIsMounted(false)
     }, [ordering]);
 
+    async function getVehiclesSearch() {
+        const vehiclesSearch: VehicleCustomType[] = await api.getVehiclesByParamsGQL(urlParams);
+        console.log('ta trasendo certo até aqui')
+        console.log(vehiclesSearch);
+        
+        setVehiclesList(vehiclesSearch || []);
+    }
     useEffect(()=> {
+        console.log("ele entra aqui caraiiiiiiiiii", urlParams.toString())
         getVehiclesSearch();
-        async function getVehiclesSearch() {
-            const vehiclesSearch: VehicleCustomType[] = await api.getVehiclesByParamsGQL(urlParams);
-            console.log('ta trasendo certo até aqui')
-            console.log(vehiclesSearch);
-            
-            setVehiclesList(vehiclesSearch || []);
-        }
     }, [urlParams]);
 
-    // useEffect(() => {
-    //     console.log(window.screen.width)
-    // }, [window.screen.width]);
-    // function toggleFilter() {
-    //     setOpenFilter(!openFilter);
-    // }
     useEffect(() => {
-        // Ao montar o componente, atualize a classe do body com base no valor de openFilterRef
-        // updateBodyClass();
-
-        // Adicione um listener de redimensionamento para atualizar openFilterRef em telas de celular
         window.addEventListener('resize', handleResize);
-
-        // Função de limpeza para remover o listener de redimensionamento quando o componente é desmontado
         return () => {
             window.removeEventListener('resize', handleResize);
         };

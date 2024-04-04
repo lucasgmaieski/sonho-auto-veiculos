@@ -12,7 +12,7 @@ export default async function Footer() {
         <footer className="flex flex-col gap-4 p-4 lg:gap-8 lg:p-16 mt-auto">
             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[2.4fr_2fr_1.2fr_1.2fr_.6fr] justify-between gap-4 flex-wrap">
                 <Link href={process.env.NEXT_PUBLIC_SITE_URL || '/'} className="w-fit block"><img className="w-32" src="/logo.svg" alt="" /></Link>
-                {infoExtras.endereco.nome &&
+                {infoExtras?.endereco?.nome &&
                     <div className="font-normal text-sm">
                         <h3 className="font-bold text-base mb-2">Localização</h3>
                         <address className="flex items-center gap-2 group">
@@ -29,8 +29,8 @@ export default async function Footer() {
                 </div>
                 <div className="flex flex-col font-normal text-sm">
                     <h3 className="font-bold text-base mb-2">Acesso Rápido</h3>
-                    <LinkFooter href="/veiculos?ano=0_0">Carros 0Km</LinkFooter>
-                    <LinkFooter href="/veiculos?condicao=usado">Carros usados</LinkFooter>
+                    <a href="/veiculos?quilometros=0_0" className="hover:text-blue-500 hover:font-medium transition-all">Carros 0Km</a>
+                    <a href="/veiculos?condicao=Usado" className="hover:text-blue-500 hover:font-medium transition-all">Carros usados</a>
                     <LinkFooter href="/noticias">Notícias</LinkFooter>
                 </div>
                 <div className="flex flex-col font-normal text-sm">

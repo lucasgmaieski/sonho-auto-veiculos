@@ -147,7 +147,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                             .map((item,index) => (
                                 <div key={index} className={`rounded-lg p-1 text-center border-blue-500 ${(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value) ? 'border' : ''}`}>
                         
-                                    <Checkbox className="hidden"  id={item.name} checked={(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value)} onCheckedChange={()=>handleSetFilterCheck('marca',item.name)}/>
+                                    <Checkbox className="hidden"  id={item.name} checked={(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value) ?? false} onCheckedChange={()=>handleSetFilterCheck('marca',item.name)}/>
                                     <label htmlFor={item.name}>
                                         <img src={item?.logoposts?.logo?.node?.mediaItemUrl} alt={item?.name} />
                                         {item?.name} <br /><span className="opacity-80"> ({item?.count ?? '0'})</span>
@@ -179,7 +179,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                                 .slice(0, 4)
                                 .map(([valor, contagem]) => (
                                 <div key={valor} className="space-x-2">
-                                    <Checkbox  id={valor} checked={(statusFilterItens.find(item => item.key === valor )?.value)} onCheckedChange={()=>handleSetFilterCheck(campo,valor)}/>
+                                    <Checkbox  id={valor} checked={(statusFilterItens.find(item => item.key === valor )?.value) ?? false} onCheckedChange={()=>handleSetFilterCheck(campo,valor)}/>
                                     <label htmlFor={valor} className="">
                                         {valor}
                                         <span className="opacity-80"> ({contagem})</span>
