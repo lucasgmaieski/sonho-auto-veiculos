@@ -2,22 +2,24 @@
 import { useFormContact } from "@/app/hooks/useFormContact";
 import { ErrorMessage } from "./ErrorMessage";
 import { Checkbox } from "@/Components/ui/checkbox"
+import { RiMailSendFill } from "react-icons/ri";
+
 import Link from "next/link";
 
 type Params = {
 
 }
 export default function FormContact() {
-    const { errors, handleForm, handleSubmit, register, loading, message, handleInputChange, privacyCheck, setPrivacyCheck } = useFormContact()
+    const { errors, handleForm, handleSubmit, register, loading, message, success, handleInputChange, privacyCheck, setPrivacyCheck } = useFormContact()
     return (
-        <form onSubmit={handleSubmit(handleForm)} className=' rounded-[18px] mb-7 max-[360px]:px-4'>
+        <form onSubmit={handleSubmit(handleForm)} className=' rounded-[18px] lg:mb-7 '>
             <label className='flex gap-2 flex-col pb-8 w-full'>
                 <input type="text" id="name"  {...register('name')} placeholder='Nome completo' onChange={handleInputChange} className='w-full bg-transparent border-2 dark:border-slate-600 border-slate-300 rounded-lg py-2 px-4 max-[360px]:text-xl text-2xl sm:text-2xl  dark:placeholder:text-white/60 placeholder:text-slate-400 dark:focus-visible:border-blue-600 focus-visible:border-blue-600 focus-visible:outline-none read-only:dark:focus-visible:border-slate-600 read-only:focus-visible:border-slate-300' readOnly={loading}/>
                 {errors.name && (
                     <ErrorMessage color='#fff' message={errors.name?.message} />
                 )}
             </label>
-            <div className="flex flex-col lg:flex-row gap-4">
+            <div className="flex flex-col lg:flex-row lg:gap-4">
                 <label className='flex gap-2 flex-col pb-8 w-full'>
                     <input type="text" id="state"  {...register('state')} placeholder='Estado' onChange={handleInputChange} className='w-full bg-transparent border-2 dark:border-slate-600 border-slate-300 rounded-lg py-2 px-4 max-[360px]:text-xl text-2xl sm:text-2xl  dark:placeholder:text-white/60 placeholder:text-slate-400 dark:focus-visible:border-blue-600 focus-visible:border-blue-600 focus-visible:outline-none read-only:dark:focus-visible:border-slate-600 read-only:focus-visible:border-slate-300' readOnly={loading}/>
                     {errors.state && (
@@ -31,7 +33,7 @@ export default function FormContact() {
                     )}
                 </label>
             </div>
-            <div className="flex flex-col lg:flex-row gap-4">
+            <div className="flex flex-col lg:flex-row lg:gap-4">
                 <label className='flex gap-2 flex-col pb-8 w-full'>
                     <input type="text" id="email"  {...register('email')} placeholder='E-mail' onChange={handleInputChange} className='w-full bg-transparent border-2 dark:border-slate-600 border-slate-300 rounded-lg py-2 px-4 max-[360px]:text-xl text-2xl sm:text-2xl  dark:placeholder:text-white/60 placeholder:text-slate-400 dark:focus-visible:border-blue-600 focus-visible:border-blue-600 focus-visible:outline-none read-only:dark:focus-visible:border-slate-600 read-only:focus-visible:border-slate-300' readOnly={loading}/>
                     {errors.email && (
@@ -57,12 +59,12 @@ export default function FormContact() {
             </label> */}
             <div className="space-x-2 mb-5">
                 <Checkbox  id="privacy" checked={privacyCheck} onCheckedChange={() => setPrivacyCheck(!privacyCheck)} disabled={loading} className="data-[state=checked]:bg-blue-500 data-[state=checked]:text-white data-[state=checked]:border-none"/>
-                <label htmlFor="privacy" className="">
+                <label htmlFor="privacy" className="cursor-pointer">
                     Ao enviar o formulário, eu concordo com as <Link href="/politica-de-privacidade" className="underline hover:text-blue-500">políticas de privacidade</Link> do Sonho Auto Veículos.
                 </label>
             </div>
     
-            <button type="submit" className='relative bg-blue-500 text-white py-2 px-3 mt-3 rounded-lg w-fit block ml-auto uppercase text-xl sm:text-2xl font-semibold sm:py-3 sm:px-6 disabled:opacity-60 hover:bg-blue-600 transition-colors' disabled={loading || !privacyCheck}>
+            <button type="submit" className='relative bg-blue-500 text-white py-2 px-3 mt-6 rounded-lg w-fit block ml-auto uppercase text-xl sm:text-2xl font-semibold sm:py-3 sm:px-6 disabled:opacity-60 hover:bg-blue-600 transition-colors' disabled={loading || !privacyCheck}>
                 {loading ? 
                     <> 
                         Enviando...
@@ -71,11 +73,11 @@ export default function FormContact() {
                 :
                     <>
                         Enviar
-                        {/* <PiSignInFill className="absolute top-1/2 right-1/2 translate-x-[6ch] -translate-y-1/2"/> */}
+                        <RiMailSendFill className="inline ml-3 "/>
                     </>
                 }
             </button>
-            <p>{message}</p>
+            <p className={`${message !== '' ? 'block' : 'hidden'} animate-fadeeout mt-7 border-2 ${success ? 'dark:border-green-500 border-green-400 dark:bg-green-400 bg-green-300' : 'dark:border-red-700 border-red-300 dark:bg-red-900 bg-red-200' }  rounded-lg w-fit p-3 mx-auto`}>{message}</p>
         </form>
     );
 }
