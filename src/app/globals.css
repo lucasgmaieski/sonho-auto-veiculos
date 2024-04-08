@@ -16,6 +16,7 @@ width: 100% !important;
 }
 .slider-card .swiper {
 padding: 0;
+width: 100%;
 }
 .slider-card .swiper-button-prev,
 .slider-card .swiper-button-next {

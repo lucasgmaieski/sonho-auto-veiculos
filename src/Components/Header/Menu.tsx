@@ -2,19 +2,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-  } from "@/Components/ui/popover";
-  import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
-  } from "@/Components/ui/accordion"
+} from "@/Components/ui/accordion"
 import { getUrl } from "@/lib/utils";
-import { FaHeart } from "react-icons/fa";
 import { ThemeSwitcher } from "@/app/ThemeSwitcher";
+import { FavoriteMenu } from "../Favorites/FavoriteMenu";
 
 export function Menu({menuPrincipal}: {menuPrincipal: MenuClassic[]}) {
     const [menuOpen, setMenuOpen] = useState<boolean>()
@@ -27,7 +22,7 @@ export function Menu({menuPrincipal}: {menuPrincipal: MenuClassic[]}) {
             <div className=" py-6 flex flex-col justify-center md:hidden z-20">
                 <div className="relative py-3 sm:max-w-xl mx-auto">
                     <nav x-data="{ open: false }">
-                        <button className="text-gray-500 w-10 h-10 relative focus:outline-none bg-white" onClick={handleMenu}>
+                        <button className="text-gray-500 w-10 h-10 relative focus:outline-none dark:bg-slate-800 bg-slate-200 rounded-lg" onClick={handleMenu}>
                             <span className="sr-only">Open main menu</span>
                             <div className="block w-5 absolute left-1/2 top-1/2   transform  -translate-x-1/2 -translate-y-1/2">
                                 <span aria-hidden="true" className={`block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out ${menuOpen ? 'rotate-45' : '-translate-y-1.5'}`}></span>
@@ -61,22 +56,12 @@ export function Menu({menuPrincipal}: {menuPrincipal: MenuClassic[]}) {
                                     </AccordionItem>
                                 </Accordion>
                                 :
-                                <Link href={getUrl(menu.url)}>{menu.label}</Link> 
+                                <Link href={getUrl(menu.url)} className="hover:underline transition-transform">{menu.label}</Link> 
                             }
                         </li>
                     ))}
                     <li className="py-2">
-                    <Popover>
-                        <PopoverTrigger><FaHeart className="w-[28px] h-[28px] text-red-500"/></PopoverTrigger>
-                        <PopoverContent>
-                            <ul>
-                                <li>ford focus R$ 35000</li>
-                                <li>ford focus R$ 35000</li>
-                                <li>ford focus R$ 35000</li>
-                                <li>ford focus R$ 35000</li>
-                            </ul>
-                        </PopoverContent>
-                    </Popover>
+                        <FavoriteMenu />
                     </li>
                     <li className="py-2">
                         <div className="flex justify-start items-start">

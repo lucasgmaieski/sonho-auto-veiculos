@@ -33,10 +33,9 @@ export default function CarCard({vehicle, home}: Props) {
         <div className="flex items-center justify-center bg-transparent p-2 slider-card">
             <div className="mx-auto w-full h-full">
                 <div className="border-[1px] dark:border-blue-900 border-blue-200 rounded-lg dark:bg-slate-800 bg-slate-100 p-2 shadow duration-150 hover:scale-[102%] hover:shadow-md h-full flex flex-col">
-                    <div className="flex items-start justify-between px-1 gap-1">
+                    <div className="flex items-start justify-between p-1 gap-1">
                         <a href={getUrl(vehicle.link)} className="font-bold dark:text-neutral-200 text-slate-900 line-clamp-1" title={vehicle.title}>{vehicle.title}</a>
-                        <p className="py-0.5 text-lg font-semibold text-white">🤍</p>
-                        <FavoriteToggleButton slug={vehicle.slug} title={vehicle.title}/>
+                        <FavoriteToggleButton vehicle={vehicle}/>
                     </div>
                     {/* <img className="w-full rounded-lg object-cover object-center" src="../../../car.png" alt="product" /> */}
                     <SliderCard images={galeria as string[]}/>
@@ -114,7 +113,7 @@ export default function CarCard({vehicle, home}: Props) {
                                 </div>
                             }
                         </div>
-                        <div className="my-4 flex flex-wrap items-center justify-between px-2 space-y-2">
+                        <div className="my-4 flex flex-wrap items-center justify-between px-2 gap-1">
                             {vehicle.acf.preco &&
                                 <p className="text-2xl font-semibold dark:text-neutral-200 text-slate-900">R$ {thousandsMask(vehicle.acf.preco.toString())}</p>
                             }

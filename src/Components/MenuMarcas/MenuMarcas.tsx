@@ -74,8 +74,8 @@ export default function MenuMarcas() {
                 {menu && menu.map((item: any, index: number) => (
                     <SwiperSlide key={index} style={{width: 'calc('+ (sizeItem) + '% - 7px)'}}>
                         <Link key={index} href={`${process.env.NEXT_PUBLIC_SITE_URL}/veiculos?marca=${item.nome}`} className="relative max-w-[190px] m-auto aspect-[1/1] p-1 rounded-full flex flex-col justify-center overflow-hidden">
-                            <div className="m-1 z-100 overflow-hidden rounded-full border border-gray-200 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:opacity-70">
-                                <img src={item.logo} className="animate-fade-in block w-full aspect-[1/1] scale-100 transform object-cover object-center " alt="" />
+                            <div className="m-1 p-4 z-100 overflow-hidden rounded-full border border-gray-200 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:bg-slate-800 bg-slate-100">
+                                <img src={item.logo} className="animate-fade-in block w-full aspect-[1/1] scale-100 transform  object-center object-contain" alt="" />
                             </div>
                         </Link>
                     </SwiperSlide>
