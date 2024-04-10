@@ -4,12 +4,13 @@ import { BsInstagram } from "react-icons/bs";
 import LinkFooter from "./LinkFooter";
 import { InfoExtras } from "@/Types/InfoExtras";
 import api from "@/api";
+import { WhatsappButton } from "../WhatsappButton/WhatsappButton";
 
 export default async function Footer() {
     const infoExtras:InfoExtras = await api.getOptionsInfoExtrasGQL();
 
     return (
-        <footer className="flex flex-col gap-4 p-4 lg:gap-8 lg:p-16 mt-auto">
+        <footer className="relative flex flex-col gap-4 p-4 lg:gap-8 lg:p-16 mt-auto container">
             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[2.4fr_2fr_1.2fr_1.2fr_.6fr] justify-between gap-4 flex-wrap">
                 <Link href={process.env.NEXT_PUBLIC_SITE_URL || '/'} className="w-fit block"><img className="w-32" src="/logo.svg" alt="" /></Link>
                 {infoExtras?.endereco?.nome &&
@@ -31,7 +32,7 @@ export default async function Footer() {
                     <h3 className="font-bold text-base mb-2">Acesso Rápido</h3>
                     <a href="/veiculos?quilometros=0_0" className="hover:text-blue-500 hover:font-medium transition-all">Carros 0Km</a>
                     <a href="/veiculos?condicao=Usado" className="hover:text-blue-500 hover:font-medium transition-all">Carros usados</a>
-                    <LinkFooter href="/noticias">Notícias</LinkFooter>
+                    <LinkFooter href="/favoritos">Favoritos</LinkFooter>
                 </div>
                 <div className="flex flex-col font-normal text-sm">
                     <h3 className="font-bold text-base mb-2">Social</h3>
@@ -70,6 +71,7 @@ export default async function Footer() {
                     </Link>
                 </div>
             </div>
+            <WhatsappButton number={infoExtras.telefone1}/>
         </footer>
     );
 }
