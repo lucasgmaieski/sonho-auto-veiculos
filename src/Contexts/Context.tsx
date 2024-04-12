@@ -23,15 +23,21 @@ export const Context = createContext<ContextType>({
 
 export default function ContextProvider({children}: React.PropsWithChildren) {
     const [favorites, dispatch] = useReducer(favoriteReducer, [], () => {
-        const storedFavorites = localStorage.getItem('favorites');
-        return storedFavorites ? JSON.parse(storedFavorites) : [];
+        if (typeof localStorage !== 'undefined') {
+            const storedFavorites = localStorage.getItem('favorites');
+            return storedFavorites ? JSON.parse(storedFavorites) : [];
+        } else {
+            return [];
+        }
     });
     useEffect(() => {
-        localStorage.setItem('favorites', JSON.stringify(favorites));
+        if (typeof localStorage !== 'undefined') {
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        }
     }, [favorites]);
 
     const [urlParams, setUrlParams] = useState('');
-    const [openFilter, setOpenFilter] = useState<boolean>(true);
+    const [openFilter, setOpenFilter] = useState<boolean>(false);
     const changeUrlParams = (newParams: string) => {
         setUrlParams(newParams)
     }

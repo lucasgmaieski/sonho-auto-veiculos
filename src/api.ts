@@ -57,8 +57,8 @@ export default {
                 throw new Error('Failed to fetch data');
             }
             const vehicle = await response.json();
-            console.log("vehicle: ")
-            console.log(vehicle);
+            // console.log("vehicle: ")
+            // console.log(vehicle);
             return vehicle;
         
         } catch (err) {
@@ -74,8 +74,8 @@ export default {
                 throw new Error('Failed to fetch data');
             }
             const vehicle = await response.json();
-            console.log("vehicle: ")
-            console.log(vehicle);
+            // console.log("vehicle: ")
+            // console.log(vehicle);
             return vehicle[0];
         
         } catch (err) {
@@ -231,6 +231,49 @@ export default {
 
         return null;
     },
+    getOptionsInfoExtrasGQL: async () => {
+        try{
+            const query = `
+            query OptInfoExtras {
+                infoExtras {
+                  infosExtras {
+                    email
+                    telefone1
+                    telefone2
+                    youtube
+                    twitter
+                    instagram
+                    facebook
+                    endereco {
+                      nome
+                      link
+                      iframe
+                    }
+                  }
+                }
+              }
+            `
+            const response = await fetch(`${process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}?query=${encodeURIComponent(query)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                cache: 'no-store'
+            });
+            if(!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const infoExtras = await response.json();
+            // console.log("menu principal: ")
+            // console.log(infoExtras.data.infoExtras);
+            return infoExtras.data.infoExtras.infosExtras;
+        
+        } catch (err) {
+            console.log(err);
+        }
+
+        return null;
+    },
     getQtdVehiclesPerFieldGQL: async () => {
         try{
             const query = `
@@ -338,7 +381,7 @@ export default {
             paramsFormated += chave + ': "' + valor + '", ';
         });
         paramsFormated = paramsFormated.slice(0, -2);
-        console.log(paramsFormated);
+        // console.log(paramsFormated);
 
         try{
             const query = `
@@ -380,8 +423,8 @@ export default {
                 throw new Error('Failed to fetch data');
             }
             const vehicle = await response.json();
-            console.log("vehicle: ")
-            console.log(vehicle.data.buscarVeiculos);
+            // console.log("vehicle: ")
+            // console.log(vehicle.data.buscarVeiculos);
             return vehicle.data.buscarVeiculos;
         } catch (err) {
             console.log(err);
@@ -445,8 +488,8 @@ export default {
                 throw new Error('Failed to fetch data');
             }
             const vehicle = await response.json();
-            console.log("vehicle more Popular: ")
-            console.log(vehicle.data.allVeiculosGQL.nodes);
+            // console.log("vehicle more Popular: ")
+            // console.log(vehicle.data.allVeiculosGQL.nodes);
             return vehicle.data.allVeiculosGQL.nodes;
         } catch (err) {
             console.log(err);
@@ -477,8 +520,8 @@ export default {
                 throw new Error('Failed to fetch data');
             }
             const vehicle = await response.json();
-            console.log("vehicle: ")
-            console.log(vehicle.data.allVeiculosGQL.nodes);
+            // console.log("vehicle: ")
+            // console.log(vehicle.data.allVeiculosGQL.nodes);
             return vehicle.data.allVeiculosGQL.nodes;
         } catch (err) {
             console.log(err);
@@ -494,6 +537,7 @@ export default {
                 veiculosGQLBy(slug: "${slug}") {
                     link
                     title
+                    slug
                     id
                     acf {
                         ano
@@ -538,14 +582,15 @@ export default {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                cache: 'no-store'
+                next: {revalidate: 86400}
             });
             if(!response.ok) {
                 throw new Error('Failed to fetch data');
             }
             const vehicle = await response.json();
-            console.log("vehicle: ")
-            console.log(vehicle.data.veiculosGQLBy);
+            // console.log("vehicle: ")
+            // console.log(vehicle.data.veiculosGQLBy);
+            
             return vehicle.data.veiculosGQLBy;
         } catch (err) {
             console.log(err);
@@ -578,8 +623,8 @@ export default {
                 throw new Error('Failed to fetch data');
             }
             const menMarcas = await response.json();
-            console.log("menMarcas: ")
-            console.log(menMarcas.data.opcoespageMenuMarca.acf.itens);
+            // console.log("menMarcas: ")
+            // console.log(menMarcas.data.opcoespageMenuMarca.acf.itens);
             return menMarcas.data.opcoespageMenuMarca.acf.itens;
         
         } catch (err) {
@@ -613,8 +658,8 @@ export default {
                 throw new Error('Failed to fetch data');
             }
             const menuTipos = await response.json();
-            console.log("menuTipos: ")
-            console.log(menuTipos.data.opcoespageMenuTipo.acf.itens);
+            // console.log("menuTipos: ")
+            // console.log(menuTipos.data.opcoespageMenuTipo.acf.itens);
             return menuTipos.data.opcoespageMenuTipo.acf.itens;
         
         } catch (err) {
@@ -631,7 +676,7 @@ export default {
                   nodes {
                     name
                     count
-                    marcas {
+                    logoposts {
                       logo {
                         node {
                           mediaItemUrl
