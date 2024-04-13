@@ -46,7 +46,7 @@ export default function SliderVehicle({images}: {images: string[]}) {
                         src={image}
                         fill
                         alt="Imagem do Veículo"
-                        priority={index <= 4}
+                        priority={false}
                         className='object-cover'
                         sizes="(max-width: 1024px) 23vw, 12vw"
                     />
