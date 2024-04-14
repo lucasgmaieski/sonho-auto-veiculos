@@ -7,6 +7,7 @@ import FilterText from "@/Components/Filters/FilterText";
 import { MarcaFilter } from "@/Types/MarcaFilter";
 import SeeAll from "./SeeAll";
 import { FaAngleRight, FaXmark } from "react-icons/fa6";
+import Image from "next/image";
 
 interface ContagemPorCampo {
     [campo: string]: {
@@ -27,14 +28,12 @@ type Props = {
     marcaFilter: MarcaFilter[];
 }
 
-
 export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
     const [activeSeeAll, setActiveSeeAll] = useState(false);
     const [contentSeeAll, setContentSeeAll] = useState<ContentSeeAllItem>();
     const { urlSearchParams, setQueryParams } = useQueryParams();
     const { urlParams, changeUrlParams, openFilter, toggleFilter } = useContext(Context);
     
-
     const [statusFilterItens, setStatusFilterItens] = useState<StatusFilterItem[]>([]);
 
     const addStatusFilterItem = (key: string, value: boolean) => {
@@ -58,8 +57,6 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
             setStatusFilterItens(novoEstado);
         } else {
             setStatusFilterItens([...statusFilterItens, { key, value: newValue }]);
-            console.log("statusFilterItens");
-            console.log(statusFilterItens);
         }
     };
 
@@ -87,11 +84,25 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
             changeUrlParams(urlSearchParams.toString());
         });
     }, []);
+
     useEffect(() => {
         if(urlParams === '') {
             setStatusFilterItens([])
+        } else {
+            const parametros = urlSearchParams;
+            parametros.forEach((value, key) => {
+                if(value) {
+                    const valueArray = value.split('_');
+                    valueArray.forEach((item) => {
+                        addStatusFilterItem(item, true);
+                    })
+                }
+            });
         }
     }, [urlParams])
+    useEffect(() => {
+        changeUrlParams(urlSearchParams.toString());
+    }, [urlSearchParams])
 
     const handleSetFilterCheck = (field: string, val: string) => {
         const currentField = urlSearchParams.get(field);
@@ -115,7 +126,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
             }
         }
         changeStatusFilterItem(val, newValue);
-        changeUrlParams(urlSearchParams.toString());
+        // changeUrlParams(urlSearchParams.toString());
     }
     const handleSetFilterText = (field: string, valMin?: string, valMax?: string) => {
         const currentField = urlSearchParams.get(field);
@@ -130,11 +141,11 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
             if(newParam === '0_0') newParam = '';
             setQueryParams({ [field]: newParam, ['page']: 1  });
         }
-        changeUrlParams(urlSearchParams.toString());
+        // changeUrlParams(urlSearchParams.toString());
     }
 
     return(
-        <aside className={`dark:bg-slate-800 bg-slate-100 ${openFilter ? 'translate-x-0 sm:min-w-[310px] w-screen h-screen sm:h-full sm:sticky top-0 fixed sm:w-1/5 z-20 sm:z-10' : 'sticky -translate-x-[310px] w-0 h-0'} transition-all`}>
+        <aside className={`dark:bg-slate-800 bg-slate-100 ${openFilter ? 'translate-x-0 sm:min-w-[310px] w-screen h-screen sm:h-full sm:sticky top-0 fixed sm:w-1/5 z-30 sm:z-10' : 'sticky -translate-x-[310px] w-0 h-0'} transition-all`}>
             <div className={`relative overflow-hidden h-full`}>
                 <div className={`overflow-y-auto h-full`}>
                 <button type="button" onClick={() =>toggleFilter(false)} className="absolute right-4 bg-slate-800 p-1 rounded-bl-md inline sm:hidden"><FaXmark className={`text-2xl`}/></button>
@@ -147,9 +158,16 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                             .map((item,index) => (
                                 <div key={index} className={`rounded-lg p-1 text-center border-blue-500 ${(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value) ? 'border' : ''}`}>
                         
-                                    <Checkbox className="hidden"  id={item.name} checked={(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value) ?? false} onCheckedChange={()=>handleSetFilterCheck('marca',item.name)}/>
+                                    <Checkbox aria-label="Checkbox" className="hidden" id={item.name} checked={(statusFilterItens.find(itemFilter => itemFilter.key === item.name )?.value) ?? false} onCheckedChange={()=>handleSetFilterCheck('marca',item.name)}/>
                                     <label htmlFor={item.name}>
-                                        <img src={item?.logoposts?.logo?.node?.mediaItemUrl} alt={item?.name} />
+                                        <Image 
+                                            src={item?.logoposts?.logo?.node?.mediaItemUrl}
+                                            width={75}
+                                            height={75}
+                                            alt={item?.name}
+                                            className='object-cover mx-auto'
+                                            sizes="75px"
+                                        />
                                         {item?.name} <br /><span className="opacity-80"> ({item?.count ?? '0'})</span>
                                     </label>
                                 </div>
@@ -179,7 +197,7 @@ export default function AsideFilters({vehiclesFilter, marcaFilter}: Props) {
                                 .slice(0, 4)
                                 .map(([valor, contagem]) => (
                                 <div key={valor} className="space-x-2">
-                                    <Checkbox  id={valor} checked={(statusFilterItens.find(item => item.key === valor )?.value) ?? false} onCheckedChange={()=>handleSetFilterCheck(campo,valor)}/>
+                                    <Checkbox aria-label="Checkbox" id={valor} checked={(statusFilterItens.find(item => item.key === valor )?.value) ?? false} onCheckedChange={()=>handleSetFilterCheck(campo,valor)}/>
                                     <label htmlFor={valor} className="">
                                         {valor}
                                         <span className="opacity-80"> ({contagem})</span>

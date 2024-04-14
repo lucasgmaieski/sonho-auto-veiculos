@@ -1,7 +1,7 @@
 "use client"
 import { VehicleCustomType } from "@/Types/VehicleCustomType";
 import { useQueryParams } from "@/lib/utils";
-import {useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { IoFilter } from "react-icons/io5";
 import CarCard from "../CarCard/CarCard";
 import { Context } from "@/Contexts/Context";
@@ -18,37 +18,37 @@ import {
   } from "@/Components/ui/select"
 import { thousandsMask } from "@/lib/masks/thousandsMask";
 import { Button } from "../ui/button";
+import CarCardSkeleton from "../CarCard/CarCardSkeleton";
 
 type Props = {
     vehicles: VehicleCustomType[];
 }
 
-
 export default function ListVehicles({vehicles}: Props) {
-    const { urlParams, changeUrlParams, openFilter, toggleFilter } = useContext(Context);
+    const { urlParams, openFilter, toggleFilter } = useContext(Context);
     const { urlSearchParams, setQueryParams, removeQueryParams } = useQueryParams();
-    const [vehiclesList, setVehiclesList] = useState<VehicleCustomType[]>([]);
+    const [vehiclesList, setVehiclesList] = useState<VehicleCustomType[]>(vehicles);
     const [isMounted, setIsMounted] = useState(true);
+    const [loading, setLoading] = useState(true);
     
     const [ordering, setOrdering] = useState<string>(urlSearchParams.get('ord') ?? 'padrao' );
 
     useEffect(() => {
         if(!isMounted){
             setQueryParams({ ['ord']: ordering, ['page']: 1 });
-            changeUrlParams(urlSearchParams.toString());
+            // changeUrlParams(urlSearchParams.toString());
         }
         setIsMounted(false)
     }, [ordering]);
 
     async function getVehiclesSearch() {
+        setLoading(true);
         const vehiclesSearch: VehicleCustomType[] = await api.getVehiclesByParamsGQL(urlParams);
-        console.log('ta trasendo certo até aqui')
-        console.log(vehiclesSearch);
         
         setVehiclesList(vehiclesSearch || []);
+        setLoading(false);
     }
     useEffect(()=> {
-        console.log("ele entra aqui caraiiiiiiiiii", urlParams.toString())
         getVehiclesSearch();
     }, [urlParams]);
 
@@ -59,26 +59,25 @@ export default function ListVehicles({vehicles}: Props) {
         };
     }, []);
     const handleResize = () => {
-        // Defina openFilter como false em telas de celular (por exemplo, largura menor que 768px)
         if (window.innerWidth < 640) {
             toggleFilter(false);
         }
     };
     const handleRemoveFilters = () => {
         removeQueryParams();
-        changeUrlParams('');
+        // changeUrlParams('');
     } 
+
     return(
         <>
             <div className="flex items-center mb-6 px-2 gap-4">
-                <button type="button" onClick={() =>toggleFilter(undefined)}><IoFilter className={`text-2xl`}/></button>
-                {/* Lista - {urlParams} */}
+                <button type="button" onClick={() =>toggleFilter(undefined)} aria-label="Filtros"><IoFilter className={`text-3xl`}/></button>
                 <Button size="sm" className="" type="button" onClick={handleRemoveFilters}>Limpar Filtros</Button>
                 
                 <div className="w-fit flex items-center ml-auto">
                     <label htmlFor="">Ordenar: </label>
                     <Select defaultValue={ordering} onValueChange={setOrdering}>
-                        <SelectTrigger>
+                        <SelectTrigger aria-label="Selecionar">
                             <SelectValue placeholder="Selecione a orndem" />
                         </SelectTrigger>
                         <SelectContent>
@@ -97,14 +96,18 @@ export default function ListVehicles({vehicles}: Props) {
                 <p className="px-2 mb-5">{thousandsMask(vehiclesList[0].count.toString())} {vehiclesList[0].count === 1 ? 'veículo encontrado' : 'veículos encontrados'}</p>
             }
             <div className={`grid grid-cols-1 ${openFilter ? 'sm:grid-cols-1' : 'sm:grid-cols-2'} md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 gap-y-6 sm:gap-y-4`}>
-
-                {vehiclesList.length > 0 && vehiclesList.map((vehicle: VehicleCustomType, index:number) => (
+                {vehiclesList.length > 0 && !loading && vehiclesList.map((vehicle: VehicleCustomType, index:number) => (
                     <CarCard vehicle={vehicle} key={index}/>
                 ))}
-                {!vehiclesList &&
-                    <p>Nenhum vaículo para mostrar!</p>
+                
+                {loading && Array.from({ length: 8 }).map((_, index) => (
+                        <CarCardSkeleton  key={index}/>
+                    ))
                 }
             </div>
+            {!vehiclesList || vehiclesList.length === 0 &&
+                <p className="text-center mt-4 text-xl">Nenhum veículo para mostrar!</p>
+            }
             {vehiclesList[0]?.count > 0 &&
                 <Pagination totalCount={vehiclesList[0]?.count} slug={"/veiculos"} perPage={2}/>
             }
