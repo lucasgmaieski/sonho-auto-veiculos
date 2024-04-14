@@ -40,10 +40,8 @@ export default function CarCard({vehicle, home}: Props) {
                 <div className="border-[1px] dark:border-blue-900 border-blue-200 rounded-lg dark:bg-slate-800 bg-slate-100 p-2 shadow duration-150 hover:scale-[102%] hover:shadow-md h-full flex flex-col">
                     <div className="flex items-start justify-between p-1 gap-1">
                         <a href={getUrl(vehicle.link)} className="font-bold dark:text-neutral-200 text-slate-900 line-clamp-1" title={vehicle.title}>{vehicle.title}</a>
-                        {/* <FavoriteToggleButton vehicle={vehicle}/> */}
                         <DynamicFavoriteToggleButton vehicle={vehicle} extraClass="bg-transparent text-2xl"> </DynamicFavoriteToggleButton>
                     </div>
-                    {/* <img className="w-full rounded-lg object-cover object-center" src="../../../car.png" alt="product" /> */}
                     <SliderCard images={galeria as string[]}/>
                     <div className="flex flex-col flex-1">
                         <div className="my-4 flex flex-wrap content-start justify-start px-2 gap-y-2 gap-x-2 flex-1">

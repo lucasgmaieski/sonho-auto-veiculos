@@ -1,6 +1,6 @@
 import { Context } from "@/Contexts/Context";
 import { VehicleCustomType } from "@/Types/VehicleCustomType";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 export const useFavorite = () => {
     const { dispatch, favorites } = useContext(Context);
@@ -9,11 +9,9 @@ export const useFavorite = () => {
         return favorites.some(favorite => favorite.slug === slug);
     }
     function addFavorite(vehicle: VehicleCustomType) {
-        console.log("ta clicando no add favorito", vehicle)
         dispatch({ type: 'ADD_FAVORITE', payload: vehicle });
     }
     function removeFavorite(slug: string) {
-        console.log("removendo favorito:", slug)
         dispatch({ type: 'REMOVE_FAVORITE', payload: slug });
     }
 

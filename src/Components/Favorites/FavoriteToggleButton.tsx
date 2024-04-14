@@ -14,7 +14,7 @@ export default function FavoriteToggleButton({vehicle, extraClass, children}: Pr
         isInFavorite(vehicle.slug) ? removeFavorite(vehicle.slug) : addFavorite(vehicle);
     }
     return (
-        <button type="button" onClick={toggleFavorite} className={`${extraClass} ${isInFavorite(vehicle.slug) ? 'bg-blue-600 text-white' : 'bg-transparent'}`}>
+        <button aria-label="Favorito" type="button" onClick={toggleFavorite} className={`${extraClass} ${isInFavorite(vehicle.slug) ? 'bg-blue-600 text-white' : 'bg-transparent'}`}>
             {isInFavorite(vehicle.slug) ?
                 <FaHeart className={`py-0.5 `}/>
                 :
