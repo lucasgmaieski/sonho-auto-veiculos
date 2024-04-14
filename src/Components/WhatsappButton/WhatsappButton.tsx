@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { BsWhatsapp } from "react-icons/bs";
 
 export function WhatsappButton({number}: {number: string}) {
     return(

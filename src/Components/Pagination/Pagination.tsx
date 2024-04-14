@@ -15,7 +15,7 @@ type Props = {
 
 const Pagination = ({ totalCount, slug, perPage }: Props) => {
     const { urlSearchParams, setQueryParams } = useQueryParams();
-    const { urlParams, changeUrlParams } = useContext(Context);
+    const { changeUrlParams } = useContext(Context);
     const page = urlSearchParams.get("page") ?? "1";
     const [currentPage, setCurrentPage] = useState(Number(page));
 

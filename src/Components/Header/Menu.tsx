@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Accordion,
     AccordionContent,
@@ -12,20 +12,24 @@ import { ThemeSwitcher } from "@/app/ThemeSwitcher";
 import { FavoriteMenu } from "../Favorites/FavoriteMenu";
 import Image from "next/image";
 
-export function Menu({menuPrincipal}: {menuPrincipal: MenuClassic[]}) {
-    const [menuOpen, setMenuOpen] = useState<boolean>()
+export function Menu({menuPrincipal, menuIsOpen}: {menuPrincipal: MenuClassic[], menuIsOpen: boolean}) {
+    const [menuOpen, setMenuOpen] = useState<boolean>(menuIsOpen)
     function handleMenu() {
         setMenuOpen(!menuOpen)
         document.body.classList.toggle('overflow-hidden');
     }
+    useEffect(() => {
+        setMenuOpen(menuIsOpen)
+        console.log('entra aqui no useEffect do menu')
+    }, [menuIsOpen])
     return (
         <>
-            <div className=" py-6 flex flex-col justify-center md:hidden z-20">
+            <div className=" py-6 flex flex-col justify-center md:hidden z-30">
                 <div className="relative py-3 sm:max-w-xl mx-auto">
                     <nav x-data="{ open: false }">
                         <button className="text-gray-500 w-10 h-10 relative focus:outline-none dark:bg-slate-800 bg-slate-200 rounded-lg" onClick={handleMenu}>
-                            <span className="sr-only">Open main menu</span>
-                            <div className="block w-5 absolute left-1/2 top-1/2   transform  -translate-x-1/2 -translate-y-1/2">
+                            <span className="sr-only">Open menu mobile</span>
+                            <div className="block w-5 absolute left-1/2 top-1/2 transform  -translate-x-1/2 -translate-y-1/2">
                                 <span aria-hidden="true" className={`block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out ${menuOpen ? 'rotate-45' : '-translate-y-1.5'}`}></span>
                                 <span aria-hidden="true" className={`block absolute  h-0.5 w-5 bg-current   transform transition duration-500 ease-in-out ${menuOpen ? 'opacity-0' : ''}`}></span>
                                 <span aria-hidden="true" className={`block absolute  h-0.5 w-5 bg-current transform  transition duration-500 ease-in-out ${menuOpen ? '-rotate-45' : ' translate-y-1.5'}`}></span>

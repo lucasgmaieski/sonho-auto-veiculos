@@ -3,10 +3,10 @@ import api from "@/api"
 import Image from "next/image";
 
 export default async function SobreNos() {
-    const page:PageSobre = await api.getPageByIdGQL(39);
+    const page:PageSobre = await api.getPageByIdGQL(8);
 
     return (
-        <div className="mt-[140px] container pt-10">
+        <div className="mt-[150px] container pt-10 mb-10">
             <h1 className="text-4xl font-bold text-center mb-10">{page.title}</h1>
             <div className="flex flex-wrap items-center justify-center">
 

@@ -6,9 +6,6 @@ import { RiMailSendFill } from "react-icons/ri";
 
 import Link from "next/link";
 
-type Params = {
-
-}
 export default function FormContact() {
     const { errors, handleForm, handleSubmit, register, loading, message, success, handleInputChange, privacyCheck, setPrivacyCheck } = useFormContact()
     return (
@@ -53,12 +50,8 @@ export default function FormContact() {
                     <ErrorMessage color='#fff' message={errors.message?.message} />
                 )}
             </label>
-            {/* <label htmlFor="privacy">
-                <input type="checkbox" name="privacy" id="privacy" />
-                Ao enviar o formulário, eu concordo com as <Link href="/politica-de-privacidade">políticas de privacidade</Link> do Sonho Auto Veículos.
-            </label> */}
             <div className="space-x-2 mb-5">
-                <Checkbox  id="privacy" checked={privacyCheck} onCheckedChange={() => setPrivacyCheck(!privacyCheck)} disabled={loading} className="data-[state=checked]:bg-blue-500 data-[state=checked]:text-white data-[state=checked]:border-none"/>
+                <Checkbox aria-label="Checkbox" id="privacy" checked={privacyCheck} onCheckedChange={() => setPrivacyCheck(!privacyCheck)} disabled={loading} className="data-[state=checked]:bg-blue-500 data-[state=checked]:text-white data-[state=checked]:border-none"/>
                 <label htmlFor="privacy" className="cursor-pointer">
                     Ao enviar o formulário, eu concordo com as <Link href="/politica-de-privacidade" className="underline hover:text-blue-500">políticas de privacidade</Link> do Sonho Auto Veículos.
                 </label>

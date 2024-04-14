@@ -4,9 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-import './Slider.css';
 
-// import required modules
 import { Navigation, Thumbs } from 'swiper/modules';
 import Image from 'next/image';
 

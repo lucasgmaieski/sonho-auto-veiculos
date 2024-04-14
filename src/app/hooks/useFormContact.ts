@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from "zod";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { formContactSchema } from "@/lib/schemas/formContactSchema";
 
 type FormProps = z.infer<typeof formContactSchema>;

@@ -8,11 +8,10 @@ import {
     BreadcrumbSeparator,
   } from "@/Components/ui/breadcrumb"
 import { BreadcrumbType } from "@/Types/BreadcrumbType";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
   
 export default function BreadcrumbCustom({itens} : {itens: BreadcrumbType[]}) {
-    const pathname = usePathname();
     
     return (
         <Breadcrumb>

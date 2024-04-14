@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Children, ReactNode } from "react";
+import { ReactNode } from "react";
 
 type Props = {
     href: string;
@@ -7,7 +7,7 @@ type Props = {
 }
 export default function LinkFooter({href, children}: Props) {
     return (
-        <Link href={href} className="hover:text-blue-500 hover:font-medium transition-all">
+        <Link href={href} className="w-fit py-[2px] text-md hover:text-blue-500 hover:font-medium transition-all">
             {children}
         </Link>
     );

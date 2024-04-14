@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import SwiperSlider from "../SwiperSlider/SwiperSlider";
 import { SwiperProps, SwiperSlide } from "swiper/react";
 import { MenuTypes } from "@/Types/MenuType";
+import Image from "next/image";
 
 export default function MenuMarcas() {
     const [menu, setMenu] = useState<MenuTypes[]>();
@@ -48,41 +49,30 @@ export default function MenuMarcas() {
         slidesPerView: 'auto',
         navigation: true,
         loop: true,
-        // breakpoints: {
-        //     475: {
-        //       slidesPerView: menu?.length > 2 ? 2 : menu?.length,
-        //     },
-        //     550: {
-        //       slidesPerView: menu?.length > 4 ? 4 : menu?.length,
-        //     },
-        //     768: {
-        //       slidesPerView: menu?.length > 5 ? 5 : menu?.length,
-        //     },
-        //     1024: {
-        //       slidesPerView: menu?.length > 6 ? 6 : menu?.length,
-        //     },
-        //     1536: {
-        //       slidesPerView: menu?.length > 6 ? 6 : menu?.length,
-        //     },
-        // }
     }
     return (
         <div id="menu-marcas" className="container relative flex flex-col justify-center gap-2 z-10 p-4 mx-auto my-14">
             <h2 className="text-center text-3xl font-bold">Marcas</h2>
             <div className="flex flex-row gap-2">
                 <SwiperSlider settings={settings}>
-                {menu && menu.map((item: any, index: number) => (
+                {menu && menu.map((item, index: number) => (
                     <SwiperSlide key={index} style={{width: 'calc('+ (sizeItem) + '% - 7px)'}}>
-                        <Link key={index} href={`${process.env.NEXT_PUBLIC_SITE_URL}/veiculos?marca=${item.nome}`} className="relative max-w-[190px] m-auto aspect-[1/1] p-1 rounded-full flex flex-col justify-center overflow-hidden">
+                        <Link aria-label={item.nome} href={`${process.env.NEXT_PUBLIC_SITE_URL}/veiculos?marca=${item.nome}`} className="relative max-w-[190px] m-auto aspect-[1/1] p-1 rounded-full flex flex-col justify-center overflow-hidden group" >
                             <div className="m-1 p-4 z-100 overflow-hidden rounded-full border border-gray-200 transition duration-300 ease-in-out group-hover:opacity-100 dark:border-gray-700 dark:bg-slate-800 bg-slate-100">
-                                <img src={item.logo} className="animate-fade-in block w-full aspect-[1/1] scale-100 transform  object-center object-contain" alt="" />
+                                <Image
+                                    src={item.logo}
+                                    width="110"
+                                    height="110"
+                                    alt={item.nome}
+                                    className='block w-full aspect-[1/1] scale-100 transform  object-center object-contain group-hover:scale-110 transition-transform'
+                                    sizes="110px"
+                                />
                             </div>
                         </Link>
                     </SwiperSlide>
                 ))}
                 </SwiperSlider>
             </div>
-            
         </div>
     );
 }

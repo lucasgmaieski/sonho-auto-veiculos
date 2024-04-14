@@ -7,7 +7,7 @@ export default async function Contato() {
     const infoExtras:InfoExtras = await api.getOptionsInfoExtrasGQL();
 
     return (
-        <div className="mt-[140px] container pt-10 p-4 sm:p-8">
+        <div className="mt-[150px] container pt-10 p-4 sm:p-8">
             <h1 className="text-4xl font-bold text-center mb-14">Contato</h1>
             <div className="flex flex-wrap gap-10 lg:gap-6">
                 <div className="w-full lg:w-1/3">

@@ -1,14 +1,7 @@
 import EmailTemplate from "@/Components/EmailTemplate/EmailTemplate";
 import { formContactSchema } from "@/lib/schemas/formContactSchema";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { Resend } from 'resend';
-import { z } from "zod";
-
-type ParamsType = {
-    name: string;
-    email: string;
-}
-type CloseProjectProps = z.infer<typeof formContactSchema>;
 
 export async function POST(req: Request) {
     try {

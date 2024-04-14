@@ -1,3 +1,4 @@
+"use client"
 import api from "@/api";
 import Link from "next/link";
 import { ThemeSwitcher } from "../../app/ThemeSwitcher";
@@ -5,13 +6,38 @@ import { getUrl } from "@/lib/utils";
 import { Menu } from "./Menu";
 import { FavoriteMenu } from "../Favorites/FavoriteMenu";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
-export default async function Header() {
-    const menuPrincipal: MenuClassic[] = await api.getMenuBySlugGQL("menu-principal");
+export default function Header() {
+    const [menuPrincipal, setMenuPrincipal] = useState<MenuClassic[]>();    
+    const [menuOpen, setMenuOpen] = useState<boolean>()
+    
+    useEffect(() => {
+        function handleClick(event) {
+          if (event.target.tagName === 'A') {
+            setMenuOpen(false)
+            document.body.classList.remove('overflow-hidden');
+          }
+        }
+        document.addEventListener('click', handleClick);
+        return () => {
+          document.removeEventListener('click', handleClick);
+        };
+    }, []);
+
+    async function getMenuPrincipal() {
+        const menuPrincipal: MenuClassic[] = await api.getMenuBySlugGQL("menu-principal");
+        console.log(menuPrincipal);
+        
+        setMenuPrincipal(menuPrincipal || []);
+    }
+    useEffect(()=> {
+        getMenuPrincipal();
+    }, []);
 
     return (
-        <header className={`fixed top-0 z-20 w-full p-4 dark:bg-gradient-to-t dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 bg-gradient-to-t from-white via-stone-100 to-white`}>
-            <div className="flex justify-between items-center container">
+        <header className={`fixed top-0 z-30 w-full dark:bg-gradient-to-t dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 bg-gradient-to-t from-white via-stone-100 to-white`}>
+            <div className="flex justify-between items-center container p-4 lg:px-14">
                 <h1>
                     <Link href={process.env.NEXT_PUBLIC_SITE_URL || '/'} aria-label="Ir para página inicial">
                         <Image
@@ -46,7 +72,7 @@ export default async function Header() {
                         <ThemeSwitcher />
                     </div>
                 </nav>
-                <Menu menuPrincipal={menuPrincipal}/>
+                <Menu menuPrincipal={menuPrincipal} menuIsOpen={menuOpen}/>
             </div>
         </header>
     );

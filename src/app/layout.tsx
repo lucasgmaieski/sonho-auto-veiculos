@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/Components/Header/Header";
-import { ThemeProvider } from "next-themes";
 import Provider from "./providers";
 import ContextProvider from "@/Contexts/Context";
 import Footer from "@/Components/Footer/Footer";
@@ -22,12 +21,12 @@ export const metadata: Metadata = {
         siteName: 'Sonho Auto Veículos',
         images: [
           {
-            url: '/logo.svg',
+            url: '/social.svg',
             width: 800,
             height: 600,
           },
           {
-            url: '/logo.svg',
+            url: '/social.svg',
             width: 1800,
             height: 1600,
             alt: 'Logo Sonho Auto Veículos',
@@ -71,7 +70,6 @@ export default function RootLayout({
 }) {
     return (
         <html lang="pt-br" className="container-fluid">
-            {/* <body className={`${inter.className} dark:bg-[url('/bg-theme.jpg')] bg-auto bg-center bg-no-repeat bg-[#f9f7f9]`}> */}
             <body className={`${inter.className} dark:bg-gradient-to-bl dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 bg-gradient-to-bl from-white via-stone-100 to-white`}>
                 <Provider>
                     <ContextProvider>

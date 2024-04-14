@@ -1,19 +1,17 @@
 "use client"
 import CarCard from "@/Components/CarCard/CarCard";
 import { Context } from "@/Contexts/Context";
-import { PageSobre } from "@/Types/PageSobre";
 import { VehicleCustomType } from "@/Types/VehicleCustomType";
 import { TbHeartX } from "react-icons/tb";
-import api from "@/api"
-import Image from "next/image";
 import { useContext } from "react";
 import Link from "next/link";
 
 export default  function Favoritos() {
     const { favorites } = useContext(Context);
     const vehicles = favorites;
+    
     return (
-        <main className="mt-[140px] pt-10 min-h-[55vh]">
+        <main className="mt-[150px] pt-10 min-h-[55vh]">
             <section className="px-2 xl:container xl:mx-auto">
                 <h2 className="text-center text-3xl font-bold mb-7">Meus favoritos</h2>
                 {vehicles.length > 0 &&
@@ -23,13 +21,12 @@ export default  function Favoritos() {
                         ))}
                     </div>
                 }
-                    {vehicles.length === 0 &&
-                        <div className="text-center mx-auto">
-                            <TbHeartX size={80} className="opacity-60 mx-auto"/>
-                            <p>Sua lista de veículos favoritos está vázia!</p>
-                        </div>
-                    }
-                {/* <a href="/veiculos" className="rounded-md bg-blue-600 block w-fit mx-auto mt-8 px-4 py-2 text-1xl font-semibold text-white hover:bg-blue-700 transition-colors">VER TODOS</a> */}
+                {vehicles.length === 0 &&
+                    <div className="text-center mx-auto">
+                        <TbHeartX size={80} className="opacity-60 mx-auto"/>
+                        <p>Sua lista de veículos favoritos está vázia!</p>
+                    </div>
+                }
             </section>
             <section className="w-full mx-auto text-center dark:bg-slate-800 bg-blue-200 md:px-10 py-10 mt-16">
                 <div className="container space-y-5">

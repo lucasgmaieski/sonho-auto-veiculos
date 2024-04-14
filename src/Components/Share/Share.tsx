@@ -6,8 +6,8 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/Components/ui/dialog"
-  import {
+} from "@/Components/ui/dialog"
+import {
     FacebookIcon,
     FacebookShareButton,
     LinkedinShareButton,
@@ -18,9 +18,9 @@ import {
     WhatsappIcon,
     TwitterIcon,
     LinkedinIcon,
-  } from "react-share";
-  import { FaCheck } from "react-icons/fa";
-  import { LuShare2 } from "react-icons/lu";
+} from "react-share";
+import { FaCheck } from "react-icons/fa";
+import { LuShare2 } from "react-icons/lu";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -44,7 +44,7 @@ export default function Share({title}: {title: string}) {
 
     return (
         <Dialog>
-            <DialogTrigger><LuShare2 className="bg-blue-600 hover:bg-blue-700 text-white text-3xl p-1 rounded-lg transition-colors"/></DialogTrigger>
+            <DialogTrigger aria-label="Botão compartilhar"><LuShare2 className="bg-blue-600 hover:bg-blue-700 text-white text-3xl p-1 rounded-lg transition-colors"/></DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle className="mb-3 text-xl">Compartilhe na suas redes sociais</DialogTitle>
